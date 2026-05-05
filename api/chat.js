@@ -34,7 +34,6 @@ Format responses with:
 Do not add excessive caveats. Provide the expert answer directly.`;
 
 export default async function handler(req) {
-  // Only allow POST
   if (req.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), {
       status: 405,
@@ -42,10 +41,9 @@ export default async function handler(req) {
     });
   }
 
-  // Basic rate limiting via response headers (Vercel handles deeper rate limiting at infra level)
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
-    return new Response(JSON.stringify({ error: 'API not configured' }), {
+    return new Response(JSON.stringify({ error: 'API key not configured on server' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });
@@ -55,7 +53,7 @@ export default async function handler(req) {
   try {
     body = await req.json();
   } catch {
-    return new Response(JSON.stringify({ error: 'Invalid JSON' }), {
+    return new Response(JSON.stringify({ error: 'Invalid JSON body' }), {
       status: 400,
       headers: { 'Content-Type': 'application/json' },
     });
@@ -63,13 +61,13 @@ export default async function handler(req) {
 
   const { messages } = body;
   if (!messages || !Array.isArray(messages) || messages.length === 0) {
-    return new Response(JSON.stringify({ error: 'Messages required' }), {
+    return new Response(JSON.stringify({ error: 'Messages array required' }), {
       status: 400,
       headers: { 'Content-Type': 'application/json' },
     });
   }
 
-  // Limit conversation history to last 20 messages to control token usage
+  // Trim to last 20 messages to control costs
   const trimmedMessages = messages.slice(-20);
 
   try {
@@ -91,10 +89,10 @@ export default async function handler(req) {
     const data = await anthropicRes.json();
 
     if (!anthropicRes.ok) {
-      return new Response(JSON.stringify({ error: 'AI service error', detail: data.error?.message }), {
-        status: anthropicRes.status,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({ error: 'AI service error', detail: data?.error?.message }),
+        { status: anthropicRes.status, headers: { 'Content-Type': 'application/json' } }
+      );
     }
 
     const reply = data.content?.map(b => b.text || '').join('') || '';
