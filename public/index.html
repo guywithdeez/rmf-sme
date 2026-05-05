@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RMF SME — Risk Management Framework Expert</title>
+<meta name="description" content="AI-powered NIST Risk Management Framework Subject Matter Expert. Get expert guidance on RMF, FISMA, FedRAMP, NIST 800-53, ATOs, and federal cybersecurity compliance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Bebas+Neue&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d12;
+    --surface: #111520;
+    --border: #1e2538;
+    --accent: #00e5ff;
+    --accent2: #ff6b35;
+    --text: #c9d4e8;
+    --muted: #4a5568;
+    --user-bubble: #131c2e;
+    --ai-bubble: #0d1520;
+    --success: #00c896;
+    --warning: #ffb347;
+    --error: #ff4d6d;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.025) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Subtle corner glow */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -200px;
+    right: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0,229,255,0.04) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 10;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 62px;
+    flex-shrink: 0;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo-icon {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, var(--accent), #0080ff);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    color: #000;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+    box-shadow: 0 0 20px rgba(0,229,255,0.2);
+  }
+
+  .logo-wordmark { line-height: 1; }
+  .logo-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: #fff;
+  }
+  .logo-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--accent);
+    letter-spacing: 1.5px;
+    opacity: 0.8;
+  }
+
+  .header-right {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    padding: 4px 9px;
+    border-radius: 4px;
+    letter-spacing: 0.8px;
+  }
+
+  .badge-nist   { background: rgba(0,229,255,0.08);  color: var(--accent);  border: 1px solid rgba(0,229,255,0.25); }
+  .badge-framp  { background: rgba(255,107,53,0.08); color: var(--accent2); border: 1px solid rgba(255,107,53,0.25); }
+  .badge-live   {
+    background: rgba(0,200,150,0.08); color: var(--success);
+    border: 1px solid rgba(0,200,150,0.25);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .live-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--success);
+    animation: pulse 1.8s infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity:1; transform: scale(1); }
+    50%      { opacity:0.3; transform: scale(0.8); }
+  }
+
+  /* ── TOPICS BAR ── */
+  .topics-bar {
+    position: relative; z-index: 10;
+    background: rgba(17,21,32,0.9);
+    border-bottom: 1px solid var(--border);
+    padding: 9px 24px;
+    display: flex; gap: 8px;
+    overflow-x: auto; flex-shrink: 0;
+    scrollbar-width: none;
+  }
+  .topics-bar::-webkit-scrollbar { display: none; }
+
+  .chip {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    padding: 5px 13px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.18s;
+    letter-spacing: 0.4px;
+  }
+  .chip:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0,229,255,0.05);
+  }
+
+  /* ── MAIN ── */
+  .main { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+  /* ── MESSAGES ── */
+  .messages {
+    flex: 1; overflow-y: auto;
+    padding: 28px 24px;
+    display: flex; flex-direction: column; gap: 22px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .messages::-webkit-scrollbar { width: 4px; }
+  .messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* ── WELCOME ── */
+  .welcome {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; text-align: center;
+    padding: 32px 20px; flex: 1; gap: 18px;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+
+  .welcome-icon {
+    width: 76px; height: 76px;
+    background: linear-gradient(135deg, rgba(0,229,255,0.1), rgba(0,128,255,0.06));
+    border: 1px solid rgba(0,229,255,0.2);
+    border-radius: 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 34px;
+    box-shadow: 0 0 40px rgba(0,229,255,0.08);
+  }
+
+  .welcome h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 34px; letter-spacing: 4px; color: #fff;
+  }
+
+  .welcome-desc {
+    font-size: 14px; color: var(--muted);
+    max-width: 460px; line-height: 1.8;
+  }
+
+  .starter-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 10px; max-width: 520px; width: 100%; margin-top: 4px;
+  }
+
+  .starter {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: left; cursor: pointer;
+    transition: all 0.18s;
+  }
+  .starter:hover {
+    border-color: rgba(0,229,255,0.4);
+    background: rgba(0,229,255,0.03);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0,229,255,0.06);
+  }
+  .starter-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; color: var(--accent);
+    letter-spacing: 1.2px; margin-bottom: 5px;
+  }
+  .starter-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* ── MESSAGE BUBBLES ── */
+  .message {
+    display: flex; gap: 12px;
+    max-width: 880px; width: 100%;
+    animation: fadeUp 0.25s ease both;
+  }
+  .message.user      { align-self: flex-end; flex-direction: row-reverse; }
+  .message.assistant { align-self: flex-start; }
+
+  .av {
+    width: 32px; height: 32px; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600;
+    flex-shrink: 0;
+  }
+  .av.user-av { background: rgba(255,107,53,0.12); border: 1px solid rgba(255,107,53,0.25); color: var(--accent2); }
+  .av.ai-av   { background: rgba(0,229,255,0.08);  border: 1px solid rgba(0,229,255,0.2);   color: var(--accent); }
+
+  .bubble {
+    padding: 14px 18px; border-radius: 10px;
+    font-size: 14px; line-height: 1.8;
+    max-width: calc(100% - 48px);
+  }
+  .message.user .bubble {
+    background: var(--user-bubble);
+    border: 1px solid var(--border);
+    border-top-right-radius: 3px;
+    color: var(--text);
+  }
+  .message.assistant .bubble {
+    background: var(--ai-bubble);
+    border: 1px solid var(--border);
+    border-top-left-radius: 3px;
+    color: var(--text);
+  }
+
+  /* Formatted content inside bubbles */
+  .bubble strong { color: var(--accent); font-weight: 600; }
+  .bubble em     { color: var(--warning); font-style: normal; font-weight: 500; }
+  .bubble code {
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+    background: rgba(0,229,255,0.07); border: 1px solid rgba(0,229,255,0.15);
+    padding: 1px 6px; border-radius: 3px; color: var(--accent);
+  }
+  .bubble .sec-header {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+    letter-spacing: 1.5px; color: var(--accent2);
+    margin: 16px 0 6px; border-bottom: 1px solid var(--border);
+    padding-bottom: 5px; display: block;
+  }
+  .bubble ul { padding-left: 20px; margin: 8px 0; }
+  .bubble li { margin-bottom: 5px; }
+  .bubble ol { padding-left: 20px; margin: 8px 0; }
+
+  /* Error bubble */
+  .bubble.error-bubble { border-color: rgba(255,77,109,0.3); color: var(--error); }
+
+  /* ── TYPING ── */
+  .typing-wrap {
+    display: flex; gap: 12px; align-items: flex-start;
+    align-self: flex-start; animation: fadeUp 0.2s ease both;
+  }
+  .typing-indicator {
+    display: flex; gap: 5px; align-items: center;
+    padding: 14px 18px;
+    background: var(--ai-bubble); border: 1px solid var(--border);
+    border-radius: 10px; border-top-left-radius: 3px;
+  }
+  .dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+    animation: bounce 1.2s infinite;
+  }
+  .dot:nth-child(2) { animation-delay: 0.2s; }
+  .dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%,60%,100% { transform: translateY(0); opacity: 0.3; }
+    30%          { transform: translateY(-7px); opacity: 1; }
+  }
+
+  /* ── INPUT ── */
+  .input-area {
+    position: relative; z-index: 10;
+    padding: 14px 24px 18px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .input-box {
+    display: flex; gap: 10px; align-items: flex-end;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 10px 12px;
+    transition: border-color 0.18s;
+  }
+  .input-box:focus-within { border-color: rgba(0,229,255,0.35); }
+
+  textarea {
+    flex: 1; background: transparent; border: none; outline: none;
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; line-height: 1.6;
+    resize: none; max-height: 140px; min-height: 24px;
+    overflow-y: auto; scrollbar-width: none;
+  }
+  textarea::placeholder { color: var(--muted); }
+
+  .send-btn {
+    width: 36px; height: 36px; border-radius: 8px; border: none;
+    background: var(--accent); color: #000; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.18s; flex-shrink: 0;
+  }
+  .send-btn:hover:not(:disabled) { background: #33eaff; transform: scale(1.06); }
+  .send-btn:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
+  .send-btn svg { width: 15px; height: 15px; }
+
+  .input-meta {
+    display: flex; justify-content: space-between;
+    padding: 7px 2px 0;
+  }
+  .hint { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); }
+  .ref  { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(0,229,255,0.5); letter-spacing: 0.8px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .starter-grid { grid-template-columns: 1fr; }
+    .header-right .badge-nist, .header-right .badge-framp { display: none; }
+    header { padding: 0 16px; }
+    .topics-bar { padding: 8px 16px; }
+    .messages { padding: 16px; }
+    .input-area { padding: 10px 16px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">RMF</div>
+    <div class="logo-wordmark">
+      <div class="logo-title">RMF Expert</div>
+      <div class="logo-sub">NIST SP 800-37 · SUBJECT MATTER EXPERT</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="badge badge-nist">NIST 800-37</span>
+    <span class="badge badge-framp">FedRAMP</span>
+    <span class="badge badge-live"><span class="live-dot"></span>AI LIVE</span>
+  </div>
+</header>
+
+<!-- QUICK TOPIC CHIPS -->
+<div class="topics-bar" role="navigation" aria-label="Quick topics">
+  <button class="chip" onclick="askTopic('Explain the 7 steps of the RMF process')">RMF 7 Steps</button>
+  <button class="chip" onclick="askTopic('What is system categorization under FIPS 199?')">FIPS 199 Categorization</button>
+  <button class="chip" onclick="askTopic('How do I select security controls using NIST SP 800-53?')">Control Selection</button>
+  <button class="chip" onclick="askTopic('What is a System Security Plan (SSP) and what should it include?')">SSP Requirements</button>
+  <button class="chip" onclick="askTopic('Explain the Authorization to Operate (ATO) process')">ATO Process</button>
+  <button class="chip" onclick="askTopic('What are POA&Ms and how are they managed?')">POA&M Management</button>
+  <button class="chip" onclick="askTopic('How does continuous monitoring work in RMF?')">Continuous Monitoring</button>
+  <button class="chip" onclick="askTopic('What is the difference between FedRAMP and RMF?')">FedRAMP vs RMF</button>
+  <button class="chip" onclick="askTopic('Explain Supply Chain Risk Management (SCRM) in RMF context')">SCRM</button>
+  <button class="chip" onclick="askTopic('What are common controls, system-specific controls, and hybrid controls?')">Control Types</button>
+  <button class="chip" onclick="askTopic('What are the roles and responsibilities in RMF (AO, ISSO, ISSM, SCA)?')">RMF Roles</button>
+  <button class="chip" onclick="askTopic('How is NIST SP 800-171 related to RMF and CMMC?')">800-171 & CMMC</button>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="messages" id="messages" role="log" aria-live="polite" aria-label="Conversation">
+
+    <!-- Welcome screen -->
+    <div class="welcome" id="welcome">
+      <div class="welcome-icon">🛡️</div>
+      <h1>RMF SUBJECT MATTER EXPERT</h1>
+      <p class="welcome-desc">Your AI-powered guide to the NIST Risk Management Framework. Ask anything about FISMA, FedRAMP, security controls, ATOs, SSPs, and federal cybersecurity compliance.</p>
+      <div class="starter-grid">
+        <button class="starter" onclick="askTopic('Walk me through the complete RMF lifecycle from categorization to authorization')">
+          <div class="starter-label">RMF LIFECYCLE</div>
+          <div class="starter-desc">Complete walkthrough of all 7 steps</div>
+        </button>
+        <button class="starter" onclick="askTopic('What documents are required for a complete ATO package?')">
+          <div class="starter-label">ATO PACKAGE</div>
+          <div class="starter-desc">Required artifacts and deliverables</div>
+        </button>
+        <button class="starter" onclick="askTopic('How do I write a security control implementation statement for NIST 800-53?')">
+          <div class="starter-label">CONTROL WRITING</div>
+          <div class="starter-desc">Crafting effective implementation statements</div>
+        </button>
+        <button class="starter" onclick="askTopic('What is the role of the Authorizing Official (AO) in the RMF process?')">
+          <div class="starter-label">RMF ROLES</div>
+          <div class="starter-desc">AO, ISSO, ISSM, SCA responsibilities</div>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- INPUT -->
+  <div class="input-area">
+    <div class="input-box">
+      <textarea
+        id="userInput"
+        placeholder="Ask anything about RMF, FISMA, FedRAMP, NIST 800-53, ATOs, SSPs…"
+        rows="1"
+        onkeydown="handleKey(event)"
+        oninput="autoResize(this)"
+        aria-label="Your question"
+      ></textarea>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()" title="Send (Enter)" aria-label="Send message">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+    <div class="input-meta">
+      <span class="hint">ENTER to send · SHIFT+ENTER for new line</span>
+      <span class="ref">NIST SP 800-37 REV.2</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  let messages = [];
+  let isLoading = false;
+
+  // ── AUTO RESIZE TEXTAREA ──
+  function autoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 140) + 'px';
+  }
+
+  // ── KEYBOARD HANDLER ──
+  function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  }
+
+  // ── TOPIC SHORTCUT ──
+  function askTopic(text) {
+    const input = document.getElementById('userInput');
+    input.value = text;
+    autoResize(input);
+    sendMessage();
+  }
+
+  // ── FORMAT AI RESPONSE (simple markdown-like) ──
+  function format(text) {
+    return text
+      // Section headers (ALL CAPS lines ending with :)
+      .replace(/^([A-Z][A-Z\s&\/\-]{3,}):$/gm, '<span class="sec-header">$1</span>')
+      // Bold **text**
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      // Control IDs like [AC-2] or [IA-5(1)]
+      .replace(/\[([A-Z]{1,3}-\d+(?:\(\d+\))?(?:\s*,\s*[A-Z]{1,3}-\d+(?:\(\d+\))?)*)\]/g, '<code>[$1]</code>')
+      // Inline code `text`
+      .replace(/`([^`]+)`/g, '<code>$1</code>')
+      // Newlines
+      .replace(/\n/g, '<br>');
+  }
+
+  // ── ADD MESSAGE TO DOM ──
+  function addMessage(role, content, isError = false) {
+    // Remove welcome screen on first message
+    const welcome = document.getElementById('welcome');
+    if (welcome) welcome.remove();
+
+    const container = document.getElementById('messages');
+    const wrap = document.createElement('div');
+    wrap.className = `message ${role}`;
+
+    const av = document.createElement('div');
+    av.className = `av ${role === 'user' ? 'user-av' : 'ai-av'}`;
+    av.textContent = role === 'user' ? 'YOU' : 'SME';
+    av.setAttribute('aria-hidden', 'true');
+
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble' + (isError ? ' error-bubble' : '');
+
+    if (role === 'assistant') {
+      bubble.innerHTML = format(content);
+    } else {
+      bubble.textContent = content;
+    }
+
+    wrap.appendChild(av);
+    wrap.appendChild(bubble);
+    container.appendChild(wrap);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  // ── SHOW TYPING INDICATOR ──
+  function showTyping() {
+    const welcome = document.getElementById('welcome');
+    if (welcome) welcome.remove();
+
+    const container = document.getElementById('messages');
+    const wrap = document.createElement('div');
+    wrap.className = 'typing-wrap';
+    wrap.id = 'typing';
+
+    const av = document.createElement('div');
+    av.className = 'av ai-av';
+    av.textContent = 'SME';
+    av.setAttribute('aria-hidden', 'true');
+
+    const indicator = document.createElement('div');
+    indicator.className = 'typing-indicator';
+    indicator.setAttribute('aria-label', 'Thinking…');
+    indicator.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+
+    wrap.appendChild(av);
+    wrap.appendChild(indicator);
+    container.appendChild(wrap);
+    container.scrollTop = container.scrollHeight;
+  }
+
+  function removeTyping() {
+    const t = document.getElementById('typing');
+    if (t) t.remove();
+  }
+
+  // ── SEND MESSAGE ──
+  async function sendMessage() {
+    if (isLoading) return;
+
+    const input = document.getElementById('userInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    // Clear input
+    input.value = '';
+    input.style.height = 'auto';
+    isLoading = true;
+    document.getElementById('sendBtn').disabled = true;
+
+    // Add user message
+    messages.push({ role: 'user', content: text });
+    addMessage('user', text);
+    showTyping();
+
+    try {
+      // Call our secure backend proxy at /api/chat
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages }),
+      });
+
+      const data = await res.json();
+
+      removeTyping();
+
+      if (!res.ok || data.error) {
+        const errMsg = data.error || 'An error occurred. Please try again.';
+        addMessage('assistant', '⚠ ' + errMsg, true);
+      } else {
+        messages.push({ role: 'assistant', content: data.reply });
+        addMessage('assistant', data.reply);
+      }
+
+    } catch (err) {
+      removeTyping();
+      addMessage('assistant', '⚠ Network error — please check your connection and try again.', true);
+    }
+
+    isLoading = false;
+    document.getElementById('sendBtn').disabled = false;
+    input.focus();
+  }
+</script>
+</body>
+</html>
