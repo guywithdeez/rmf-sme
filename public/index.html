@@ -4,379 +4,439 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RMF SME — Risk Management Framework Expert</title>
-<meta name="description" content="AI-powered NIST Risk Management Framework Subject Matter Expert. Get expert guidance on RMF, FISMA, FedRAMP, NIST 800-53, ATOs, and federal cybersecurity compliance.">
+<meta name="description" content="AI-powered NIST Risk Management Framework Subject Matter Expert. RMF guidance, templates, cybersecurity news, and IAVA tracking.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Bebas+Neue&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0a0d12;
-    --surface: #111520;
-    --border: #1e2538;
-    --accent: #00e5ff;
-    --accent2: #ff6b35;
-    --text: #c9d4e8;
-    --muted: #4a5568;
-    --user-bubble: #131c2e;
-    --ai-bubble: #0d1520;
-    --success: #00c896;
-    --warning: #ffb347;
-    --error: #ff4d6d;
-  }
+:root {
+  --bg: #0a0d12;
+  --surface: #111520;
+  --surface2: #161c2a;
+  --border: #1e2538;
+  --border2: #252d42;
+  --accent: #00e5ff;
+  --accent2: #ff6b35;
+  --accent3: #7c3aed;
+  --text: #c9d4e8;
+  --muted: #4a5568;
+  --muted2: #64748b;
+  --success: #00c896;
+  --warning: #ffb347;
+  --error: #ff4d6d;
+  --header-h: 62px;
+  --nav-h: 48px;
+}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'IBM Plex Sans', sans-serif;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans', sans-serif;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(0,229,255,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,229,255,0.025) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
-  }
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(0,229,255,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,229,255,0.018) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none; z-index: 0;
+}
 
-  /* Subtle corner glow */
-  body::after {
-    content: '';
-    position: fixed;
-    top: -200px;
-    right: -200px;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(0,229,255,0.04) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
+/* ── HEADER ── */
+header {
+  position: relative; z-index: 100;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: var(--header-h); flex-shrink: 0;
+}
 
-  /* ── HEADER ── */
-  header {
-    position: relative;
-    z-index: 10;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 0 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 62px;
-    flex-shrink: 0;
-  }
+.logo { display: flex; align-items: center; gap: 14px; }
+.logo-icon {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, var(--accent), #0080ff);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif; font-size: 16px;
+  color: #000; letter-spacing: 0.5px;
+  box-shadow: 0 0 20px rgba(0,229,255,0.2);
+}
+.logo-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px; color: #fff; }
+.logo-sub { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--accent); letter-spacing: 1.5px; opacity: 0.8; }
 
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
+.header-badges { display: flex; gap: 8px; align-items: center; }
+.badge {
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+  padding: 4px 9px; border-radius: 4px; letter-spacing: 0.8px;
+}
+.badge-nist   { background: rgba(0,229,255,0.08);  color: var(--accent);  border: 1px solid rgba(0,229,255,0.25); }
+.badge-framp  { background: rgba(255,107,53,0.08); color: var(--accent2); border: 1px solid rgba(255,107,53,0.25); }
+.badge-live   { background: rgba(0,200,150,0.08); color: var(--success); border: 1px solid rgba(0,200,150,0.25); display:flex;align-items:center;gap:6px; }
+.live-dot { width:6px;height:6px;border-radius:50%;background:var(--success);animation:pulse 1.8s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.8)} }
 
-  .logo-icon {
-    width: 38px;
-    height: 38px;
-    background: linear-gradient(135deg, var(--accent), #0080ff);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 16px;
-    color: #000;
-    letter-spacing: 0.5px;
-    flex-shrink: 0;
-    box-shadow: 0 0 20px rgba(0,229,255,0.2);
-  }
+/* ── NAV TABS ── */
+nav {
+  position: relative; z-index: 99;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: stretch;
+  height: var(--nav-h); flex-shrink: 0;
+  padding: 0 12px;
+  overflow-x: auto; scrollbar-width: none;
+}
+nav::-webkit-scrollbar { display: none; }
 
-  .logo-wordmark { line-height: 1; }
-  .logo-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
-    letter-spacing: 3px;
-    color: #fff;
-  }
-  .logo-sub {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px;
-    color: var(--accent);
-    letter-spacing: 1.5px;
-    opacity: 0.8;
-  }
+.tab-btn {
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+  letter-spacing: 1px; text-transform: uppercase;
+  padding: 0 18px;
+  border: none; background: transparent;
+  color: var(--muted); cursor: pointer;
+  display: flex; align-items: center; gap: 8px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.18s; white-space: nowrap;
+  position: relative;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+.tab-icon { font-size: 14px; }
 
-  .header-right {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
+/* ── PAGES ── */
+.page { display: none; flex: 1; overflow: hidden; flex-direction: column; position: relative; z-index: 1; }
+.page.active { display: flex; }
 
-  .badge {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    padding: 4px 9px;
-    border-radius: 4px;
-    letter-spacing: 0.8px;
-  }
+/* ════════════════════════════
+   CHAT PAGE
+════════════════════════════ */
+.topics-bar {
+  background: rgba(17,21,32,0.9);
+  border-bottom: 1px solid var(--border);
+  padding: 9px 24px;
+  display: flex; gap: 8px; overflow-x: auto; flex-shrink: 0;
+  scrollbar-width: none;
+}
+.topics-bar::-webkit-scrollbar { display: none; }
+.chip {
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+  padding: 5px 13px; border-radius: 20px;
+  border: 1px solid var(--border); background: transparent;
+  color: var(--muted); cursor: pointer; white-space: nowrap;
+  transition: all 0.18s;
+}
+.chip:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,229,255,0.05); }
 
-  .badge-nist   { background: rgba(0,229,255,0.08);  color: var(--accent);  border: 1px solid rgba(0,229,255,0.25); }
-  .badge-framp  { background: rgba(255,107,53,0.08); color: var(--accent2); border: 1px solid rgba(255,107,53,0.25); }
-  .badge-live   {
-    background: rgba(0,200,150,0.08); color: var(--success);
-    border: 1px solid rgba(0,200,150,0.25);
-    display: flex; align-items: center; gap: 6px;
-  }
-  .live-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--success);
-    animation: pulse 1.8s infinite;
-  }
+.messages {
+  flex: 1; overflow-y: auto; padding: 28px 24px;
+  display: flex; flex-direction: column; gap: 22px;
+  scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+}
+.messages::-webkit-scrollbar { width: 4px; }
+.messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
-  @keyframes pulse {
-    0%,100% { opacity:1; transform: scale(1); }
-    50%      { opacity:0.3; transform: scale(0.8); }
-  }
+.welcome {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; text-align: center;
+  padding: 32px 20px; flex: 1; gap: 18px;
+  animation: fadeUp 0.5s ease both;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
 
-  /* ── TOPICS BAR ── */
-  .topics-bar {
-    position: relative; z-index: 10;
-    background: rgba(17,21,32,0.9);
-    border-bottom: 1px solid var(--border);
-    padding: 9px 24px;
-    display: flex; gap: 8px;
-    overflow-x: auto; flex-shrink: 0;
-    scrollbar-width: none;
-  }
-  .topics-bar::-webkit-scrollbar { display: none; }
+.welcome-icon {
+  width: 76px; height: 76px;
+  background: linear-gradient(135deg, rgba(0,229,255,0.1), rgba(0,128,255,0.06));
+  border: 1px solid rgba(0,229,255,0.2); border-radius: 18px;
+  display: flex; align-items: center; justify-content: center; font-size: 34px;
+}
+.welcome h1 { font-family: 'Bebas Neue', sans-serif; font-size: 34px; letter-spacing: 4px; color: #fff; }
+.welcome-desc { font-size: 14px; color: var(--muted); max-width: 460px; line-height: 1.8; }
+.starter-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; max-width: 520px; width: 100%; }
+.starter {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 14px 16px; text-align: left; cursor: pointer; transition: all 0.18s;
+}
+.starter:hover { border-color: rgba(0,229,255,0.4); background: rgba(0,229,255,0.03); transform: translateY(-2px); }
+.starter-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 1.2px; margin-bottom: 5px; }
+.starter-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
 
-  .chip {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    padding: 5px 13px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--muted);
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.18s;
-    letter-spacing: 0.4px;
-  }
-  .chip:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: rgba(0,229,255,0.05);
-  }
+.message { display: flex; gap: 12px; max-width: 880px; width: 100%; animation: fadeUp 0.25s ease both; }
+.message.user { align-self: flex-end; flex-direction: row-reverse; }
+.message.assistant { align-self: flex-start; }
 
-  /* ── MAIN ── */
-  .main { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.av {
+  width: 32px; height: 32px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; flex-shrink: 0;
+}
+.av.user-av { background: rgba(255,107,53,0.12); border: 1px solid rgba(255,107,53,0.25); color: var(--accent2); }
+.av.ai-av   { background: rgba(0,229,255,0.08);  border: 1px solid rgba(0,229,255,0.2);   color: var(--accent); }
 
-  /* ── MESSAGES ── */
-  .messages {
-    flex: 1; overflow-y: auto;
-    padding: 28px 24px;
-    display: flex; flex-direction: column; gap: 22px;
-    scrollbar-width: thin;
-    scrollbar-color: var(--border) transparent;
-  }
-  .messages::-webkit-scrollbar { width: 4px; }
-  .messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.bubble { padding: 14px 18px; border-radius: 10px; font-size: 14px; line-height: 1.8; max-width: calc(100% - 48px); }
+.message.user .bubble { background: var(--surface2); border: 1px solid var(--border); border-top-right-radius: 3px; }
+.message.assistant .bubble { background: #0d1520; border: 1px solid var(--border); border-top-left-radius: 3px; }
+.bubble strong { color: var(--accent); font-weight: 600; }
+.bubble code { font-family: 'IBM Plex Mono', monospace; font-size: 12px; background: rgba(0,229,255,0.07); border: 1px solid rgba(0,229,255,0.15); padding: 1px 6px; border-radius: 3px; color: var(--accent); }
+.bubble .sec-header { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 1.5px; color: var(--accent2); margin: 16px 0 6px; border-bottom: 1px solid var(--border); padding-bottom: 5px; display: block; }
+.bubble.error-bubble { border-color: rgba(255,77,109,0.3); color: var(--error); }
 
-  /* ── WELCOME ── */
-  .welcome {
-    display: flex; flex-direction: column; align-items: center;
-    justify-content: center; text-align: center;
-    padding: 32px 20px; flex: 1; gap: 18px;
-    animation: fadeUp 0.5s ease both;
-  }
+.typing-wrap { display: flex; gap: 12px; align-items: flex-start; align-self: flex-start; animation: fadeUp 0.2s ease both; }
+.typing-indicator { display: flex; gap: 5px; align-items: center; padding: 14px 18px; background: #0d1520; border: 1px solid var(--border); border-radius: 10px; border-top-left-radius: 3px; }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: bounce 1.2s infinite; }
+.dot:nth-child(2){animation-delay:.2s} .dot:nth-child(3){animation-delay:.4s}
+@keyframes bounce { 0%,60%,100%{transform:translateY(0);opacity:.3} 30%{transform:translateY(-7px);opacity:1} }
 
-  @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+.input-area { padding: 14px 24px 18px; background: var(--surface); border-top: 1px solid var(--border); flex-shrink: 0; }
+.input-box { display: flex; gap: 10px; align-items: flex-end; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; transition: border-color 0.18s; }
+.input-box:focus-within { border-color: rgba(0,229,255,0.35); }
+textarea { flex: 1; background: transparent; border: none; outline: none; color: var(--text); font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; line-height: 1.6; resize: none; max-height: 140px; min-height: 24px; overflow-y: auto; scrollbar-width: none; }
+textarea::placeholder { color: var(--muted); }
+.send-btn { width: 36px; height: 36px; border-radius: 8px; border: none; background: var(--accent); color: #000; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.18s; flex-shrink: 0; }
+.send-btn:hover:not(:disabled) { background: #33eaff; transform: scale(1.06); }
+.send-btn:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
+.send-btn svg { width: 15px; height: 15px; }
+.input-meta { display: flex; justify-content: space-between; padding: 7px 2px 0; }
+.hint { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); }
+.ref  { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(0,229,255,0.5); }
 
-  .welcome-icon {
-    width: 76px; height: 76px;
-    background: linear-gradient(135deg, rgba(0,229,255,0.1), rgba(0,128,255,0.06));
-    border: 1px solid rgba(0,229,255,0.2);
-    border-radius: 18px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 34px;
-    box-shadow: 0 0 40px rgba(0,229,255,0.08);
-  }
+/* ════════════════════════════
+   ABOUT PAGE
+════════════════════════════ */
+.page-scroll { flex: 1; overflow-y: auto; padding: 40px 32px; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+.page-scroll::-webkit-scrollbar { width: 4px; }
+.page-scroll::-webkit-scrollbar-thumb { background: var(--border); }
 
-  .welcome h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 34px; letter-spacing: 4px; color: #fff;
-  }
+.page-header { margin-bottom: 40px; }
+.page-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 2px; margin-bottom: 10px; }
+.page-title { font-family: 'Bebas Neue', sans-serif; font-size: 42px; letter-spacing: 3px; color: #fff; line-height: 1; margin-bottom: 12px; }
+.page-desc { font-size: 15px; color: var(--muted2); line-height: 1.8; max-width: 680px; }
 
-  .welcome-desc {
-    font-size: 14px; color: var(--muted);
-    max-width: 460px; line-height: 1.8;
-  }
+.about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 40px; }
+.about-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 24px; transition: all 0.2s;
+}
+.about-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+.about-card-icon { font-size: 28px; margin-bottom: 14px; }
+.about-card-title { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent); letter-spacing: 1px; margin-bottom: 8px; }
+.about-card-text { font-size: 13px; color: var(--muted2); line-height: 1.7; }
 
-  .starter-grid {
-    display: grid; grid-template-columns: repeat(2, 1fr);
-    gap: 10px; max-width: 520px; width: 100%; margin-top: 4px;
-  }
+.how-to { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; margin-bottom: 32px; }
+.how-to h3 { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; color: #fff; margin-bottom: 20px; }
+.how-step { display: flex; gap: 16px; margin-bottom: 20px; }
+.how-step:last-child { margin-bottom: 0; }
+.step-num { width: 32px; height: 32px; border-radius: 8px; background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.25); display: flex; align-items: center; justify-content: center; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent); flex-shrink: 0; }
+.step-content h4 { font-size: 14px; color: var(--text); font-weight: 600; margin-bottom: 4px; }
+.step-content p { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
-  .starter {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px 16px;
-    text-align: left; cursor: pointer;
-    transition: all 0.18s;
-  }
-  .starter:hover {
-    border-color: rgba(0,229,255,0.4);
-    background: rgba(0,229,255,0.03);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(0,229,255,0.06);
-  }
-  .starter-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px; color: var(--accent);
-    letter-spacing: 1.2px; margin-bottom: 5px;
-  }
-  .starter-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.refs-section h3 { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 2px; color: #fff; margin-bottom: 16px; }
+.ref-links { display: flex; flex-wrap: wrap; gap: 10px; }
+.ref-link {
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+  padding: 8px 14px; border-radius: 6px;
+  border: 1px solid var(--border); background: var(--surface);
+  color: var(--muted2); text-decoration: none;
+  transition: all 0.18s; letter-spacing: 0.5px;
+  display: flex; align-items: center; gap: 6px;
+}
+.ref-link:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,229,255,0.04); }
 
-  /* ── MESSAGE BUBBLES ── */
-  .message {
-    display: flex; gap: 12px;
-    max-width: 880px; width: 100%;
-    animation: fadeUp 0.25s ease both;
-  }
-  .message.user      { align-self: flex-end; flex-direction: row-reverse; }
-  .message.assistant { align-self: flex-start; }
+/* ════════════════════════════
+   TEMPLATES PAGE
+════════════════════════════ */
+.templates-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.template-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 22px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
+}
+.template-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.2s; }
+.template-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+.template-card:hover::before { transform: scaleX(1); }
+.template-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; padding: 3px 8px; border-radius: 3px; margin-bottom: 12px; display: inline-block; letter-spacing: 0.8px; }
+.tag-nist   { background: rgba(0,229,255,0.1);  color: var(--accent);  border: 1px solid rgba(0,229,255,0.2); }
+.tag-fisma  { background: rgba(124,58,237,0.1); color: #a78bfa;        border: 1px solid rgba(124,58,237,0.2); }
+.tag-fedramp{ background: rgba(255,107,53,0.1); color: var(--accent2); border: 1px solid rgba(255,107,53,0.2); }
+.template-title { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+.template-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
+.template-meta { display: flex; gap: 12px; align-items: center; }
+.template-pages { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); }
+.template-btn {
+  margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+  padding: 6px 14px; border-radius: 6px; border: 1px solid rgba(0,229,255,0.3);
+  background: rgba(0,229,255,0.06); color: var(--accent); cursor: pointer;
+  transition: all 0.18s; letter-spacing: 0.5px;
+}
+.template-btn:hover { background: rgba(0,229,255,0.12); border-color: var(--accent); }
 
-  .av {
-    width: 32px; height: 32px; border-radius: 7px;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600;
-    flex-shrink: 0;
-  }
-  .av.user-av { background: rgba(255,107,53,0.12); border: 1px solid rgba(255,107,53,0.25); color: var(--accent2); }
-  .av.ai-av   { background: rgba(0,229,255,0.08);  border: 1px solid rgba(0,229,255,0.2);   color: var(--accent); }
+/* Template viewer modal */
+.modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 500;
+  background: rgba(5,7,12,0.85); backdrop-filter: blur(4px);
+  align-items: center; justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: 14px; width: 90%; max-width: 760px; max-height: 88vh;
+  display: flex; flex-direction: column; overflow: hidden;
+  animation: fadeUp 0.25s ease;
+}
+.modal-header {
+  padding: 20px 24px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+}
+.modal-header h2 { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 2px; color: #fff; }
+.modal-close { width: 32px; height: 32px; border-radius: 7px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: all 0.18s; }
+.modal-close:hover { border-color: var(--error); color: var(--error); }
+.modal-body { flex: 1; overflow-y: auto; padding: 24px; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+.modal-body::-webkit-scrollbar { width: 4px; }
+.modal-body::-webkit-scrollbar-thumb { background: var(--border); }
+.modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; gap: 10px; flex-shrink: 0; }
 
-  .bubble {
-    padding: 14px 18px; border-radius: 10px;
-    font-size: 14px; line-height: 1.8;
-    max-width: calc(100% - 48px);
-  }
-  .message.user .bubble {
-    background: var(--user-bubble);
-    border: 1px solid var(--border);
-    border-top-right-radius: 3px;
-    color: var(--text);
-  }
-  .message.assistant .bubble {
-    background: var(--ai-bubble);
-    border: 1px solid var(--border);
-    border-top-left-radius: 3px;
-    color: var(--text);
-  }
+.tpl-section { margin-bottom: 24px; }
+.tpl-section-title { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 1.5px; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.tpl-field { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; margin-bottom: 8px; }
+.tpl-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.8px; margin-bottom: 4px; }
+.tpl-value { font-size: 13px; color: var(--muted2); font-style: italic; }
+.tpl-placeholder { font-size: 13px; color: var(--border2); }
 
-  /* Formatted content inside bubbles */
-  .bubble strong { color: var(--accent); font-weight: 600; }
-  .bubble em     { color: var(--warning); font-style: normal; font-weight: 500; }
-  .bubble code {
-    font-family: 'IBM Plex Mono', monospace; font-size: 12px;
-    background: rgba(0,229,255,0.07); border: 1px solid rgba(0,229,255,0.15);
-    padding: 1px 6px; border-radius: 3px; color: var(--accent);
-  }
-  .bubble .sec-header {
-    font-family: 'IBM Plex Mono', monospace; font-size: 10px;
-    letter-spacing: 1.5px; color: var(--accent2);
-    margin: 16px 0 6px; border-bottom: 1px solid var(--border);
-    padding-bottom: 5px; display: block;
-  }
-  .bubble ul { padding-left: 20px; margin: 8px 0; }
-  .bubble li { margin-bottom: 5px; }
-  .bubble ol { padding-left: 20px; margin: 8px 0; }
+.dl-btn {
+  flex: 1; padding: 10px; border-radius: 8px; border: none;
+  background: var(--accent); color: #000; font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px; font-weight: 600; letter-spacing: 1px; cursor: pointer;
+  transition: all 0.18s;
+}
+.dl-btn:hover { background: #33eaff; }
+.copy-btn {
+  padding: 10px 16px; border-radius: 8px; border: 1px solid var(--border);
+  background: transparent; color: var(--muted); font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px; letter-spacing: 0.8px; cursor: pointer; transition: all 0.18s;
+}
+.copy-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* Error bubble */
-  .bubble.error-bubble { border-color: rgba(255,77,109,0.3); color: var(--error); }
+/* ════════════════════════════
+   NEWS PAGE
+════════════════════════════ */
+.news-controls { display: flex; gap: 10px; align-items: center; margin-bottom: 24px; flex-wrap: wrap; }
+.news-filter-btn {
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+  padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border);
+  background: transparent; color: var(--muted); cursor: pointer; transition: all 0.18s;
+}
+.news-filter-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(0,229,255,0.06); }
+.refresh-btn {
+  margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+  padding: 6px 14px; border-radius: 6px; border: 1px solid var(--border);
+  background: transparent; color: var(--muted); cursor: pointer; transition: all 0.18s;
+  display: flex; align-items: center; gap: 6px;
+}
+.refresh-btn:hover { border-color: var(--accent); color: var(--accent); }
+.refresh-icon { display: inline-block; transition: transform 0.6s; }
+.refresh-btn.spinning .refresh-icon { animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
-  /* ── TYPING ── */
-  .typing-wrap {
-    display: flex; gap: 12px; align-items: flex-start;
-    align-self: flex-start; animation: fadeUp 0.2s ease both;
-  }
-  .typing-indicator {
-    display: flex; gap: 5px; align-items: center;
-    padding: 14px 18px;
-    background: var(--ai-bubble); border: 1px solid var(--border);
-    border-radius: 10px; border-top-left-radius: 3px;
-  }
-  .dot {
-    width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
-    animation: bounce 1.2s infinite;
-  }
-  .dot:nth-child(2) { animation-delay: 0.2s; }
-  .dot:nth-child(3) { animation-delay: 0.4s; }
+.news-grid { display: flex; flex-direction: column; gap: 12px; }
+.news-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 18px 20px; cursor: pointer; transition: all 0.18s;
+  display: flex; gap: 16px; align-items: flex-start;
+  text-decoration: none;
+}
+.news-card:hover { border-color: var(--border2); background: var(--surface2); }
+.news-source-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+.news-body { flex: 1; min-width: 0; }
+.news-source-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.8px; margin-bottom: 5px; }
+.news-title { font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.5; margin-bottom: 6px; }
+.news-summary { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 8px; }
+.news-meta { display: flex; gap: 12px; align-items: center; }
+.news-date { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); }
+.news-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; padding: 2px 7px; border-radius: 3px; }
+.news-arrow { color: var(--muted); font-size: 16px; flex-shrink: 0; margin-top: 2px; transition: transform 0.18s; }
+.news-card:hover .news-arrow { transform: translateX(3px); color: var(--accent); }
 
-  @keyframes bounce {
-    0%,60%,100% { transform: translateY(0); opacity: 0.3; }
-    30%          { transform: translateY(-7px); opacity: 1; }
-  }
+.news-loading { text-align: center; padding: 60px 20px; color: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 1px; }
+.news-error { text-align: center; padding: 40px 20px; }
+.news-error-text { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
 
-  /* ── INPUT ── */
-  .input-area {
-    position: relative; z-index: 10;
-    padding: 14px 24px 18px;
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    flex-shrink: 0;
-  }
+/* ════════════════════════════
+   IAVA PAGE
+════════════════════════════ */
+.iava-header-row { display: flex; gap: 16px; align-items: center; margin-bottom: 24px; flex-wrap: wrap; }
+.iava-search {
+  flex: 1; min-width: 200px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 14px; color: var(--text);
+  font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; outline: none;
+  transition: border-color 0.18s;
+}
+.iava-search:focus { border-color: rgba(0,229,255,0.4); }
+.iava-search::placeholder { color: var(--muted); }
 
-  .input-box {
-    display: flex; gap: 10px; align-items: flex-end;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 10px; padding: 10px 12px;
-    transition: border-color 0.18s;
-  }
-  .input-box:focus-within { border-color: rgba(0,229,255,0.35); }
+.sev-filters { display: flex; gap: 8px; }
+.sev-btn {
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+  padding: 6px 12px; border-radius: 4px; border: 1px solid var(--border);
+  background: transparent; cursor: pointer; transition: all 0.18s; letter-spacing: 0.5px;
+}
+.sev-btn[data-sev="CRITICAL"] { color: #ff4d6d; }
+.sev-btn[data-sev="HIGH"]     { color: #ff8c42; }
+.sev-btn[data-sev="MEDIUM"]   { color: var(--warning); }
+.sev-btn[data-sev="LOW"]      { color: var(--success); }
+.sev-btn.active[data-sev="CRITICAL"] { background: rgba(255,77,109,0.12); border-color: rgba(255,77,109,0.4); }
+.sev-btn.active[data-sev="HIGH"]     { background: rgba(255,140,66,0.12); border-color: rgba(255,140,66,0.4); }
+.sev-btn.active[data-sev="MEDIUM"]   { background: rgba(255,179,71,0.12); border-color: rgba(255,179,71,0.4); }
+.sev-btn.active[data-sev="LOW"]      { background: rgba(0,200,150,0.12); border-color: rgba(0,200,150,0.4); }
 
-  textarea {
-    flex: 1; background: transparent; border: none; outline: none;
-    color: var(--text);
-    font-family: 'IBM Plex Sans', sans-serif; font-size: 14px; line-height: 1.6;
-    resize: none; max-height: 140px; min-height: 24px;
-    overflow-y: auto; scrollbar-width: none;
-  }
-  textarea::placeholder { color: var(--muted); }
+.iava-notice {
+  background: rgba(255,107,53,0.06); border: 1px solid rgba(255,107,53,0.2);
+  border-radius: 8px; padding: 12px 16px; margin-bottom: 20px;
+  font-size: 12px; color: var(--muted2); line-height: 1.6;
+  display: flex; gap: 10px; align-items: flex-start;
+}
+.iava-notice-icon { color: var(--accent2); flex-shrink: 0; font-size: 14px; margin-top: 1px; }
 
-  .send-btn {
-    width: 36px; height: 36px; border-radius: 8px; border: none;
-    background: var(--accent); color: #000; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.18s; flex-shrink: 0;
-  }
-  .send-btn:hover:not(:disabled) { background: #33eaff; transform: scale(1.06); }
-  .send-btn:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
-  .send-btn svg { width: 15px; height: 15px; }
+.iava-table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.iava-table { width: 100%; border-collapse: collapse; }
+.iava-table th {
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 1px;
+  color: var(--muted); text-align: left; padding: 12px 16px;
+  background: rgba(0,0,0,0.3); border-bottom: 1px solid var(--border); white-space: nowrap;
+}
+.iava-table td { padding: 12px 16px; font-size: 13px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.iava-table tr:last-child td { border-bottom: none; }
+.iava-table tr:hover td { background: rgba(255,255,255,0.02); }
 
-  .input-meta {
-    display: flex; justify-content: space-between;
-    padding: 7px 2px 0;
-  }
-  .hint { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); }
-  .ref  { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: rgba(0,229,255,0.5); letter-spacing: 0.8px; }
+.iava-id { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent); white-space: nowrap; }
+.iava-title-cell { color: var(--text); line-height: 1.5; }
+.iava-cve { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted2); }
+.iava-date { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); white-space: nowrap; }
+.sev-badge { font-family: 'IBM Plex Mono', monospace; font-size: 10px; padding: 3px 8px; border-radius: 3px; letter-spacing: 0.5px; white-space: nowrap; }
+.sev-CRITICAL { background: rgba(255,77,109,0.15);  color: #ff4d6d; border: 1px solid rgba(255,77,109,0.3); }
+.sev-HIGH     { background: rgba(255,140,66,0.15);  color: #ff8c42; border: 1px solid rgba(255,140,66,0.3); }
+.sev-MEDIUM   { background: rgba(255,179,71,0.15);  color: var(--warning); border: 1px solid rgba(255,179,71,0.3); }
+.sev-LOW      { background: rgba(0,200,150,0.15);   color: var(--success); border: 1px solid rgba(0,200,150,0.3); }
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 600px) {
-    .starter-grid { grid-template-columns: 1fr; }
-    .header-right .badge-nist, .header-right .badge-framp { display: none; }
-    header { padding: 0 16px; }
-    .topics-bar { padding: 8px 16px; }
-    .messages { padding: 16px; }
-    .input-area { padding: 10px 16px 14px; }
-  }
+.iava-stats { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+.iava-stat { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 18px; text-align: center; }
+.iava-stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; line-height: 1; }
+.iava-stat-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.8px; margin-top: 4px; }
+
+/* Responsive */
+@media (max-width: 640px) {
+  .starter-grid { grid-template-columns: 1fr; }
+  .header-badges .badge-nist, .header-badges .badge-framp { display: none; }
+  header { padding: 0 16px; }
+  .page-scroll { padding: 24px 16px; }
+  .messages { padding: 16px; }
+  .input-area { padding: 10px 16px 14px; }
+  .iava-table th:nth-child(3), .iava-table td:nth-child(3) { display: none; }
+}
 </style>
 </head>
 <body>
@@ -385,39 +445,55 @@
 <header>
   <div class="logo">
     <div class="logo-icon">RMF</div>
-    <div class="logo-wordmark">
+    <div>
       <div class="logo-title">RMF Expert</div>
       <div class="logo-sub">NIST SP 800-37 · SUBJECT MATTER EXPERT</div>
     </div>
   </div>
-  <div class="header-right">
+  <div class="header-badges">
     <span class="badge badge-nist">NIST 800-37</span>
     <span class="badge badge-framp">FedRAMP</span>
     <span class="badge badge-live"><span class="live-dot"></span>AI LIVE</span>
   </div>
 </header>
 
-<!-- QUICK TOPIC CHIPS -->
-<div class="topics-bar" role="navigation" aria-label="Quick topics">
-  <button class="chip" onclick="askTopic('Explain the 7 steps of the RMF process')">RMF 7 Steps</button>
-  <button class="chip" onclick="askTopic('What is system categorization under FIPS 199?')">FIPS 199 Categorization</button>
-  <button class="chip" onclick="askTopic('How do I select security controls using NIST SP 800-53?')">Control Selection</button>
-  <button class="chip" onclick="askTopic('What is a System Security Plan (SSP) and what should it include?')">SSP Requirements</button>
-  <button class="chip" onclick="askTopic('Explain the Authorization to Operate (ATO) process')">ATO Process</button>
-  <button class="chip" onclick="askTopic('What are POA&Ms and how are they managed?')">POA&M Management</button>
-  <button class="chip" onclick="askTopic('How does continuous monitoring work in RMF?')">Continuous Monitoring</button>
-  <button class="chip" onclick="askTopic('What is the difference between FedRAMP and RMF?')">FedRAMP vs RMF</button>
-  <button class="chip" onclick="askTopic('Explain Supply Chain Risk Management (SCRM) in RMF context')">SCRM</button>
-  <button class="chip" onclick="askTopic('What are common controls, system-specific controls, and hybrid controls?')">Control Types</button>
-  <button class="chip" onclick="askTopic('What are the roles and responsibilities in RMF (AO, ISSO, ISSM, SCA)?')">RMF Roles</button>
-  <button class="chip" onclick="askTopic('How is NIST SP 800-171 related to RMF and CMMC?')">800-171 & CMMC</button>
-</div>
+<!-- NAV TABS -->
+<nav>
+  <button class="tab-btn active" onclick="showTab('chat')" id="tab-chat">
+    <span class="tab-icon">💬</span> AI Chat
+  </button>
+  <button class="tab-btn" onclick="showTab('about')" id="tab-about">
+    <span class="tab-icon">ℹ️</span> About
+  </button>
+  <button class="tab-btn" onclick="showTab('templates')" id="tab-templates">
+    <span class="tab-icon">📄</span> Templates
+  </button>
+  <button class="tab-btn" onclick="showTab('news')" id="tab-news">
+    <span class="tab-icon">📡</span> Cyber News
+  </button>
+  <button class="tab-btn" onclick="showTab('iava')" id="tab-iava">
+    <span class="tab-icon">🛡️</span> IAVA Database
+  </button>
+</nav>
 
-<!-- MAIN -->
-<div class="main">
-  <div class="messages" id="messages" role="log" aria-live="polite" aria-label="Conversation">
+<!-- ══════════════════════════════
+     PAGE: CHAT
+══════════════════════════════ -->
+<div class="page active" id="page-chat">
+  <div class="topics-bar">
+    <button class="chip" onclick="askTopic('Explain the 7 steps of the RMF process')">RMF 7 Steps</button>
+    <button class="chip" onclick="askTopic('What is system categorization under FIPS 199?')">FIPS 199</button>
+    <button class="chip" onclick="askTopic('How do I select security controls using NIST SP 800-53?')">Control Selection</button>
+    <button class="chip" onclick="askTopic('What should a System Security Plan (SSP) include?')">SSP</button>
+    <button class="chip" onclick="askTopic('Explain the Authorization to Operate (ATO) process')">ATO Process</button>
+    <button class="chip" onclick="askTopic('What are POA&Ms and how are they managed?')">POA&M</button>
+    <button class="chip" onclick="askTopic('How does continuous monitoring work in RMF?')">ConMon</button>
+    <button class="chip" onclick="askTopic('What is the difference between FedRAMP and RMF?')">FedRAMP vs RMF</button>
+    <button class="chip" onclick="askTopic('Explain Supply Chain Risk Management (SCRM) in RMF')">SCRM</button>
+    <button class="chip" onclick="askTopic('What are the roles of AO, ISSO, ISSM, and SCA in RMF?')">RMF Roles</button>
+  </div>
 
-    <!-- Welcome screen -->
+  <div class="messages" id="messages">
     <div class="welcome" id="welcome">
       <div class="welcome-icon">🛡️</div>
       <h1>RMF SUBJECT MATTER EXPERT</h1>
@@ -441,24 +517,15 @@
         </button>
       </div>
     </div>
-
   </div>
 
-  <!-- INPUT -->
   <div class="input-area">
     <div class="input-box">
-      <textarea
-        id="userInput"
-        placeholder="Ask anything about RMF, FISMA, FedRAMP, NIST 800-53, ATOs, SSPs…"
-        rows="1"
-        onkeydown="handleKey(event)"
-        oninput="autoResize(this)"
-        aria-label="Your question"
-      ></textarea>
-      <button class="send-btn" id="sendBtn" onclick="sendMessage()" title="Send (Enter)" aria-label="Send message">
+      <textarea id="userInput" placeholder="Ask anything about RMF, FISMA, FedRAMP, NIST 800-53, ATOs, SSPs…" rows="1"
+        onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="22" y1="2" x2="11" y2="13"/>
-          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
         </svg>
       </button>
     </div>
@@ -469,153 +536,882 @@
   </div>
 </div>
 
+<!-- ══════════════════════════════
+     PAGE: ABOUT
+══════════════════════════════ -->
+<div class="page" id="page-about">
+  <div class="page-scroll">
+    <div class="page-header">
+      <div class="page-eyebrow">ABOUT THIS TOOL</div>
+      <div class="page-title">RMF Subject Matter Expert</div>
+      <p class="page-desc">A free AI-powered resource for federal cybersecurity professionals, contractors, and anyone working with the NIST Risk Management Framework. Built to provide fast, accurate RMF guidance without digging through hundreds of pages of documentation.</p>
+    </div>
+
+    <div class="how-to" style="margin-bottom:32px">
+      <h3>How To Use This Site</h3>
+      <div class="how-step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h4>💬 AI Chat — Ask Anything</h4>
+          <p>Use the AI Chat tab to ask detailed questions about RMF processes, NIST 800-53 controls, ATO packages, or any other compliance topic. The AI is trained on the full RMF body of knowledge and can explain controls, review processes, and help write implementation statements. Use the quick-topic chips at the top for common questions, or type your own in the chat box.</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h4>📄 Templates — Download Ready-to-Use Docs</h4>
+          <p>The Templates tab provides starter templates for the most common RMF artifacts: SSP, POA&M, SAR, Incident Response Plan, and Continuous Monitoring Plan. Click any template card to preview its structure, then download it as a text file to customize for your system. These follow current NIST and FedRAMP formatting conventions.</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h4>📡 Cyber News — Live RSS Feed</h4>
+          <p>The Cyber News tab pulls the latest cybersecurity headlines from CISA, NIST, and other authoritative government and industry sources. Use the filter buttons to narrow by category. Articles open directly on the source website. The feed refreshes each time you visit the tab.</p>
+        </div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <h4>🛡️ IAVA Database — Vulnerability Tracking</h4>
+          <p>The IAVA tab pulls recent high-severity vulnerabilities from NIST's National Vulnerability Database (NVD), which is the public-facing data source that maps directly to DoD IAVA notices. You can search by keyword, filter by severity (CRITICAL/HIGH/MEDIUM/LOW), and click any entry for full CVE details. Note: the actual DISA IAVM system requires a DoD CAC login — this tab provides the underlying public CVE data.</p>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="step-num">05</div>
+        <div class="step-content">
+          <h4>💡 Tips for Best Results</h4>
+          <p>Be specific in the chat — "How do I document AC-2 for a cloud system under FedRAMP Moderate?" will get a much better answer than "tell me about access control." You can ask follow-up questions and the AI remembers the full conversation. For template customization help, paste your draft into the chat and ask the AI to review it.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="about-card-icon">⚡</div>
+        <div class="about-card-title">POWERED BY CLAUDE AI</div>
+        <div class="about-card-text">The AI chat is powered by Anthropic's Claude, configured with a deep RMF and federal cybersecurity knowledge base covering NIST, FISMA, FedRAMP, and DoD requirements.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">🔒</div>
+        <div class="about-card-title">PRIVACY & SECURITY</div>
+        <div class="about-card-text">No conversation data is stored by this site. API calls go through a secure server-side proxy — your questions are never logged or retained beyond the active session.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">📚</div>
+        <div class="about-card-title">KNOWLEDGE BASE</div>
+        <div class="about-card-text">Covers NIST SP 800-37, 800-53, 800-53A, 800-30, 800-171, FIPS 199/200, FISMA, FedRAMP, CMMC, and DoD RMF policy — all current Rev. 2 and Rev. 5 publications.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon">⚠️</div>
+        <div class="about-card-title">DISCLAIMER</div>
+        <div class="about-card-text">This tool provides general RMF guidance and is not a substitute for official NIST documentation, an authorized assessor, or legal/compliance counsel. Always verify against current official publications.</div>
+      </div>
+    </div>
+
+    <div class="refs-section">
+      <h3>Official References</h3>
+      <div class="ref-links">
+        <a class="ref-link" href="https://csrc.nist.gov/publications/detail/sp/800-37/rev-2/final" target="_blank">↗ NIST SP 800-37</a>
+        <a class="ref-link" href="https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final" target="_blank">↗ NIST SP 800-53</a>
+        <a class="ref-link" href="https://www.fedramp.gov" target="_blank">↗ FedRAMP</a>
+        <a class="ref-link" href="https://public.cyber.mil" target="_blank">↗ DISA Cyber Exchange</a>
+        <a class="ref-link" href="https://www.cisa.gov" target="_blank">↗ CISA</a>
+        <a class="ref-link" href="https://nvd.nist.gov" target="_blank">↗ NVD / CVE Database</a>
+        <a class="ref-link" href="https://dodcio.defense.gov/RMF/" target="_blank">↗ DoD RMF Knowledge Service</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE: TEMPLATES
+══════════════════════════════ -->
+<div class="page" id="page-templates">
+  <div class="page-scroll">
+    <div class="page-header">
+      <div class="page-eyebrow">DOCUMENT TEMPLATES</div>
+      <div class="page-title">RMF Artifact Templates</div>
+      <p class="page-desc">Starter templates for the most common RMF deliverables. Click any card to preview the structure, then download as a text file to customize for your system.</p>
+    </div>
+    <div class="templates-grid" id="templates-grid"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE: NEWS
+══════════════════════════════ -->
+<div class="page" id="page-news">
+  <div class="page-scroll">
+    <div class="page-header">
+      <div class="page-eyebrow">LIVE FEED</div>
+      <div class="page-title">Cybersecurity News</div>
+      <p class="page-desc">Latest alerts, advisories, and news from CISA, NIST, and leading cybersecurity sources.</p>
+    </div>
+    <div class="news-controls">
+      <button class="news-filter-btn active" onclick="filterNews('all', this)">ALL</button>
+      <button class="news-filter-btn" onclick="filterNews('advisory', this)">ADVISORIES</button>
+      <button class="news-filter-btn" onclick="filterNews('vulnerability', this)">VULNERABILITIES</button>
+      <button class="news-filter-btn" onclick="filterNews('policy', this)">POLICY</button>
+      <button class="refresh-btn" onclick="loadNews(true)" id="refresh-btn">
+        <span class="refresh-icon">↻</span> Refresh
+      </button>
+    </div>
+    <div id="news-container"><div class="news-loading">⬡ Loading cybersecurity news…</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PAGE: IAVA
+══════════════════════════════ -->
+<div class="page" id="page-iava">
+  <div class="page-scroll">
+    <div class="page-header">
+      <div class="page-eyebrow">VULNERABILITY TRACKING</div>
+      <div class="page-title">IAVA / CVE Database</div>
+      <p class="page-desc">Recent high-severity vulnerabilities from NIST NVD — the public data source that maps to DoD IAVA notices.</p>
+    </div>
+
+    <div class="iava-notice">
+      <span class="iava-notice-icon">ℹ</span>
+      <span>The official DISA IAVM system requires a DoD CAC/PKI login. This tab displays the same underlying vulnerability data from NIST's public National Vulnerability Database (NVD), which maps directly to IAVA identifiers via CVE numbers. For official IAVA tracking, visit <a href="https://public.cyber.mil" target="_blank" style="color:var(--accent2)">public.cyber.mil</a> with your CAC.</span>
+    </div>
+
+    <div class="iava-stats" id="iava-stats"></div>
+
+    <div class="iava-header-row">
+      <input class="iava-search" id="iava-search" placeholder="Search CVE ID, keyword, or product…" oninput="filterIAVA()">
+      <div class="sev-filters">
+        <button class="sev-btn active" data-sev="CRITICAL" onclick="toggleSev(this)">CRITICAL</button>
+        <button class="sev-btn active" data-sev="HIGH"     onclick="toggleSev(this)">HIGH</button>
+        <button class="sev-btn active" data-sev="MEDIUM"   onclick="toggleSev(this)">MEDIUM</button>
+        <button class="sev-btn active" data-sev="LOW"      onclick="toggleSev(this)">LOW</button>
+      </div>
+    </div>
+
+    <div class="iava-table-wrap">
+      <table class="iava-table">
+        <thead>
+          <tr>
+            <th>CVE ID</th>
+            <th>DESCRIPTION</th>
+            <th>AFFECTED</th>
+            <th>PUBLISHED</th>
+            <th>SEVERITY</th>
+          </tr>
+        </thead>
+        <tbody id="iava-tbody">
+          <tr><td colspan="5" style="text-align:center;padding:40px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;">⬡ Loading vulnerability data…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- TEMPLATE MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modal-title">Template</h2>
+      <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-footer">
+      <button class="dl-btn" id="modal-dl">⬇ Download Template</button>
+      <button class="copy-btn" id="modal-copy">Copy Text</button>
+    </div>
+  </div>
+</div>
+
 <script>
-  let messages = [];
-  let isLoading = false;
+// ═══════════════════════════
+// TAB NAVIGATION
+// ═══════════════════════════
+function showTab(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  if (name === 'news' && !newsLoaded) loadNews();
+  if (name === 'iava' && !iavaLoaded) loadIAVA();
+}
 
-  // ── AUTO RESIZE TEXTAREA ──
-  function autoResize(el) {
-    el.style.height = 'auto';
-    el.style.height = Math.min(el.scrollHeight, 140) + 'px';
-  }
+// ═══════════════════════════
+// CHAT
+// ═══════════════════════════
+let messages = [], isLoading = false;
 
-  // ── KEYBOARD HANDLER ──
-  function handleKey(e) {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
-  }
+function autoResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 140) + 'px'; }
+function handleKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } }
 
-  // ── TOPIC SHORTCUT ──
-  function askTopic(text) {
-    const input = document.getElementById('userInput');
-    input.value = text;
-    autoResize(input);
-    sendMessage();
-  }
+function askTopic(text) {
+  showTab('chat');
+  const input = document.getElementById('userInput');
+  input.value = text; autoResize(input); sendMessage();
+}
 
-  // ── FORMAT AI RESPONSE (simple markdown-like) ──
-  function format(text) {
-    return text
-      // Section headers (ALL CAPS lines ending with :)
-      .replace(/^([A-Z][A-Z\s&\/\-]{3,}):$/gm, '<span class="sec-header">$1</span>')
-      // Bold **text**
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      // Control IDs like [AC-2] or [IA-5(1)]
-      .replace(/\[([A-Z]{1,3}-\d+(?:\(\d+\))?(?:\s*,\s*[A-Z]{1,3}-\d+(?:\(\d+\))?)*)\]/g, '<code>[$1]</code>')
-      // Inline code `text`
-      .replace(/`([^`]+)`/g, '<code>$1</code>')
-      // Newlines
-      .replace(/\n/g, '<br>');
-  }
+function format(text) {
+  return text
+    .replace(/^([A-Z][A-Z\s&\/\-]{3,}):$/gm, '<span class="sec-header">$1</span>')
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\[([A-Z]{1,3}-\d+(?:\(\d+\))?(?:,\s*[A-Z]{1,3}-\d+(?:\(\d+\))?)*)\]/g, '<code>[$1]</code>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\n/g, '<br>');
+}
 
-  // ── ADD MESSAGE TO DOM ──
-  function addMessage(role, content, isError = false) {
-    // Remove welcome screen on first message
-    const welcome = document.getElementById('welcome');
-    if (welcome) welcome.remove();
+function addMessage(role, content, isError = false) {
+  const welcome = document.getElementById('welcome');
+  if (welcome) welcome.remove();
+  const container = document.getElementById('messages');
+  const wrap = document.createElement('div'); wrap.className = `message ${role}`;
+  const av = document.createElement('div'); av.className = `av ${role==='user'?'user-av':'ai-av'}`;
+  av.textContent = role === 'user' ? 'YOU' : 'SME';
+  const bubble = document.createElement('div'); bubble.className = 'bubble' + (isError?' error-bubble':'');
+  if (role === 'assistant') bubble.innerHTML = format(content); else bubble.textContent = content;
+  wrap.appendChild(av); wrap.appendChild(bubble); container.appendChild(wrap);
+  container.scrollTop = container.scrollHeight;
+}
 
-    const container = document.getElementById('messages');
-    const wrap = document.createElement('div');
-    wrap.className = `message ${role}`;
+function showTyping() {
+  const welcome = document.getElementById('welcome'); if (welcome) welcome.remove();
+  const container = document.getElementById('messages');
+  const wrap = document.createElement('div'); wrap.className = 'typing-wrap'; wrap.id = 'typing';
+  const av = document.createElement('div'); av.className = 'av ai-av'; av.textContent = 'SME';
+  const ind = document.createElement('div'); ind.className = 'typing-indicator';
+  ind.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+  wrap.appendChild(av); wrap.appendChild(ind); container.appendChild(wrap);
+  container.scrollTop = container.scrollHeight;
+}
+function removeTyping() { const t = document.getElementById('typing'); if (t) t.remove(); }
 
-    const av = document.createElement('div');
-    av.className = `av ${role === 'user' ? 'user-av' : 'ai-av'}`;
-    av.textContent = role === 'user' ? 'YOU' : 'SME';
-    av.setAttribute('aria-hidden', 'true');
+async function sendMessage() {
+  if (isLoading) return;
+  const input = document.getElementById('userInput');
+  const text = input.value.trim(); if (!text) return;
+  input.value = ''; input.style.height = 'auto';
+  isLoading = true; document.getElementById('sendBtn').disabled = true;
+  messages.push({ role: 'user', content: text }); addMessage('user', text); showTyping();
+  try {
+    const res = await fetch('/api/chat', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ messages }) });
+    const data = await res.json(); removeTyping();
+    if (!res.ok || data.error) { addMessage('assistant', '⚠ ' + (data.error || 'Error'), true); }
+    else { messages.push({ role: 'assistant', content: data.reply }); addMessage('assistant', data.reply); }
+  } catch { removeTyping(); addMessage('assistant', '⚠ Network error — please try again.', true); }
+  isLoading = false; document.getElementById('sendBtn').disabled = false; input.focus();
+}
 
-    const bubble = document.createElement('div');
-    bubble.className = 'bubble' + (isError ? ' error-bubble' : '');
+// ═══════════════════════════
+// TEMPLATES
+// ═══════════════════════════
+const TEMPLATES = [
+  {
+    id: 'ssp', tag: 'tag-nist', tagLabel: 'NIST 800-18', title: 'System Security Plan (SSP)',
+    desc: 'Comprehensive SSP template following NIST SP 800-18 and FedRAMP SSP structure.',
+    pages: '~40 pages', color: 'var(--accent)',
+    sections: [
+      { title: 'SYSTEM IDENTIFICATION', fields: [
+        { label: 'System Name', placeholder: 'e.g., Agency Financial Management System (AFMS)' },
+        { label: 'System Acronym', placeholder: 'e.g., AFMS' },
+        { label: 'System Owner', placeholder: 'Name, Title, Organization, Phone, Email' },
+        { label: 'Authorization Boundary', placeholder: 'Description of what is included/excluded' },
+        { label: 'System Description', placeholder: '1-3 paragraph functional description of the system' },
+        { label: 'System Type', placeholder: 'Major Application / General Support System' },
+      ]},
+      { title: 'CATEGORIZATION', fields: [
+        { label: 'FIPS 199 Categorization', placeholder: 'Confidentiality: [Low/Moderate/High]\nIntegrity: [Low/Moderate/High]\nAvailability: [Low/Moderate/High]\nOverall: [Low/Moderate/High]' },
+        { label: 'Categorization Rationale', placeholder: 'Justification for the impact level selection' },
+      ]},
+      { title: 'SYSTEM ENVIRONMENT', fields: [
+        { label: 'Network Architecture', placeholder: 'Description of network topology, interconnections, data flows' },
+        { label: 'System Components', placeholder: 'Servers, workstations, network devices, software' },
+        { label: 'Data Types Processed', placeholder: 'PII, CUI, classified, financial data, etc.' },
+      ]},
+      { title: 'SECURITY CONTROLS', fields: [
+        { label: 'Control Baseline', placeholder: 'Low / Moderate / High baseline per FIPS 200' },
+        { label: 'Control Implementation Summary', placeholder: 'For each control family: AC, AT, AU, CA, CM, CP, IA, IR, MA, MP, PE, PL, PM, PS, PT, RA, SA, SC, SI, SR' },
+        { label: 'Common Controls Inherited', placeholder: 'List controls inherited from the organization/agency' },
+      ]},
+      { title: 'AUTHORIZATION', fields: [
+        { label: 'Authorizing Official (AO)', placeholder: 'Name, Title, Organization' },
+        { label: 'ISSO', placeholder: 'Name, Title, Phone, Email' },
+        { label: 'Current ATO Status', placeholder: 'Authorization date, expiration, type (Full ATO / IATO / ATC)' },
+      ]},
+    ],
+    fullText: `SYSTEM SECURITY PLAN (SSP)
+NIST SP 800-18 / FedRAMP Compatible
+=====================================
 
-    if (role === 'assistant') {
-      bubble.innerHTML = format(content);
-    } else {
-      bubble.textContent = content;
-    }
+1. SYSTEM IDENTIFICATION
+   System Name: ___________________________________
+   System Acronym: ________________________________
+   System Owner: __________________________________
+   System Owner Phone: ____________________________
+   System Owner Email: ____________________________
+   
+2. INFORMATION SYSTEM CATEGORIZATION
+   Confidentiality: [ ] Low  [ ] Moderate  [ ] High
+   Integrity:       [ ] Low  [ ] Moderate  [ ] High
+   Availability:    [ ] Low  [ ] Moderate  [ ] High
+   Overall Impact:  [ ] Low  [ ] Moderate  [ ] High
+   
+3. SYSTEM DESCRIPTION
+   [Provide a 1-3 paragraph description of the system's purpose,
+   functions, and the data it processes.]
+   
+4. AUTHORIZATION BOUNDARY
+   [Describe what hardware, software, and services are IN scope
+   and explicitly what is OUT of scope.]
+   
+5. NETWORK ARCHITECTURE
+   [Describe the network topology. Reference network diagram.]
+   
+6. INFORMATION SYSTEM COMPONENTS
+   Component | Type | IP/Hostname | OS/Version | Function
+   --------- | ---- | ----------- | ---------- | --------
+   
+7. SECURITY CONTROL IMPLEMENTATION
+   [For each control in your baseline, document:
+   - Control ID and Title
+   - Implementation Status (Implemented/Planned/N/A)
+   - Responsible Entity
+   - Implementation Description
+   - Evidence Location]
+   
+8. PERSONNEL ROLES
+   Authorizing Official (AO): _____________________
+   ISSO: _________________________________________
+   ISSM: _________________________________________
+   System Owner: _________________________________
+   
+9. AUTHORIZATION STATUS
+   Authorization Type: ____________________________
+   Authorization Date: ____________________________
+   Authorization Expiration: ______________________
+   Authorizing Official Signature: ________________`
+  },
+  {
+    id: 'poam', tag: 'tag-fisma', tagLabel: 'FISMA', title: 'Plan of Action & Milestones (POA&M)',
+    desc: 'Tracks open security weaknesses, remediation plans, and milestone dates.',
+    pages: 'Spreadsheet format', color: '#a78bfa',
+    sections: [
+      { title: 'POAM ENTRY FIELDS', fields: [
+        { label: 'POA&M ID', placeholder: 'Sequential identifier (e.g., POAM-2024-001)' },
+        { label: 'Control Identifier', placeholder: 'e.g., AC-2, IA-5, SI-2' },
+        { label: 'Weakness Description', placeholder: 'Clear description of the finding/weakness' },
+        { label: 'Point of Contact', placeholder: 'Name and organization responsible for remediation' },
+        { label: 'Resources Required', placeholder: 'Budget, personnel, tools needed' },
+        { label: 'Scheduled Completion Date', placeholder: 'MM/DD/YYYY' },
+        { label: 'Milestones', placeholder: 'Milestone 1: [Action] by [Date]\nMilestone 2: [Action] by [Date]' },
+        { label: 'Status', placeholder: 'Open / In Progress / Completed / Risk Accepted' },
+        { label: 'Risk Rating', placeholder: 'Critical / High / Moderate / Low' },
+        { label: 'Source of Discovery', placeholder: 'Security Assessment / Audit / ConMon / Penetration Test' },
+      ]},
+    ],
+    fullText: `PLAN OF ACTION AND MILESTONES (POA&M)
+NIST SP 800-37 Compatible
+=====================================
 
-    wrap.appendChild(av);
-    wrap.appendChild(bubble);
-    container.appendChild(wrap);
-    container.scrollTop = container.scrollHeight;
-  }
+POA&M ID | Control | Weakness Description | POC | Resources | Scheduled Completion | Milestones | Status | Risk | Source
+-------- | ------- | -------------------- | --- | --------- | -------------------- | ---------- | ------ | ---- | ------
 
-  // ── SHOW TYPING INDICATOR ──
-  function showTyping() {
-    const welcome = document.getElementById('welcome');
-    if (welcome) welcome.remove();
+INSTRUCTIONS:
+- POA&M ID: Assign a unique sequential ID (e.g., POAM-2024-001)
+- Control: Reference the NIST 800-53 control (e.g., AC-2, IA-5)
+- Weakness: Describe the finding clearly and specifically
+- POC: Assign a responsible owner by name and org
+- Resources: Estimate cost/effort to remediate
+- Scheduled Completion: Target remediation date
+- Milestones: Break remediation into measurable steps with dates
+- Status: Open | In Progress | Completed | Risk Accepted | False Positive
+- Risk: Critical | High | Moderate | Low (based on CVSS or NIST risk rating)
+- Source: How was the finding discovered?
 
-    const container = document.getElementById('messages');
-    const wrap = document.createElement('div');
-    wrap.className = 'typing-wrap';
-    wrap.id = 'typing';
+RISK ACCEPTANCE:
+If risk is accepted, document:
+- AO name and signature
+- Justification for acceptance
+- Compensating controls in place
+- Re-evaluation date`
+  },
+  {
+    id: 'sar', tag: 'tag-nist', tagLabel: 'NIST 800-53A', title: 'Security Assessment Report (SAR)',
+    desc: 'Documents the results of security control assessments performed by an SCA.',
+    pages: '~25 pages', color: 'var(--accent)',
+    sections: [
+      { title: 'ASSESSMENT OVERVIEW', fields: [
+        { label: 'System Name', placeholder: 'Name of the system assessed' },
+        { label: 'Assessment Type', placeholder: 'Initial Assessment / Annual / Reauthorization / Continuous Monitoring' },
+        { label: 'Assessment Period', placeholder: 'Start Date – End Date' },
+        { label: 'Security Control Assessor (SCA)', placeholder: 'Name, Organization, Credentials' },
+        { label: 'Controls Assessed', placeholder: 'List control families or specific controls assessed' },
+      ]},
+      { title: 'ASSESSMENT METHODOLOGY', fields: [
+        { label: 'Assessment Methods Used', placeholder: 'Interview / Examine / Test' },
+        { label: 'Sampling Approach', placeholder: 'How controls were sampled if not 100% tested' },
+        { label: 'Assessment Tools', placeholder: 'Vulnerability scanners, SCAP tools, checklist names' },
+      ]},
+      { title: 'FINDINGS SUMMARY', fields: [
+        { label: 'Total Controls Assessed', placeholder: 'Number' },
+        { label: 'Satisfied', placeholder: 'Number of controls fully satisfied' },
+        { label: 'Other Than Satisfied (OTS)', placeholder: 'Number of controls with deficiencies' },
+        { label: 'Not Applicable', placeholder: 'Number of controls marked N/A with justification' },
+      ]},
+      { title: 'DETAILED FINDINGS', fields: [
+        { label: 'Finding Format', placeholder: 'Control ID | Finding | Risk | Recommendation | Evidence' },
+      ]},
+    ],
+    fullText: `SECURITY ASSESSMENT REPORT (SAR)
+NIST SP 800-53A Compatible
+=====================================
 
-    const av = document.createElement('div');
-    av.className = 'av ai-av';
-    av.textContent = 'SME';
-    av.setAttribute('aria-hidden', 'true');
+1. EXECUTIVE SUMMARY
+   System: ________________________________________
+   Assessment Period: _____________________________
+   Assessor: _____________________________________
+   Overall Risk Rating: [ ] Critical [ ] High [ ] Moderate [ ] Low
+   
+2. ASSESSMENT SCOPE
+   Controls Assessed: _____________________________
+   Boundary Assessed: _____________________________
+   Exclusions: ___________________________________
+   
+3. ASSESSMENT METHODOLOGY
+   Methods: [ ] Interview  [ ] Examine  [ ] Test
+   Tools Used: ___________________________________
+   
+4. FINDINGS SUMMARY
+   Total Controls in Scope:  ____
+   Satisfied (S):            ____
+   Other Than Satisfied (O): ____
+   Not Applicable (NA):      ____
+   
+5. DETAILED FINDINGS
+   Finding ID: ___________________________________
+   Control: ______________________________________
+   Finding: ______________________________________
+   Risk Level: [ ] Critical [ ] High [ ] Moderate [ ] Low
+   Evidence: ____________________________________
+   Recommendation: ______________________________
+   
+6. RISK SUMMARY
+   [Summarize the overall risk posture of the system
+   based on findings and residual risk]
+   
+7. RECOMMENDATIONS
+   [Prioritized list of remediation actions]
+   
+8. ASSESSOR SIGNATURE
+   Assessor: __________________ Date: ____________
+   SCA Organization: _____________________________`
+  },
+  {
+    id: 'irp', tag: 'tag-fisma', tagLabel: 'NIST 800-61', title: 'Incident Response Plan (IRP)',
+    desc: 'Defines procedures for detecting, responding to, and recovering from cybersecurity incidents.',
+    pages: '~20 pages', color: '#a78bfa',
+    sections: [
+      { title: 'PLAN OVERVIEW', fields: [
+        { label: 'System / Organization', placeholder: 'Name of system or org this plan covers' },
+        { label: 'Plan Version & Date', placeholder: 'Version 1.0 — MM/DD/YYYY' },
+        { label: 'Plan Owner', placeholder: 'Name, Title, Contact' },
+        { label: 'Scope', placeholder: 'What systems and incident types this plan covers' },
+      ]},
+      { title: 'INCIDENT RESPONSE TEAM', fields: [
+        { label: 'IR Team Lead', placeholder: 'Name, phone, email, alternate' },
+        { label: 'Technical Lead', placeholder: 'Name, phone, email' },
+        { label: 'Management Contact', placeholder: 'Name, phone, email' },
+        { label: 'Legal / Counsel', placeholder: 'Name, phone, email' },
+        { label: 'Public Affairs', placeholder: 'Name, phone, email (if applicable)' },
+        { label: 'US-CERT Reporting Contact', placeholder: 'Agency POC for federal reporting' },
+      ]},
+      { title: 'INCIDENT CATEGORIES', fields: [
+        { label: 'Category Definitions', placeholder: 'CAT 1: Unauthorized Access\nCAT 2: Denial of Service\nCAT 3: Malicious Code\nCAT 4: Improper Usage\nCAT 5: Scans/Probes\nCAT 6: Investigation' },
+        { label: 'Severity Levels', placeholder: 'High / Medium / Low with definitions' },
+      ]},
+      { title: 'RESPONSE PROCEDURES', fields: [
+        { label: 'Detection & Analysis', placeholder: 'How incidents are detected and initially triaged' },
+        { label: 'Containment Strategy', placeholder: 'Short-term and long-term containment steps' },
+        { label: 'Eradication', placeholder: 'Steps to remove the threat from the environment' },
+        { label: 'Recovery', placeholder: 'Steps to restore systems to normal operation' },
+        { label: 'Post-Incident Activity', placeholder: 'Lessons learned, after-action report requirements' },
+      ]},
+    ],
+    fullText: `INCIDENT RESPONSE PLAN (IRP)
+NIST SP 800-61 Rev 2 Compatible
+=====================================
 
-    const indicator = document.createElement('div');
-    indicator.className = 'typing-indicator';
-    indicator.setAttribute('aria-label', 'Thinking…');
-    indicator.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+1. PURPOSE AND SCOPE
+   This plan establishes procedures for ________________
+   [System/Organization] to detect, respond to, and
+   recover from cybersecurity incidents.
 
-    wrap.appendChild(av);
-    wrap.appendChild(indicator);
-    container.appendChild(wrap);
-    container.scrollTop = container.scrollHeight;
-  }
+2. INCIDENT RESPONSE TEAM (IRT)
+   IR Team Lead:        ___________________________
+   Technical Lead:      ___________________________
+   Management Contact:  ___________________________
+   Legal Counsel:       ___________________________
+   US-CERT Reporting:   ___________________________
+   
+3. INCIDENT CATEGORIES (NIST/US-CERT)
+   CAT 1: Unauthorized Access
+   CAT 2: Denial of Service (DoS)
+   CAT 3: Malicious Code
+   CAT 4: Improper Usage
+   CAT 5: Scans, Probes, Attempted Access
+   CAT 6: Investigation
+   
+4. SEVERITY DEFINITIONS
+   High:   Immediate threat to operations or data
+   Medium: Limited impact, contained threat
+   Low:    Minimal impact, monitoring required
+   
+5. DETECTION & ANALYSIS
+   Step 1: Alert received from [monitoring tool / SIEM / user]
+   Step 2: Assign incident ticket and categorize
+   Step 3: Notify IR Team Lead within [X] hours
+   Step 4: Document all actions in incident log
+   
+6. CONTAINMENT
+   Short-term: Isolate affected systems immediately
+   Long-term:  [System-specific containment procedures]
+   
+7. ERADICATION
+   - Remove malware / unauthorized access
+   - Patch exploited vulnerability
+   - Reset compromised credentials
+   
+8. RECOVERY
+   - Restore from verified clean backup
+   - Monitor systems for 72 hours post-recovery
+   - Confirm normal operations with system owner
+   
+9. POST-INCIDENT ACTIVITY
+   - Lessons learned meeting within 2 weeks
+   - After-Action Report submitted to ISSO
+   - Update POA&M if control deficiencies found
+   - Report to US-CERT per FISMA requirements
+   
+10. US-CERT REPORTING REQUIREMENTS
+    Major incidents must be reported within 1 hour.
+    All incidents reported within 24 hours.
+    Contact: www.us-cert.gov / 1-888-282-0870`
+  },
+  {
+    id: 'conmon', tag: 'tag-fedramp', tagLabel: 'NIST 800-137', title: 'Continuous Monitoring Plan',
+    desc: 'Defines the ongoing monitoring strategy for maintaining system authorization over time.',
+    pages: '~15 pages', color: 'var(--accent2)',
+    sections: [
+      { title: 'MONITORING STRATEGY', fields: [
+        { label: 'System Name', placeholder: 'System this ConMon plan covers' },
+        { label: 'Monitoring Tier', placeholder: 'Tier 1 (Org) / Tier 2 (Mission) / Tier 3 (System)' },
+        { label: 'ISSO Responsible', placeholder: 'Name, Contact' },
+      ]},
+      { title: 'MONITORING FREQUENCIES', fields: [
+        { label: 'Ongoing (Continuous)', placeholder: 'IDS/IPS alerts, SIEM monitoring, authentication logs' },
+        { label: 'Daily', placeholder: 'Review of security alerts, backup verification' },
+        { label: 'Weekly', placeholder: 'Vulnerability scan review, log analysis' },
+        { label: 'Monthly', placeholder: 'Patch status review, account review, POA&M update' },
+        { label: 'Quarterly', placeholder: 'Control assessments, contingency plan review' },
+        { label: 'Annually', placeholder: 'Full security assessment, policy review, ATO review' },
+      ]},
+      { title: 'TOOLS & METHODS', fields: [
+        { label: 'Vulnerability Scanner', placeholder: 'Tool name, version, scan schedule' },
+        { label: 'SIEM / Log Management', placeholder: 'Tool name, retention period' },
+        { label: 'Configuration Management', placeholder: 'Tool/process for tracking changes' },
+        { label: 'Patch Management', placeholder: 'Tool and patch timeline (e.g., Critical: 30 days)' },
+      ]},
+      { title: 'REPORTING', fields: [
+        { label: 'Monthly Reporting', placeholder: 'What is included and who receives it' },
+        { label: 'POA&M Updates', placeholder: 'Frequency and distribution' },
+        { label: 'AO Reporting', placeholder: 'What triggers a report to the Authorizing Official' },
+        { label: 'Significant Change Process', placeholder: 'How significant changes are identified and reported' },
+      ]},
+    ],
+    fullText: `CONTINUOUS MONITORING PLAN (ConMon)
+NIST SP 800-137 / FedRAMP ConMon Compatible
+=====================================
 
-  function removeTyping() {
-    const t = document.getElementById('typing');
-    if (t) t.remove();
-  }
+1. PURPOSE
+   This plan defines the continuous monitoring strategy
+   for [System Name] to maintain its authorization and
+   ensure ongoing awareness of security posture.
 
-  // ── SEND MESSAGE ──
-  async function sendMessage() {
-    if (isLoading) return;
+2. MONITORING STRATEGY OVERVIEW
+   System: ______________________________________
+   ATO Type: ____________________________________
+   ISSO: ________________________________________
+   AO: __________________________________________
+   
+3. MONITORING FREQUENCIES
+   ONGOING (Automated):
+   - IDS/IPS monitoring
+   - SIEM alerting
+   - Authentication failure monitoring
+   - Data Loss Prevention (DLP) alerts
+   
+   DAILY:
+   - Review security alerts
+   - Backup verification
+   - Privileged account activity review
+   
+   WEEKLY:
+   - Vulnerability scan result review
+   - Log analysis
+   - Patch status check
+   
+   MONTHLY:
+   - POA&M update and submission
+   - Account access review (AC-2)
+   - Configuration baseline review
+   - Security metrics report to ISSO
+   
+   QUARTERLY:
+   - Selected control assessments
+   - Contingency plan review
+   - Supply chain review
+   
+   ANNUALLY:
+   - Full security control assessment
+   - Penetration testing (if required)
+   - Policy and procedure review
+   - ATO package review/reauthorization decision
+   
+4. TOOLS
+   Vulnerability Scanner: ________________________
+   SIEM: ________________________________________
+   Patch Management: ____________________________
+   Config Management: ___________________________
+   
+5. PATCH MANAGEMENT TIMELINES
+   Critical (CVSS 9.0-10.0): Remediate within 30 days
+   High (CVSS 7.0-8.9):      Remediate within 60 days
+   Medium (CVSS 4.0-6.9):    Remediate within 90 days
+   Low (CVSS 0.1-3.9):       Remediate within 180 days
+   
+6. SIGNIFICANT CHANGE PROCESS
+   Changes requiring AO notification:
+   - New interconnections
+   - Changes to authorization boundary
+   - New data types (PII, CUI)
+   - Major architecture changes
+   - New high-impact vulnerabilities
+   
+7. REPORTING REQUIREMENTS
+   Monthly report to: ___________________________
+   Quarterly report to: _________________________
+   Annual report to: ____________________________`
+  },
+];
 
-    const input = document.getElementById('userInput');
-    const text = input.value.trim();
-    if (!text) return;
+function renderTemplates() {
+  const grid = document.getElementById('templates-grid');
+  grid.innerHTML = TEMPLATES.map(t => `
+    <div class="template-card" onclick="openModal('${t.id}')">
+      <span class="template-tag ${t.tag}">${t.tagLabel}</span>
+      <div class="template-title">${t.title}</div>
+      <div class="template-desc">${t.desc}</div>
+      <div class="template-meta">
+        <span class="template-pages">${t.pages}</span>
+        <button class="template-btn" onclick="event.stopPropagation();openModal('${t.id}')">Preview →</button>
+      </div>
+    </div>
+  `).join('');
+}
 
-    // Clear input
-    input.value = '';
-    input.style.height = 'auto';
-    isLoading = true;
-    document.getElementById('sendBtn').disabled = true;
+function openModal(id) {
+  const t = TEMPLATES.find(x => x.id === id);
+  document.getElementById('modal-title').textContent = t.title;
+  const body = document.getElementById('modal-body');
+  body.innerHTML = t.sections.map(s => `
+    <div class="tpl-section">
+      <div class="tpl-section-title">${s.title}</div>
+      ${s.fields.map(f => `
+        <div class="tpl-field">
+          <div class="tpl-label">${f.label}</div>
+          <div class="tpl-placeholder">${f.placeholder.replace(/\n/g,'<br>')}</div>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
 
-    // Add user message
-    messages.push({ role: 'user', content: text });
-    addMessage('user', text);
-    showTyping();
+  document.getElementById('modal-dl').onclick = () => downloadTemplate(t);
+  document.getElementById('modal-copy').onclick = () => {
+    navigator.clipboard.writeText(t.fullText);
+    document.getElementById('modal-copy').textContent = '✓ Copied!';
+    setTimeout(() => document.getElementById('modal-copy').textContent = 'Copy Text', 2000);
+  };
+  document.getElementById('modal-overlay').classList.add('open');
+}
 
+function downloadTemplate(t) {
+  const blob = new Blob([t.fullText], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `RMF-${t.id.toUpperCase()}-Template.txt`;
+  a.click();
+}
+
+function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalBtn(); }
+function closeModalBtn() { document.getElementById('modal-overlay').classList.remove('open'); }
+
+// ═══════════════════════════
+// NEWS
+// ═══════════════════════════
+let newsLoaded = false, allNewsItems = [], newsFilter = 'all';
+
+const NEWS_FEEDS = [
+  { url: 'https://www.cisa.gov/uscert/ncas/alerts.xml', source: 'CISA ALERTS', color: '#ff4d6d', category: 'advisory' },
+  { url: 'https://www.cisa.gov/uscert/ncas/current-activity.xml', source: 'CISA ACTIVITY', color: '#ff8c42', category: 'vulnerability' },
+  { url: 'https://feeds.feedburner.com/TheHackersNews', source: 'HACKER NEWS', color: '#00e5ff', category: 'vulnerability' },
+  { url: 'https://www.schneier.com/blog/atom.xml', source: 'SCHNEIER', color: '#a78bfa', category: 'policy' },
+  { url: 'https://krebsonsecurity.com/feed/', source: 'KREBS', color: '#00c896', category: 'vulnerability' },
+];
+
+const RSS_PROXY = 'https://api.rss2json.com/v1/api.json?rss_url=';
+
+async function loadNews(force = false) {
+  if (newsLoaded && !force) return;
+  newsLoaded = true;
+  const container = document.getElementById('news-container');
+  container.innerHTML = '<div class="news-loading">⬡ Fetching cybersecurity feeds…</div>';
+  const btn = document.getElementById('refresh-btn');
+  if (btn) btn.classList.add('spinning');
+
+  allNewsItems = [];
+  const fetches = NEWS_FEEDS.map(async feed => {
     try {
-      // Call our secure backend proxy at /api/chat
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages }),
-      });
-
-      const data = await res.json();
-
-      removeTyping();
-
-      if (!res.ok || data.error) {
-        const errMsg = data.error || 'An error occurred. Please try again.';
-        addMessage('assistant', '⚠ ' + errMsg, true);
-      } else {
-        messages.push({ role: 'assistant', content: data.reply });
-        addMessage('assistant', data.reply);
+      const r = await fetch(RSS_PROXY + encodeURIComponent(feed.url));
+      const d = await r.json();
+      if (d.items) {
+        d.items.slice(0, 8).forEach(item => {
+          allNewsItems.push({
+            title: item.title || 'Untitled',
+            summary: (item.description || '').replace(/<[^>]+>/g, '').slice(0, 200).trim(),
+            link: item.link || '#',
+            date: item.pubDate ? new Date(item.pubDate).toLocaleDateString('en-US', {month:'short',day:'numeric',year:'numeric'}) : '',
+            source: feed.source, color: feed.color, category: feed.category,
+          });
+        });
       }
+    } catch {}
+  });
+  await Promise.all(fetches);
 
-    } catch (err) {
-      removeTyping();
-      addMessage('assistant', '⚠ Network error — please check your connection and try again.', true);
-    }
+  allNewsItems.sort((a, b) => new Date(b.date) - new Date(a.date));
+  if (btn) btn.classList.remove('spinning');
+  renderNews();
+}
 
-    isLoading = false;
-    document.getElementById('sendBtn').disabled = false;
-    input.focus();
+function renderNews() {
+  const container = document.getElementById('news-container');
+  const filtered = newsFilter === 'all' ? allNewsItems : allNewsItems.filter(n => n.category === newsFilter);
+  if (!filtered.length) {
+    container.innerHTML = `<div class="news-error"><div class="news-error-text">No articles found. Try refreshing or check back later.</div></div>`;
+    return;
   }
+  container.innerHTML = `<div class="news-grid">${filtered.map(n => `
+    <a class="news-card" href="${n.link}" target="_blank" rel="noopener">
+      <span class="news-source-dot" style="background:${n.color}"></span>
+      <div class="news-body">
+        <div class="news-source-label">${n.source}</div>
+        <div class="news-title">${n.title}</div>
+        ${n.summary ? `<div class="news-summary">${n.summary}…</div>` : ''}
+        <div class="news-meta">
+          <span class="news-date">${n.date}</span>
+          <span class="news-tag" style="background:${n.color}22;color:${n.color};border:1px solid ${n.color}44">${n.category.toUpperCase()}</span>
+        </div>
+      </div>
+      <span class="news-arrow">→</span>
+    </a>
+  `).join('')}</div>`;
+}
+
+function filterNews(category, btn) {
+  newsFilter = category;
+  document.querySelectorAll('.news-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderNews();
+}
+
+// ═══════════════════════════
+// IAVA / NVD
+// ═══════════════════════════
+let iavaLoaded = false, allIAVA = [], activeSevs = new Set(['CRITICAL','HIGH','MEDIUM','LOW']);
+
+async function loadIAVA() {
+  if (iavaLoaded) return; iavaLoaded = true;
+  try {
+    // Fetch recent critical/high CVEs from NVD public API
+    const url = 'https://services.nvd.nist.gov/rest/json/cves/2.0?cvssV3Severity=CRITICAL&resultsPerPage=40&startIndex=0';
+    const url2 = 'https://services.nvd.nist.gov/rest/json/cves/2.0?cvssV3Severity=HIGH&resultsPerPage=30&startIndex=0';
+    const url3 = 'https://services.nvd.nist.gov/rest/json/cves/2.0?cvssV3Severity=MEDIUM&resultsPerPage=20&startIndex=0';
+
+    const [r1, r2, r3] = await Promise.all([fetch(url), fetch(url2), fetch(url3)]);
+    const [d1, d2, d3] = await Promise.all([r1.json(), r2.json(), r3.json()]);
+
+    const parse = (data, sev) => (data.vulnerabilities || []).map(v => {
+      const cve = v.cve;
+      const desc = cve.descriptions?.find(d => d.lang === 'en')?.value || '';
+      const score = cve.metrics?.cvssMetricV31?.[0]?.cvssData?.baseScore ||
+                    cve.metrics?.cvssMetricV30?.[0]?.cvssData?.baseScore || '';
+      const published = cve.published ? new Date(cve.published).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '';
+      const affected = cve.configurations?.[0]?.nodes?.[0]?.cpeMatch?.[0]?.criteria?.split(':')[4] || '—';
+      return { id: cve.id, desc: desc.slice(0, 180), score, sev, published, affected };
+    });
+
+    allIAVA = [...parse(d1,'CRITICAL'), ...parse(d2,'HIGH'), ...parse(d3,'MEDIUM')];
+    allIAVA.sort((a,b) => (parseFloat(b.score)||0) - (parseFloat(a.score)||0));
+
+    // Stats
+    const stats = { CRITICAL: 0, HIGH: 0, MEDIUM: 0, LOW: 0 };
+    allIAVA.forEach(i => stats[i.sev] = (stats[i.sev]||0) + 1);
+    document.getElementById('iava-stats').innerHTML = Object.entries(stats).map(([k,v]) => `
+      <div class="iava-stat">
+        <div class="iava-stat-num sev-${k === 'CRITICAL' ? 'CRITICAL' : k === 'HIGH' ? 'HIGH' : k === 'MEDIUM' ? 'MEDIUM' : 'LOW'}" style="color:${k==='CRITICAL'?'#ff4d6d':k==='HIGH'?'#ff8c42':k==='MEDIUM'?'#ffb347':'#00c896'}">${v}</div>
+        <div class="iava-stat-label">${k}</div>
+      </div>
+    `).join('') + `<div class="iava-stat"><div class="iava-stat-num" style="color:var(--accent)">${allIAVA.length}</div><div class="iava-stat-label">TOTAL LOADED</div></div>`;
+
+    filterIAVA();
+  } catch(e) {
+    document.getElementById('iava-tbody').innerHTML = `<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--error);font-family:'IBM Plex Mono',monospace;font-size:12px;">⚠ Could not load NVD data. NIST API may be temporarily unavailable.<br><br><a href="https://nvd.nist.gov/vuln/search" target="_blank" style="color:var(--accent)">Search NVD directly →</a></td></tr>`;
+  }
+}
+
+function toggleSev(btn) {
+  const sev = btn.dataset.sev;
+  if (activeSevs.has(sev)) { activeSevs.delete(sev); btn.classList.remove('active'); }
+  else { activeSevs.add(sev); btn.classList.add('active'); }
+  filterIAVA();
+}
+
+function filterIAVA() {
+  const q = (document.getElementById('iava-search')?.value || '').toLowerCase();
+  const filtered = allIAVA.filter(i =>
+    activeSevs.has(i.sev) &&
+    (!q || i.id.toLowerCase().includes(q) || i.desc.toLowerCase().includes(q) || i.affected.toLowerCase().includes(q))
+  );
+  const tbody = document.getElementById('iava-tbody');
+  if (!filtered.length) {
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;">No results match your filters.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = filtered.map(i => `
+    <tr>
+      <td><a class="iava-id" href="https://nvd.nist.gov/vuln/detail/${i.id}" target="_blank">${i.id}</a></td>
+      <td class="iava-title-cell">${i.desc}${i.desc.length >= 180 ? '…' : ''}</td>
+      <td class="iava-cve">${i.affected}</td>
+      <td class="iava-date">${i.published}</td>
+      <td><span class="sev-badge sev-${i.sev}">${i.sev}${i.score ? ' '+i.score : ''}</span></td>
+    </tr>
+  `).join('');
+}
+
+// ═══════════════════════════
+// INIT
+// ═══════════════════════════
+renderTemplates();
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalBtn(); });
 </script>
 </body>
 </html>
