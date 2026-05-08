@@ -469,8 +469,8 @@ textarea::placeholder{color:var(--muted)}
       onclick="document.getElementById('ckl-file-input').click()">
       <div class="drop-zone-icon">📂</div>
       <div class="drop-zone-title">STIG Viewer</div>
-      <p class="drop-zone-desc">Drop your STIG Checklist file here to begin. The file never leaves your browser — all processing is local.</p>
-      <span class="drop-zone-types">ACCEPTS: .ckl · .cklb · .xml</span>
+      <p class="drop-zone-desc">Drop your STIG Checklist (.ckl) or SCC HTML report here. Both formats are fully supported. The file never leaves your browser — all processing is local.</p>
+      <span class="drop-zone-types">ACCEPTS: .ckl · .cklb · .xml · SCC HTML</span>
       <button class="browse-btn" onclick="event.stopPropagation();document.getElementById('ckl-file-input').click()">Browse Files</button>
     </div>
     <div class="stig-info-cards">
@@ -479,7 +479,7 @@ textarea::placeholder{color:var(--muted)}
       <div class="stig-info-card"><div class="stig-info-card-icon">📋</div><div class="stig-info-card-title">EXPORT</div><div class="stig-info-card-text">Export updated .ckl, a pre-filled POA&M, or a CSV summary.</div></div>
       <div class="stig-info-card"><div class="stig-info-card-icon">✏️</div><div class="stig-info-card-title">EDIT STATUS</div><div class="stig-info-card-text">Update finding status and comments directly in the viewer.</div></div>
     </div>
-    <input type="file" id="ckl-file-input" accept=".ckl,.cklb,.xml" style="display:none" onchange="handleFileInput(this)">
+    <input type="file" id="ckl-file-input" accept=".ckl,.cklb,.xml,.html,.htm" style="display:none" onchange="handleFileInput(this)">
   </div>
 
   <!-- Main viewer (hidden until file loaded) -->
