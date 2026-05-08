@@ -349,6 +349,8 @@ textarea::placeholder{color:var(--muted)}
 .stig-no-selection-icon{font-size:36px;opacity:.3}
 .stig-no-selection-text{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:1px}
 </style>
+<!-- Vercel Web Analytics -->
+<script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 
@@ -756,56 +758,206 @@ function handleDrop(e){
 }
 function handleFileInput(input){const f=input.files[0];if(f)parseCKL(f)}
 
+// ── FILE TYPE ROUTER ──
 function parseCKL(file){
-  stigFileName=file.name;
-  const reader=new FileReader();
-  reader.onload=function(e){
-    try{
-      const parser=new DOMParser();
-      const xml=parser.parseFromString(e.target.result,'text/xml');
-      const vulns=xml.querySelectorAll('VULN');
-      stigFindings=[];
-      vulns.forEach((v,idx)=>{
-        const g=n=>v.querySelector(`STIG_DATA > ATTRIBUTE_NAME:not([*])`);//helper below
-        const getData=(key)=>{
-          const nodes=v.querySelectorAll('STIG_DATA');
-          for(const n of nodes){
-            const attr=n.querySelector('ATTRIBUTE_NAME');
-            const val=n.querySelector('ATTRIBUTE_DATA');
-            if(attr&&attr.textContent.trim()===key&&val)return val.textContent.trim();
-          }
-          return '';
-        };
-        const status=v.querySelector('STATUS')?.textContent.trim()||'Not_Reviewed';
-        const comments=v.querySelector('FINDING_DETAILS')?.textContent.trim()||'';
-        const comments2=v.querySelector('COMMENTS')?.textContent.trim()||'';
-        const cat=getData('Severity')||getData('CAT')||'medium';
-        const catNum=cat.toLowerCase().includes('high')||cat==='I'?'I':cat.toLowerCase().includes('medium')||cat==='II'?'II':'III';
-        stigFindings.push({
-          idx,
-          vulnId:getData('Vuln_Num')||getData('Rule_ID')||`V-${String(idx+1).padStart(6,'0')}`,
-          ruleId:getData('Rule_ID')||'',
-          groupTitle:getData('Group_Title')||'',
-          ruleTitle:getData('Rule_Title')||getData('Group_Title')||'Finding #'+(idx+1),
-          severity:getData('Severity')||cat,
-          cat:catNum,
-          weight:getData('Weight')||'',
-          discussion:getData('Vuln_Discuss')||'No discussion available.',
-          checkContent:getData('Check_Content')||'See STIG documentation.',
-          fixText:getData('Fix_Text')||'See STIG documentation.',
-          cciRef:getData('CCI_REF')||'',
-          iaControl:getData('IA_Controls')||'',
-          nistControl:getData('CCI_REF')||'',
-          status,comments,comments2,
-          raw:v,
-          changed:false,
-        });
-      });
-      if(!stigFindings.length){alert('No VULN entries found in this file. Make sure it is a valid STIG .ckl file.');return}
-      showStigViewer();
-    }catch(err){alert('Could not parse this file. Make sure it is a valid STIG checklist (.ckl) file.\n\n'+err.message)}
+  stigFileName = file.name;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    const raw = e.target.result;
+    const isHTML = /^[\s\S]{0,10}<!doctype html/i.test(raw) ||
+                   raw.includes('SCAP Compliance Checker') ||
+                   raw.includes('SCC -') ||
+                   raw.includes('<html');
+    if(isHTML){ parseSCCHTML(raw); } else { parseCKLXML(raw); }
   };
   reader.readAsText(file);
+}
+
+// ── CKL XML PARSER ──
+function parseCKLXML(raw){
+  try{
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(raw, 'text/xml');
+
+    // Check for XML parse error
+    const parseErr = xml.querySelector('parsererror');
+    if(parseErr){
+      alert('XML parse error in .ckl file:\n\n' + parseErr.textContent.slice(0,300));
+      return;
+    }
+
+    const vulns = Array.from(xml.getElementsByTagName('VULN'));
+    if(!vulns.length){
+      alert('No VULN entries found.\n\nMake sure you are dropping a DISA STIG Viewer .ckl checklist file, not an XCCDF or SCAP file.\n\nFor SCC HTML reports, drop the HTML file instead.');
+      return;
+    }
+
+    stigFindings = [];
+    vulns.forEach((v, idx) => {
+      const getData = (key) => {
+        const nodes = v.getElementsByTagName('STIG_DATA');
+        for(const n of nodes){
+          const attr = n.getElementsByTagName('ATTRIBUTE_NAME')[0];
+          const val  = n.getElementsByTagName('ATTRIBUTE_DATA')[0];
+          if(attr && attr.textContent.trim() === key && val)
+            return val.textContent.trim();
+        }
+        return '';
+      };
+
+      const statusEl  = v.getElementsByTagName('STATUS')[0];
+      const detailsEl = v.getElementsByTagName('FINDING_DETAILS')[0];
+      const status    = statusEl  ? statusEl.textContent.trim()  : 'Not_Reviewed';
+      const comments  = detailsEl ? detailsEl.textContent.trim() : '';
+
+      const sev    = getData('Severity') || getData('CAT') || 'medium';
+      const sevLow = sev.toLowerCase();
+      const cat    = (sevLow === 'high'   || sev === 'I')   ? 'I'   :
+                     (sevLow === 'medium' || sev === 'II')  ? 'II'  : 'III';
+
+      stigFindings.push({
+        idx,
+        vulnId:      getData('Vuln_Num')   || getData('Rule_ID') || ('V-' + String(idx+1).padStart(6,'0')),
+        ruleId:      getData('Rule_ID')    || '',
+        ruleTitle:   getData('Rule_Title') || getData('Group_Title') || 'Finding #' + (idx+1),
+        severity:    sev,
+        cat,
+        weight:      getData('Weight')        || '',
+        discussion:  getData('Vuln_Discuss')  || 'No discussion available.',
+        checkContent:getData('Check_Content') || 'See STIG documentation.',
+        fixText:     getData('Fix_Text')      || 'See STIG documentation.',
+        cciRef:      getData('CCI_REF')       || '',
+        iaControl:   getData('IA_Controls')   || '',
+        status,
+        comments,
+        sourceType: 'ckl',
+        changed: false,
+      });
+    });
+
+    showStigViewer();
+  } catch(err){
+    alert('Unexpected error parsing CKL file:\n\n' + err.message);
+  }
+}
+
+// ── SCC HTML PARSER ──
+function parseSCCHTML(raw){
+  try{
+    const parser = new DOMParser();
+    const doc    = parser.parseFromString(raw, 'text/html');
+
+    // Extract hostname from the HTML comment at the top
+    const commentMatch = raw.match(/HostName:(.*?),/);
+    const hostname = commentMatch ? commentMatch[1].trim() : '';
+
+    stigFindings = [];
+    let findingIdx = 0;
+
+    // All h2s in the document — findings are "V-XXXXXX - Title"
+    const allH2 = Array.from(doc.querySelectorAll('h2'));
+
+    allH2.forEach(h2 => {
+      const titleText = h2.textContent.trim();
+      const findingMatch = titleText.match(/^(V-\d+)\s*-\s*(.+)$/);
+      if(!findingMatch) return;   // skip "Automated Checks", "Manual Checks", etc.
+
+      const vulnId    = findingMatch[1];
+      const ruleTitle = findingMatch[2].trim();
+
+      // h2 is often wrapped in <a name="..."> — walk up to find the real container
+      const container = (h2.parentElement && h2.parentElement.tagName === 'A')
+                        ? h2.parentElement
+                        : h2;
+
+      // The detail table is the next TABLE sibling after the container
+      let sibling = container.nextElementSibling;
+      while(sibling && sibling.tagName !== 'TABLE') sibling = sibling.nextElementSibling;
+      const table = sibling;
+      if(!table) return;
+
+      // Helper: find a field value by its label in td.first
+      const getField = (label) => {
+        const rows = table.querySelectorAll('tr');
+        for(const row of rows){
+          const first = row.querySelector('td.first');
+          if(first && first.textContent.trim() === label + ':'){
+            const second = first.nextElementSibling;
+            return second ? second.textContent.trim() : '';
+          }
+        }
+        return '';
+      };
+
+      const ruleResult = getField('Rule Result');
+      const severity   = getField('Severity') || 'medium';
+      const description= getField('Description');
+      const checkText  = getField('Check Text');
+      const fixText    = getField('Fix Text');
+      const ruleId     = getField('Rule ID');
+      const version    = getField('Version');
+      const identities = getField('Identities');
+      const testType   = getField('Test Type');
+      const weight     = getField('Weight');
+
+      // Map SCC result → CKL status
+      const statusMap = {
+        'Pass'           : 'NotAFinding',
+        'Fail'           : 'Open',
+        'Not Applicable' : 'Not_Applicable',
+        'Not Checked'    : 'Not_Reviewed',
+        'Not Reviewed'   : 'Not_Reviewed',
+        'Error'          : 'Open',
+        'Unknown'        : 'Not_Reviewed',
+      };
+      const status = statusMap[ruleResult] || 'Not_Reviewed';
+
+      const sevLow = severity.toLowerCase();
+      const cat    = (sevLow === 'high'   || ruleResult === 'I')  ? 'I'   :
+                     (sevLow === 'medium' || ruleResult === 'II') ? 'II'  : 'III';
+
+      // CCI reference from identities text
+      const cciMatch = identities.match(/CCI-\d+/);
+      const cciRef   = cciMatch ? cciMatch[0] : '';
+
+      // Result Analysis is shown for failing tests — pre-fill into comments
+      const resultAnalysis = getField('Result Analysis');
+      const comments = resultAnalysis ? 'SCC Result Analysis:\n' + resultAnalysis : '';
+
+      stigFindings.push({
+        idx: findingIdx++,
+        vulnId,
+        ruleId,
+        ruleTitle,
+        severity,
+        cat,
+        weight,
+        discussion:  description  || 'No description available.',
+        checkContent: checkText   || 'See STIG documentation.',
+        fixText:      fixText     || 'See STIG documentation.',
+        cciRef,
+        iaControl: '',
+        status,
+        comments,
+        testType,
+        version,
+        sourceType: 'scc',
+        sccResult:  ruleResult,
+        changed: false,
+      });
+    });
+
+    if(!stigFindings.length){
+      alert('No findings could be extracted from this SCC HTML report.\n\nExpected format: SCC 5.x "All Settings" or results HTML report.');
+      return;
+    }
+
+    if(hostname) stigFileName = stigFileName + '  (' + hostname + ')';
+    showStigViewer();
+
+  } catch(err){
+    alert('Error parsing SCC HTML report:\n\n' + err.message);
+  }
 }
 
 function showStigViewer(){
