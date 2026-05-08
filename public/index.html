@@ -929,11 +929,12 @@ let stigAiLoading=false;
 async function stigAskQuick(type){
   if(!selectedFinding)return;
   const f=selectedFinding;
+  const catSev=f.cat==='I'?'High':f.cat==='II'?'Medium':'Low';
   const prompts={
-    explain:`Explain this STIG finding in plain language. What is the vulnerability, why does it matter, and what is the risk to a federal system?\n\nFinding: ${f.vulnId}\nTitle: ${f.ruleTitle}\nCategory: CAT ${f.cat}\nDiscussion: ${f.discussion.slice(0,800)}`,
-    remediate:`Provide step-by-step remediation instructions for this STIG finding. Be specific and actionable.\n\nFinding: ${f.vulnId}\nTitle: ${f.ruleTitle}\nFix Text: ${f.fixText.slice(0,800)}\nCheck Content: ${f.checkContent.slice(0,400)}`,
-    poam:`Draft a POA&M entry for this open STIG finding following NIST 800-37 POA&M format. Include: weakness description, risk rating, recommended resources, and suggested milestones with timeframes.\n\nFinding: ${f.vulnId}\nTitle: ${f.ruleTitle}\nCategory: CAT ${f.cat} (${f.cat==='I'?'High':'f.cat==='II'?Medium:Low'} severity)\nDiscussion: ${f.discussion.slice(0,600)}`,
-    risk:`Assess the risk impact of this STIG finding for a federal system. Consider confidentiality, integrity, and availability impact. Reference relevant NIST 800-53 controls.\n\nFinding: ${f.vulnId}\nTitle: ${f.ruleTitle}\nCategory: CAT ${f.cat}\nDiscussion: ${f.discussion.slice(0,600)}\nCCI Reference: ${f.cciRef||'N/A'}`,
+    explain:'Explain this STIG finding in plain language. What is the vulnerability, why does it matter, and what is the risk to a federal system?\n\nFinding: '+f.vulnId+'\nTitle: '+f.ruleTitle+'\nCategory: CAT '+f.cat+'\nDiscussion: '+f.discussion.slice(0,800),
+    remediate:'Provide step-by-step remediation instructions for this STIG finding. Be specific and actionable.\n\nFinding: '+f.vulnId+'\nTitle: '+f.ruleTitle+'\nFix Text: '+f.fixText.slice(0,800)+'\nCheck Content: '+f.checkContent.slice(0,400),
+    poam:'Draft a POA&M entry for this open STIG finding following NIST 800-37 POA&M format. Include: weakness description, risk rating, recommended resources, and suggested milestones with timeframes.\n\nFinding: '+f.vulnId+'\nTitle: '+f.ruleTitle+'\nCategory: CAT '+f.cat+' ('+catSev+' severity)\nDiscussion: '+f.discussion.slice(0,600),
+    risk:'Assess the risk impact of this STIG finding for a federal system. Consider confidentiality, integrity, and availability impact. Reference relevant NIST 800-53 controls.\n\nFinding: '+f.vulnId+'\nTitle: '+f.ruleTitle+'\nCategory: CAT '+f.cat+'\nDiscussion: '+f.discussion.slice(0,600)+'\nCCI Reference: '+(f.cciRef||'N/A'),
   };
   await stigSendAI(prompts[type]);
 }
