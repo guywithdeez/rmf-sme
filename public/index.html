@@ -348,6 +348,28 @@ textarea::placeholder{color:var(--muted)}
 .stig-no-selection{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:var(--muted);padding:40px}
 .stig-no-selection-icon{font-size:36px;opacity:.3}
 .stig-no-selection-text{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:1px}
+
+/* ── MODEL SELECTOR ── */
+.model-selector-bar{flex-shrink:0;background:var(--surface);border-bottom:1px solid var(--border);padding:8px 20px;display:flex;align-items:center;gap:10px}
+.model-selector-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;white-space:nowrap}
+.model-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:7px;white-space:nowrap;letter-spacing:.4px}
+.model-btn .model-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.model-btn.active-claude{border-color:rgba(0,229,255,.5);background:rgba(0,229,255,.08);color:var(--accent)}
+.model-btn.active-gpt4o{border-color:rgba(16,185,129,.5);background:rgba(16,185,129,.08);color:#10b981}
+.model-btn.active-gemini{border-color:rgba(99,102,241,.5);background:rgba(99,102,241,.08);color:#818cf8}
+.model-btn.active-smart{border-color:rgba(255,179,71,.5);background:rgba(255,179,71,.08);color:var(--warning)}
+.model-btn:not([class*="active"]):hover{border-color:var(--border2);color:var(--text)}
+.model-dot-claude{background:var(--accent)}
+.model-dot-gpt4o{background:#10b981}
+.model-dot-gemini{background:#818cf8}
+.model-dot-smart{background:var(--warning)}
+.ai-source-badge{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:2px 7px;border-radius:3px;letter-spacing:.6px;margin-left:6px;vertical-align:middle}
+.badge-claude{background:rgba(0,229,255,.1);color:var(--accent);border:1px solid rgba(0,229,255,.25)}
+.badge-gpt4o{background:rgba(16,185,129,.1);color:#10b981;border:1px solid rgba(16,185,129,.25)}
+.badge-gemini{background:rgba(99,102,241,.1);color:#818cf8;border:1px solid rgba(99,102,241,.25)}
+.model-divider{width:1px;height:20px;background:var(--border);margin:0 4px}
+.smart-desc{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-left:auto}
+
 </style>
 <!-- Vercel Web Analytics -->
 <script defer src="/_vercel/insights/script.js"></script>
@@ -392,6 +414,23 @@ textarea::placeholder{color:var(--muted)}
     <button class="chip" onclick="askTopic('Explain Supply Chain Risk Management in RMF')">SCRM</button>
     <button class="chip" onclick="askTopic('What are the roles of AO, ISSO, ISSM, and SCA in RMF?')">RMF Roles</button>
   </div>
+  <div class="model-selector-bar">
+    <span class="model-selector-label">AI SPECIALIST:</span>
+    <button class="model-btn active-claude" id="mb-claude" onclick="setModel('claude',this)">
+      <span class="model-dot model-dot-claude"></span>Claude Sonnet 4
+    </button>
+    <button class="model-btn" id="mb-gpt4o" onclick="setModel('gpt4o',this)">
+      <span class="model-dot model-dot-gpt4o"></span>GPT-4o
+    </button>
+    <button class="model-btn" id="mb-gemini" onclick="setModel('gemini',this)">
+      <span class="model-dot model-dot-gemini"></span>Gemini 2.5 Flash
+    </button>
+    <div class="model-divider"></div>
+    <button class="model-btn" id="mb-smart" onclick="setModel('smart',this)">
+      <span class="model-dot model-dot-smart"></span>⚡ Smart Route
+    </button>
+    <span class="smart-desc" id="smart-desc"></span>
+  </div>
   <div class="messages" id="messages">
     <div class="welcome" id="welcome">
       <div class="welcome-icon">🛡️</div>
@@ -425,7 +464,7 @@ textarea::placeholder{color:var(--muted)}
     </div>
     <div class="input-meta">
       <span class="hint">ENTER to send · SHIFT+ENTER for new line</span>
-      <span class="ref">NIST SP 800-37 REV.2</span>
+      <span id="active-model-label" class="ref">CLAUDE SONNET 4</span>
     </div>
   </div>
 </div>
@@ -705,32 +744,80 @@ function showTab(name) {
 }
 
 // ═══════════════════
-// CHAT
+// CHAT + MULTI-AI
 // ═══════════════════
-let chatMessages=[],chatLoading=false;
+let chatMessages=[],chatLoading=false,selectedModel='claude';
+
+const MODEL_META={
+  claude:{ label:'CLAUDE SONNET 4', badge:'badge-claude', avText:'CLD', color:'var(--accent)' },
+  gpt4o: { label:'GPT-4O',          badge:'badge-gpt4o',  avText:'GPT', color:'#10b981' },
+  gemini:{ label:'GEMINI 2.5',      badge:'badge-gemini', avText:'GEM', color:'#818cf8' },
+  smart: { label:'SMART ROUTE',     badge:'badge-claude', avText:'SME', color:'var(--warning)' },
+};
+
+const SMART_LABELS={
+  claude:'→ Claude (control analysis)',
+  gpt4o:'→ GPT-4o (quick answer)',
+  gemini:'→ Gemini (document analysis)',
+};
+
+function setModel(model, btn){
+  selectedModel=model;
+  document.querySelectorAll('.model-btn').forEach(b=>{
+    b.className='model-btn';
+    const dot=b.querySelector('.model-dot');
+    if(dot) dot.className='model-dot model-dot-'+b.id.replace('mb-','');
+  });
+  btn.classList.add('active-'+model);
+  const meta=MODEL_META[model]||MODEL_META.claude;
+  document.getElementById('active-model-label').textContent=meta.label;
+  document.getElementById('smart-desc').textContent=model==='smart'?'Auto-routes to best AI for each question':'';
+}
+
 function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,140)+'px'}
 function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage()}}
 function askTopic(text){showTab('chat');const i=document.getElementById('userInput');i.value=text;autoResize(i);sendMessage()}
 function fmtBubble(t){return t.replace(/^([A-Z][A-Z\s&\/\-]{3,}):$/gm,'<span class="sec-header">$1</span>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\[([A-Z]{1,3}-\d+(?:\(\d+\))?)\]/g,'<code>[$1]</code>').replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\n/g,'<br>')}
-function addChatMsg(role,content,isError=false){
+
+function addChatMsg(role, content, isError=false, usedModel=null){
   const welcome=document.getElementById('welcome');if(welcome)welcome.remove();
   const c=document.getElementById('messages');
-  const w=document.createElement('div');w.className=`message ${role}`;
-  const a=document.createElement('div');a.className=`av ${role==='user'?'user-av':'ai-av'}`;a.textContent=role==='user'?'YOU':'SME';
+  const w=document.createElement('div');w.className='message '+role;
+  const a=document.createElement('div');
+  const meta=MODEL_META[usedModel||selectedModel]||MODEL_META.claude;
+  a.className='av '+(role==='user'?'user-av':'ai-av');
+  if(role==='assistant'&&usedModel){a.textContent=meta.avText;a.style.color=meta.color;a.style.borderColor=meta.color+'44';}
+  else{a.textContent=role==='user'?'YOU':'SME';}
   const b=document.createElement('div');b.className='bubble'+(isError?' error-bubble':'');
-  if(role==='assistant')b.innerHTML=fmtBubble(content);else b.textContent=content;
+  if(role==='assistant'){
+    let html=fmtBubble(content);
+    if(usedModel&&usedModel!=='claude'){
+      const badgeMeta=MODEL_META[usedModel];
+      html='<span class="ai-source-badge '+badgeMeta.badge+'">'+badgeMeta.label+'</span><br><br>'+html;
+    }
+    if(selectedModel==='smart'&&usedModel&&SMART_LABELS[usedModel]){
+      html+='<br><span style="font-family:IBM Plex Mono,monospace;font-size:10px;color:var(--muted);display:block;margin-top:10px">⚡ Smart Route '+SMART_LABELS[usedModel]+'</span>';
+    }
+    b.innerHTML=html;
+  } else {
+    b.textContent=content;
+  }
   w.appendChild(a);w.appendChild(b);c.appendChild(w);c.scrollTop=c.scrollHeight;
 }
+
 function showTyping(){
   const welcome=document.getElementById('welcome');if(welcome)welcome.remove();
   const c=document.getElementById('messages');
   const w=document.createElement('div');w.className='typing-wrap';w.id='typing';
-  const a=document.createElement('div');a.className='av ai-av';a.textContent='SME';
+  const a=document.createElement('div');a.className='av ai-av';
+  const meta=MODEL_META[selectedModel]||MODEL_META.claude;
+  a.textContent=meta.avText;a.style.color=meta.color;a.style.borderColor=meta.color+'44';
   const i=document.createElement('div');i.className='typing-indicator';
   i.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
   w.appendChild(a);w.appendChild(i);c.appendChild(w);c.scrollTop=c.scrollHeight;
 }
 function removeTyping(){const t=document.getElementById('typing');if(t)t.remove()}
+
 async function sendMessage(){
   if(chatLoading)return;
   const input=document.getElementById('userInput');
@@ -739,10 +826,10 @@ async function sendMessage(){
   chatLoading=true;document.getElementById('sendBtn').disabled=true;
   chatMessages.push({role:'user',content:text});addChatMsg('user',text);showTyping();
   try{
-    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:chatMessages})});
+    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:chatMessages,model:selectedModel})});
     const data=await res.json();removeTyping();
     if(!res.ok||data.error){addChatMsg('assistant','⚠ '+(data.error||'Error'),true)}
-    else{chatMessages.push({role:'assistant',content:data.reply});addChatMsg('assistant',data.reply)}
+    else{chatMessages.push({role:'assistant',content:data.reply});addChatMsg('assistant',data.reply,false,data.usedModel||selectedModel)}
   }catch{removeTyping();addChatMsg('assistant','⚠ Network error — please try again.',true)}
   chatLoading=false;document.getElementById('sendBtn').disabled=false;input.focus();
 }
