@@ -23,7 +23,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 
 /* HEADER */
 header{position:relative;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:var(--header-h);flex-shrink:0}
-.logo{display:flex;align-items:center;gap:14px}
+.logo{display:flex;align-items:center;gap:14px;transition:opacity .18s}.logo:hover{opacity:.8}
 .logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--accent),#0080ff);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:16px;color:#000;letter-spacing:.5px;box-shadow:0 0 20px rgba(0,229,255,.2)}
 .logo-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:#fff}
 .logo-sub{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--accent);letter-spacing:1.5px;opacity:.8}
@@ -381,7 +381,7 @@ textarea::placeholder{color:var(--muted)}
 <body>
 
 <header>
-  <div class="logo">
+  <div class="logo" onclick="goHome()" style="cursor:pointer" title="Return to home">
     <div class="logo-icon">RMF</div>
     <div>
       <div class="logo-title">RMF Expert</div>
@@ -772,36 +772,77 @@ function showTab(name) {
   if(name==='iava'&&!iavaLoaded) loadIAVA();
 }
 
+function goHome(){
+  // Switch to chat tab
+  showTab('chat');
+  // If there are messages, reset to welcome screen
+  const messages = document.getElementById('messages');
+  if(!document.getElementById('welcome')){
+    chatMessages = [];
+    messages.innerHTML = `<div class="welcome" id="welcome">
+      <div class="welcome-icon">🛡️</div>
+      <h1>RMF SUBJECT MATTER EXPERT</h1>
+      <p class="welcome-desc">Your AI-powered guide to NIST RMF, FISMA, FedRAMP, STIG compliance, and federal cybersecurity.</p>
+      <div class="starter-grid">
+        <button class="starter" onclick="askTopic('Walk me through the complete RMF lifecycle from categorization to authorization')">
+          <div class="starter-label">RMF LIFECYCLE</div><div class="starter-desc">Complete walkthrough of all 7 steps</div>
+        </button>
+        <button class="starter" onclick="askTopic('What documents are required for a complete ATO package?')">
+          <div class="starter-label">ATO PACKAGE</div><div class="starter-desc">Required artifacts and deliverables</div>
+        </button>
+        <button class="starter" onclick="showTab(\'stig\')">
+          <div class="starter-label">STIG VIEWER</div><div class="starter-desc">Upload a .ckl or SCC file for AI analysis</div>
+        </button>
+        <button class="starter" onclick="askTopic(\'What is the role of the Authorizing Official (AO) in the RMF process?\')">
+          <div class="starter-label">RMF ROLES</div><div class="starter-desc">AO, ISSO, ISSM, SCA responsibilities</div>
+        </button>
+      </div>
+    </div>`;
+  }
+}
+
 // ═══════════════════
 // CHAT + MULTI-AI
 // ═══════════════════
 let chatMessages=[],chatLoading=false,selectedModel='claude';
 
 const MODEL_META={
-  claude:{ label:'CLAUDE SONNET 4', badge:'badge-claude', avText:'CLD', color:'var(--accent)' },
-  gpt4o: { label:'GPT-4O',          badge:'badge-gpt4o',  avText:'GPT', color:'#10b981' },
-  gemini:{ label:'GEMINI 2.5',      badge:'badge-gemini', avText:'GEM', color:'#818cf8' },
-  smart: { label:'SMART ROUTE',     badge:'badge-claude', avText:'SME', color:'var(--warning)' },
+  claude:{ short:'Claude',    full:'CLAUDE SONNET 4', badge:'badge-claude', avText:'CLD', color:'var(--accent)',  dot:'var(--accent)'   },
+  gpt4o: { short:'GPT-4o',   full:'GPT-4O',           badge:'badge-gpt4o',  avText:'GPT', color:'#10b981',       dot:'#10b981'         },
+  gemini:{ short:'Gemini',   full:'GEMINI 2.5',       badge:'badge-gemini', avText:'GEM', color:'#818cf8',       dot:'#818cf8'         },
+  smart: { short:'⚡ Smart', full:'SMART ROUTE',      badge:'badge-smart',  avText:'SME', color:'var(--warning)',dot:'var(--warning)'  },
 };
 
 const SMART_LABELS={
-  claude:'→ Claude (control analysis)',
-  gpt4o:'→ GPT-4o (quick answer)',
-  gemini:'→ Gemini (document analysis)',
+  claude:'⚡ Smart → Claude',
+  gpt4o: '⚡ Smart → GPT-4o',
+  gemini:'⚡ Smart → Gemini',
 };
 
-function setModel(model, btn){
-  selectedModel=model;
-  document.querySelectorAll('.model-btn').forEach(b=>{
-    b.className='model-btn';
-    const dot=b.querySelector('.model-dot');
-    if(dot) dot.className='model-dot model-dot-'+b.id.replace('mb-','');
+function setModel(model){
+  selectedModel = model;
+  // Close dropdown
+  document.getElementById('ai-picker-menu').classList.remove('open');
+  // Update pill label + dot
+  const meta = MODEL_META[model] || MODEL_META.claude;
+  document.getElementById('ai-picker-dot').style.background = meta.dot;
+  document.getElementById('ai-picker-label').textContent    = meta.short;
+  document.getElementById('active-model-label').textContent = meta.full;
+  // Update checkmarks in menu
+  document.querySelectorAll('.ai-picker-option').forEach(opt => {
+    opt.classList.toggle('selected', opt.dataset.model === model);
   });
-  btn.classList.add('active-'+model);
-  const meta=MODEL_META[model]||MODEL_META.claude;
-  document.getElementById('active-model-label').textContent=meta.label;
-  document.getElementById('smart-desc').textContent=model==='smart'?'Auto-routes to best AI for each question':'';
 }
+
+function togglePicker(e){
+  e.stopPropagation();
+  document.getElementById('ai-picker-menu').classList.toggle('open');
+}
+
+document.addEventListener('click', () => {
+  const m = document.getElementById('ai-picker-menu');
+  if(m) m.classList.remove('open');
+});
 
 function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,140)+'px'}
 function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage()}}
