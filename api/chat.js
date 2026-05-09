@@ -80,6 +80,18 @@ export default async function handler(req) {
   try { body = await req.json(); }
   catch { return new Response(JSON.stringify({ error: 'Invalid JSON body' }), { status: 400, headers: { 'Content-Type': 'application/json' } }); }
 
+  // Verify session token
+  const sitePassword = process.env.SITE_PASSWORD;
+  if (sitePassword) {
+    const authHeader = req.headers.get('X-Session-Token') || '';
+    const expectedToken = btoa('authenticated:' + sitePassword);
+    if (authHeader !== expectedToken) {
+      return new Response(JSON.stringify({ error: 'Session expired. Please refresh and log in again.' }), {
+        status: 401, headers: { 'Content-Type': 'application/json' },
+      });
+    }
+  }
+
   const { messages, model: requestedModel = 'claude' } = body;
   if (!messages || !Array.isArray(messages) || !messages.length)
     return new Response(JSON.stringify({ error: 'Messages array required' }), { status: 400, headers: { 'Content-Type': 'application/json' } });

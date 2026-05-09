@@ -16,7 +16,49 @@
   --success:#00c896; --warning:#ffb347; --error:#ff4d6d;
   --cat1:#ff4d6d; --cat2:#ffb347; --cat3:#64748b;
   --header-h:62px; --nav-h:48px;
+  --grid-color:rgba(0,229,255,.018);
 }
+/* ── LIGHT THEME ── */
+[data-theme="light"] {
+  --bg:#f0f4f8; --surface:#ffffff; --surface2:#e8eef5; --surface3:#dde5ef;
+  --border:#d1dae6; --border2:#b8c4d4;
+  --accent:#0066cc; --accent2:#e05a20; --accent3:#6d28d9;
+  --text:#1a2538; --muted:#6b7c93; --muted2:#4a5c72;
+  --success:#0f7a4a; --warning:#b45309; --error:#c0152a;
+  --cat1:#c0152a; --cat2:#b45309; --cat3:#6b7c93;
+  --grid-color:rgba(0,102,204,.025);
+}
+[data-theme="light"] body::before{background-image:linear-gradient(var(--grid-color) 1px,transparent 1px),linear-gradient(90deg,var(--grid-color) 1px,transparent 1px)}
+[data-theme="light"] .logo-icon{background:linear-gradient(135deg,#0066cc,#004499);box-shadow:0 0 20px rgba(0,102,204,.2)}
+[data-theme="light"] .bubble{background:var(--surface)!important;border-color:var(--border)!important}
+[data-theme="light"] .message.assistant .bubble{background:var(--surface2)!important}
+[data-theme="light"] .typing-indicator{background:var(--surface2);border-color:var(--border)}
+[data-theme="light"] .dot{background:var(--accent)}
+[data-theme="light"] .ai-picker-btn{background:var(--surface2)}
+[data-theme="light"] .ai-picker-menu{background:var(--surface);border-color:var(--border2)}
+[data-theme="light"] .ai-picker-option:hover{background:var(--surface2)}
+[data-theme="light"] .stig-drop-zone .drop-zone-box{border-color:var(--border2)}
+[data-theme="light"] .iava-table th{background:var(--surface2)}
+[data-theme="light"] .news-card{background:var(--surface);border-color:var(--border)}
+[data-theme="light"] nav,[data-theme="light"] header{border-color:var(--border)}
+/* ── THEME TOGGLE BUTTON ── */
+.theme-toggle{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:transparent;cursor:pointer;color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .18s;margin-left:4px}
+.theme-toggle:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,229,255,.05)}
+/* ── PASSWORD SCREEN ── */
+#pw-screen{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0}
+#pw-screen::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--grid-color) 1px,transparent 1px),linear-gradient(90deg,var(--grid-color) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
+.pw-card{position:relative;background:var(--surface);border:1px solid var(--border2);border-radius:18px;padding:44px 48px;width:100%;max-width:400px;display:flex;flex-direction:column;align-items:center;gap:20px;box-shadow:0 24px 64px rgba(0,0,0,.4);animation:fadeUp .4s ease}
+.pw-logo{width:60px;height:60px;background:linear-gradient(135deg,var(--accent),#0080ff);border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:24px;color:#000;box-shadow:0 0 30px rgba(0,229,255,.25)}
+.pw-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;color:var(--text);text-align:center}
+.pw-sub{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:1px;text-align:center}
+.pw-input{width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:10px;padding:13px 16px;color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:15px;outline:none;text-align:center;letter-spacing:2px;transition:border-color .18s}
+.pw-input:focus{border-color:var(--accent)}
+.pw-input::placeholder{letter-spacing:0;color:var(--muted);font-size:13px}
+.pw-btn{width:100%;padding:13px;border-radius:10px;border:none;background:var(--accent);color:#000;font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;letter-spacing:1.5px;cursor:pointer;transition:all .18s}
+.pw-btn:hover{background:#33eaff;transform:translateY(-1px)}
+.pw-btn:disabled{background:var(--border);color:var(--muted);cursor:not-allowed;transform:none}
+.pw-error{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--error);letter-spacing:.5px;min-height:16px;text-align:center}
+.pw-hidden{display:none!important}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;height:100vh;display:flex;flex-direction:column;overflow:hidden}
 body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.018) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
@@ -380,6 +422,19 @@ textarea::placeholder{color:var(--muted)}
 </head>
 <body>
 
+<!-- PASSWORD SCREEN -->
+<div id="pw-screen">
+  <div class="pw-card">
+    <div class="pw-logo">RMF</div>
+    <div class="pw-title">RMF EXPERT</div>
+    <div class="pw-sub">RESTRICTED ACCESS · ENTER PASSWORD</div>
+    <input class="pw-input" id="pw-input" type="password" placeholder="Enter password"
+      onkeydown="if(event.key==='Enter')submitPassword()">
+    <button class="pw-btn" id="pw-btn" onclick="submitPassword()">UNLOCK</button>
+    <div class="pw-error" id="pw-error"></div>
+  </div>
+</div>
+
 <header>
   <div class="logo" onclick="goHome()" style="cursor:pointer" title="Return to home">
     <div class="logo-icon">RMF</div>
@@ -392,6 +447,7 @@ textarea::placeholder{color:var(--muted)}
     <span class="badge badge-nist">NIST 800-37</span>
     <span class="badge badge-framp">FedRAMP</span>
     <span class="badge badge-live"><span class="live-dot"></span>AI LIVE</span>
+    <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn" title="Toggle light/dark mode">🌙</button>
   </div>
 </header>
 
@@ -761,6 +817,80 @@ textarea::placeholder{color:var(--muted)}
 
 <script>
 // ═══════════════════
+// PASSWORD AUTH
+// ═══════════════════
+const SESSION_KEY = 'rmf_session';
+
+async function submitPassword(){
+  const input = document.getElementById('pw-input');
+  const btn   = document.getElementById('pw-btn');
+  const err   = document.getElementById('pw-error');
+  const pw    = input.value.trim();
+  if(!pw) return;
+
+  btn.disabled = true;
+  btn.textContent = 'CHECKING…';
+  err.textContent = '';
+
+  try {
+    const res  = await fetch('/api/auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw }),
+    });
+    const data = await res.json();
+
+    if(res.ok && data.token){
+      localStorage.setItem(SESSION_KEY, data.token);
+      document.getElementById('pw-screen').classList.add('pw-hidden');
+      input.value = '';
+    } else {
+      err.textContent = data.error || 'Incorrect password.';
+      input.value = '';
+      input.focus();
+    }
+  } catch {
+    err.textContent = 'Network error. Please try again.';
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'UNLOCK';
+}
+
+function checkSession(){
+  const token = localStorage.getItem(SESSION_KEY);
+  if(token){
+    document.getElementById('pw-screen').classList.add('pw-hidden');
+  } else {
+    // Show password screen, focus input
+    setTimeout(() => document.getElementById('pw-input')?.focus(), 100);
+  }
+}
+
+// Run on load
+checkSession();
+
+// ═══════════════════
+// THEME TOGGLE
+// ═══════════════════
+function applyTheme(theme){
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('rmf_theme', theme);
+  document.getElementById('theme-btn').textContent = theme === 'light' ? '🌙' : '☀️';
+}
+
+function toggleTheme(){
+  const current = document.documentElement.getAttribute('data-theme') || 'dark';
+  applyTheme(current === 'dark' ? 'light' : 'dark');
+}
+
+// Apply saved theme on load
+(function(){
+  const saved = localStorage.getItem('rmf_theme') || 'dark';
+  applyTheme(saved);
+})();
+
+// ═══════════════════
 // TAB NAV
 // ═══════════════════
 function showTab(name) {
@@ -896,7 +1026,8 @@ async function sendMessage(){
   chatLoading=true;document.getElementById('sendBtn').disabled=true;
   chatMessages.push({role:'user',content:text});addChatMsg('user',text);showTyping();
   try{
-    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:chatMessages,model:selectedModel})});
+    const token=localStorage.getItem(SESSION_KEY)||'';
+    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json','X-Session-Token':token},body:JSON.stringify({messages:chatMessages,model:selectedModel})});
     const data=await res.json();removeTyping();
     if(!res.ok||data.error){addChatMsg('assistant','⚠ '+(data.error||'Error'),true)}
     else{chatMessages.push({role:'assistant',content:data.reply});addChatMsg('assistant',data.reply,false,data.usedModel||selectedModel)}
@@ -1269,7 +1400,8 @@ async function stigSendAI(prompt,displayMsg=null){
   loading.innerHTML='<span style="opacity:.5;font-family:IBM Plex Mono,monospace;font-size:11px">Analyzing…</span>';
   msgContainer.appendChild(loading);msgContainer.scrollTop=msgContainer.scrollHeight;
   try{
-    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:[{role:'user',content:prompt}]})});
+    const token=localStorage.getItem(SESSION_KEY)||'';
+    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json','X-Session-Token':token},body:JSON.stringify({messages:[{role:'user',content:prompt}]})});
     const data=await res.json();
     loading.remove();
     const rm=document.createElement('div');rm.className='ai-msg assistant';
