@@ -55,14 +55,14 @@ nav::-webkit-scrollbar{display:none}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── CHAT ── */
-.topics-bar{background:rgba(17,21,32,.9);border-bottom:1px solid var(--border);padding:9px 24px;display:flex;gap:8px;overflow-x:auto;flex-shrink:0;scrollbar-width:none}
+.topics-bar{background:rgba(17,21,32,.9);border-bottom:1px solid var(--border);padding:9px 0;display:flex;gap:8px;overflow-x:auto;flex-shrink:0;scrollbar-width:none;justify-content:center}
 .topics-bar::-webkit-scrollbar{display:none}
 .chip{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:5px 13px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .18s}
 .chip:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,229,255,.05)}
-.messages{flex:1;overflow-y:auto;padding:28px 24px;display:flex;flex-direction:column;gap:22px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.messages{flex:1;overflow-y:auto;padding:28px 24px;display:flex;flex-direction:column;gap:22px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;align-items:center}
 .messages::-webkit-scrollbar{width:4px}
 .messages::-webkit-scrollbar-thumb{background:var(--border)}
-.welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 20px;flex:1;gap:18px;animation:fadeUp .5s ease both}
+.welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 20px;flex:1;gap:18px;animation:fadeUp .5s ease both;width:100%;max-width:760px}
 .welcome-icon{width:76px;height:76px;background:linear-gradient(135deg,rgba(0,229,255,.1),rgba(0,128,255,.06));border:1px solid rgba(0,229,255,.2);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:34px}
 .welcome h1{font-family:'Bebas Neue',sans-serif;font-size:34px;letter-spacing:4px;color:#fff}
 .welcome-desc{font-size:14px;color:var(--muted);max-width:460px;line-height:1.8}
@@ -71,7 +71,7 @@ nav::-webkit-scrollbar{display:none}
 .starter:hover{border-color:rgba(0,229,255,.4);background:rgba(0,229,255,.03);transform:translateY(-2px)}
 .starter-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:1.2px;margin-bottom:5px}
 .starter-desc{font-size:12px;color:var(--muted);line-height:1.5}
-.message{display:flex;gap:12px;max-width:880px;width:100%;animation:fadeUp .25s ease both}
+.message{display:flex;gap:12px;max-width:760px;width:100%;animation:fadeUp .25s ease both}
 .message.user{align-self:flex-end;flex-direction:row-reverse}
 .message.assistant{align-self:flex-start}
 .av{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;flex-shrink:0}
@@ -89,16 +89,16 @@ nav::-webkit-scrollbar{display:none}
 .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:bounce 1.2s infinite}
 .dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
 @keyframes bounce{0%,60%,100%{transform:translateY(0);opacity:.3}30%{transform:translateY(-7px);opacity:1}}
-.input-area{padding:14px 24px 18px;background:var(--surface);border-top:1px solid var(--border);flex-shrink:0}
-.input-box{display:flex;gap:10px;align-items:flex-end;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:10px 12px;transition:border-color .18s}
-.input-box:focus-within{border-color:rgba(0,229,255,.35)}
+.input-area{padding:16px 24px 20px;background:var(--bg);border-top:1px solid var(--border);flex-shrink:0;display:flex;flex-direction:column;align-items:center}
+.input-box{display:flex;gap:10px;align-items:flex-end;background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:10px 12px;transition:border-color .18s;width:100%;max-width:760px;box-shadow:0 4px 24px rgba(0,0,0,.3)}
+.input-box:focus-within{border-color:rgba(0,229,255,.4);box-shadow:0 4px 28px rgba(0,229,255,.08)}
 textarea{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:14px;line-height:1.6;resize:none;max-height:140px;min-height:24px;overflow-y:auto;scrollbar-width:none}
 textarea::placeholder{color:var(--muted)}
 .send-btn{width:36px;height:36px;border-radius:8px;border:none;background:var(--accent);color:#000;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .18s;flex-shrink:0}
 .send-btn:hover:not(:disabled){background:#33eaff;transform:scale(1.06)}
 .send-btn:disabled{background:var(--border);color:var(--muted);cursor:not-allowed}
 .send-btn svg{width:15px;height:15px}
-.input-meta{display:flex;justify-content:space-between;padding:7px 2px 0}
+.input-meta{display:flex;justify-content:space-between;padding:7px 4px 0;width:100%;max-width:760px}
 .hint{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)}
 .ref{font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(0,229,255,.5)}
 
@@ -349,26 +349,30 @@ textarea::placeholder{color:var(--muted)}
 .stig-no-selection-icon{font-size:36px;opacity:.3}
 .stig-no-selection-text{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:1px}
 
-/* ── MODEL SELECTOR ── */
-.model-selector-bar{flex-shrink:0;background:var(--surface);border-bottom:1px solid var(--border);padding:8px 20px;display:flex;align-items:center;gap:10px}
-.model-selector-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;white-space:nowrap}
-.model-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:7px;white-space:nowrap;letter-spacing:.4px}
-.model-btn .model-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.model-btn.active-claude{border-color:rgba(0,229,255,.5);background:rgba(0,229,255,.08);color:var(--accent)}
-.model-btn.active-gpt4o{border-color:rgba(16,185,129,.5);background:rgba(16,185,129,.08);color:#10b981}
-.model-btn.active-gemini{border-color:rgba(99,102,241,.5);background:rgba(99,102,241,.08);color:#818cf8}
-.model-btn.active-smart{border-color:rgba(255,179,71,.5);background:rgba(255,179,71,.08);color:var(--warning)}
-.model-btn:not([class*="active"]):hover{border-color:var(--border2);color:var(--text)}
-.model-dot-claude{background:var(--accent)}
-.model-dot-gpt4o{background:#10b981}
-.model-dot-gemini{background:#818cf8}
-.model-dot-smart{background:var(--warning)}
-.ai-source-badge{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:2px 7px;border-radius:3px;letter-spacing:.6px;margin-left:6px;vertical-align:middle}
+/* ── AI PICKER (inline in input box) ── */
+.ai-picker-wrap{position:relative;flex-shrink:0;align-self:flex-end;margin-bottom:1px}
+.ai-picker-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:var(--surface2);color:var(--text);cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;transition:all .18s;height:34px}
+.ai-picker-btn:hover{border-color:var(--border2)}
+.ai-picker-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.ai-picker-arrow{font-size:9px;opacity:.5;margin-left:2px}
+.ai-picker-menu{display:none;position:absolute;bottom:calc(100% + 8px);left:0;background:var(--surface);border:1px solid var(--border2);border-radius:10px;overflow:hidden;z-index:200;min-width:200px;box-shadow:0 8px 32px rgba(0,0,0,.4)}
+.ai-picker-menu.open{display:block;animation:fadeUp .15s ease}
+.ai-picker-option{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;transition:background .12s;border-bottom:1px solid var(--border)}
+.ai-picker-option:last-child{border-bottom:none}
+.ai-picker-option:hover{background:var(--surface2)}
+.ai-picker-option.selected{background:rgba(0,229,255,.05)}
+.ai-option-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.ai-option-info{flex:1}
+.ai-option-name{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.4px}
+.ai-option-desc{font-size:11px;color:var(--muted);margin-top:1px}
+.ai-option-check{font-size:12px;color:var(--accent);opacity:0}
+.ai-picker-option.selected .ai-option-check{opacity:1}
+/* source badges on messages */
+.ai-source-badge{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:2px 7px;border-radius:3px;letter-spacing:.6px;display:inline-block;margin-bottom:8px}
 .badge-claude{background:rgba(0,229,255,.1);color:var(--accent);border:1px solid rgba(0,229,255,.25)}
 .badge-gpt4o{background:rgba(16,185,129,.1);color:#10b981;border:1px solid rgba(16,185,129,.25)}
 .badge-gemini{background:rgba(99,102,241,.1);color:#818cf8;border:1px solid rgba(99,102,241,.25)}
-.model-divider{width:1px;height:20px;background:var(--border);margin:0 4px}
-.smart-desc{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);margin-left:auto}
+.badge-smart{background:rgba(255,179,71,.1);color:var(--warning);border:1px solid rgba(255,179,71,.25)}
 
 </style>
 <!-- Vercel Web Analytics -->
@@ -414,23 +418,6 @@ textarea::placeholder{color:var(--muted)}
     <button class="chip" onclick="askTopic('Explain Supply Chain Risk Management in RMF')">SCRM</button>
     <button class="chip" onclick="askTopic('What are the roles of AO, ISSO, ISSM, and SCA in RMF?')">RMF Roles</button>
   </div>
-  <div class="model-selector-bar">
-    <span class="model-selector-label">AI SPECIALIST:</span>
-    <button class="model-btn active-claude" id="mb-claude" onclick="setModel('claude',this)">
-      <span class="model-dot model-dot-claude"></span>Claude Sonnet 4
-    </button>
-    <button class="model-btn" id="mb-gpt4o" onclick="setModel('gpt4o',this)">
-      <span class="model-dot model-dot-gpt4o"></span>GPT-4o
-    </button>
-    <button class="model-btn" id="mb-gemini" onclick="setModel('gemini',this)">
-      <span class="model-dot model-dot-gemini"></span>Gemini 2.5 Flash
-    </button>
-    <div class="model-divider"></div>
-    <button class="model-btn" id="mb-smart" onclick="setModel('smart',this)">
-      <span class="model-dot model-dot-smart"></span>⚡ Smart Route
-    </button>
-    <span class="smart-desc" id="smart-desc"></span>
-  </div>
   <div class="messages" id="messages">
     <div class="welcome" id="welcome">
       <div class="welcome-icon">🛡️</div>
@@ -454,6 +441,48 @@ textarea::placeholder{color:var(--muted)}
   </div>
   <div class="input-area">
     <div class="input-box">
+      <!-- AI Picker lives inside the input box -->
+      <div class="ai-picker-wrap" id="ai-picker-wrap">
+        <button class="ai-picker-btn" id="ai-picker-btn" onclick="togglePicker(event)" title="Switch AI Specialist">
+          <span class="ai-picker-dot" id="ai-picker-dot" style="background:var(--accent)"></span>
+          <span id="ai-picker-label">Claude</span>
+          <span class="ai-picker-arrow">▾</span>
+        </button>
+        <div class="ai-picker-menu" id="ai-picker-menu">
+          <div class="ai-picker-option selected" data-model="claude" onclick="setModel('claude')">
+            <span class="ai-option-dot" style="background:var(--accent)"></span>
+            <div class="ai-option-info">
+              <div class="ai-option-name" style="color:var(--accent)">Claude Sonnet 4</div>
+              <div class="ai-option-desc">Best for NIST controls &amp; STIG analysis</div>
+            </div>
+            <span class="ai-option-check">✓</span>
+          </div>
+          <div class="ai-picker-option" data-model="gpt4o" onclick="setModel('gpt4o')">
+            <span class="ai-option-dot" style="background:#10b981"></span>
+            <div class="ai-option-info">
+              <div class="ai-option-name" style="color:#10b981">GPT-4o</div>
+              <div class="ai-option-desc">Best for quick definitions &amp; summaries</div>
+            </div>
+            <span class="ai-option-check">✓</span>
+          </div>
+          <div class="ai-picker-option" data-model="gemini" onclick="setModel('gemini')">
+            <span class="ai-option-dot" style="background:#818cf8"></span>
+            <div class="ai-option-info">
+              <div class="ai-option-name" style="color:#818cf8">Gemini 2.5 Flash</div>
+              <div class="ai-option-desc">Best for large document analysis</div>
+            </div>
+            <span class="ai-option-check">✓</span>
+          </div>
+          <div class="ai-picker-option" data-model="smart" onclick="setModel('smart')">
+            <span class="ai-option-dot" style="background:var(--warning)"></span>
+            <div class="ai-option-info">
+              <div class="ai-option-name" style="color:var(--warning)">⚡ Smart Route</div>
+              <div class="ai-option-desc">Auto-picks the best AI per question</div>
+            </div>
+            <span class="ai-option-check">✓</span>
+          </div>
+        </div>
+      </div>
       <textarea id="userInput" placeholder="Ask about RMF, FISMA, FedRAMP, STIGs, ATOs…" rows="1"
         onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
       <button class="send-btn" id="sendBtn" onclick="sendMessage()">

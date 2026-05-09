@@ -9,7 +9,7 @@ Format responses with ALL CAPS section headers, cite controls like [AC-2], numbe
 const MODELS = {
   claude: 'claude-sonnet-4-6',
   gpt4o:  'gpt-4o',
-  gemini: 'gemini-2.5-flash-preview-05-20',
+  gemini: 'gemini-2.5-flash',
 };
 
 async function callClaude(messages, apiKey) {
