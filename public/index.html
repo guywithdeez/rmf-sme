@@ -211,6 +211,83 @@
 /* ── THEME TOGGLE BUTTON ── */
 .theme-toggle{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:transparent;cursor:pointer;color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:16px;transition:all .18s;margin-left:4px}
 .theme-toggle:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,229,255,.05)}
+/* ── EMAIL TAB ── */
+.email-layout{flex:1;display:flex;overflow:hidden}
+.email-sidebar{width:280px;flex-shrink:0;border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;background:var(--surface)}
+.email-sidebar-header{padding:14px 16px;border-bottom:1px solid var(--border);font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:1.5px;flex-shrink:0}
+.email-sidebar-scroll{flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.stakeholder-row{padding:10px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;cursor:default;transition:background .12s}
+.stakeholder-row:hover{background:var(--surface2)}
+.stakeholder-avatar{width:30px;height:30px;border-radius:50%;background:rgba(0,229,255,.12);border:1px solid rgba(0,229,255,.25);display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent);flex-shrink:0}
+.stakeholder-name{font-size:13px;color:var(--text);font-weight:500;line-height:1.2}
+.stakeholder-role{font-size:11px;color:var(--muted);font-family:'IBM Plex Mono',monospace}
+.stakeholder-del{margin-left:auto;width:22px;height:22px;border-radius:4px;border:none;background:transparent;color:var(--muted);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+.stakeholder-del:hover{background:rgba(255,77,109,.12);color:var(--error)}
+.add-stakeholder-form{flex-shrink:0;padding:12px 14px;border-top:1px solid var(--border);background:var(--surface2);display:flex;flex-direction:column;gap:6px}
+.add-sh-input{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:7px 10px;color:var(--text);font-size:12px;font-family:'IBM Plex Sans',sans-serif;outline:none;transition:border-color .15s}
+.add-sh-input:focus{border-color:rgba(0,229,255,.4)}
+.add-sh-input::placeholder{color:var(--muted);font-size:11px}
+.add-sh-btn{padding:7px;border-radius:6px;border:none;background:var(--accent);color:#000;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;cursor:pointer;transition:all .18s;letter-spacing:.5px}
+.add-sh-btn:hover{background:#33eaff}
+.email-main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.email-type-bar{flex-shrink:0;padding:12px 20px;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:center;background:var(--surface)}
+.email-type-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;margin-right:4px}
+.etype-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;letter-spacing:.4px}
+.etype-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(0,229,255,.08)}
+.email-form{flex:1;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:14px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.email-field-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--accent2);letter-spacing:1.2px;margin-bottom:5px}
+.email-to-wrap{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:8px 10px;display:flex;flex-wrap:wrap;gap:6px;min-height:40px;cursor:text;transition:border-color .15s}
+.email-to-wrap:focus-within{border-color:rgba(0,229,255,.4)}
+.email-chip{display:flex;align-items:center;gap:5px;background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.25);border-radius:4px;padding:2px 8px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--accent)}
+.email-chip-x{background:none;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:0;line-height:1;display:flex;align-items:center}
+.email-chip-x:hover{color:var(--error)}
+.email-input{background:transparent;border:none;outline:none;color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:13px;min-width:120px;flex:1}
+.email-input::placeholder{color:var(--muted)}
+.email-text-input{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:13px;outline:none;transition:border-color .15s;width:100%}
+.email-text-input:focus{border-color:rgba(0,229,255,.4)}
+.email-text-input::placeholder{color:var(--muted)}
+.email-body-area{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:13px;outline:none;transition:border-color .15s;width:100%;resize:vertical;min-height:220px;line-height:1.7}
+.email-body-area:focus{border-color:rgba(0,229,255,.4)}
+.email-body-area::placeholder{color:var(--muted)}
+.email-actions{flex-shrink:0;padding:14px 24px;border-top:1px solid var(--border);background:var(--surface);display:flex;gap:10px;align-items:center}
+.email-send-btn{font-family:'IBM Plex Mono',monospace;font-size:12px;padding:10px 24px;border-radius:8px;border:none;background:var(--accent);color:#000;font-weight:700;cursor:pointer;transition:all .18s;letter-spacing:.8px}
+.email-send-btn:hover:not(:disabled){background:#33eaff}
+.email-send-btn:disabled{background:var(--border);color:var(--muted);cursor:not-allowed}
+.email-draft-btn{font-family:'IBM Plex Mono',monospace;font-size:12px;padding:10px 18px;border-radius:8px;border:1px solid rgba(0,229,255,.3);background:rgba(0,229,255,.06);color:var(--accent);cursor:pointer;transition:all .18s;letter-spacing:.5px}
+.email-draft-btn:hover:not(:disabled){background:rgba(0,229,255,.12)}
+.email-draft-btn:disabled{opacity:.4;cursor:not-allowed}
+.email-status{font-family:'IBM Plex Mono',monospace;font-size:11px;margin-left:auto}
+.email-status.ok{color:var(--success)}
+.email-status.err{color:var(--error)}
+.sent-row{padding:12px 16px;border-bottom:1px solid var(--border);display:grid;grid-template-columns:120px 1fr auto;gap:12px;align-items:center;cursor:pointer;transition:background .12s}
+.sent-row:hover{background:var(--surface2)}
+.sent-date{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)}
+.sent-subject{font-size:13px;color:var(--text)}
+.sent-to{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted2)}
+.email-empty{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:var(--muted);padding:40px}
+.email-empty-icon{font-size:40px;opacity:.3}
+.email-empty-text{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:1px}
+.sh-dropdown{position:absolute;background:var(--surface);border:1px solid var(--border2);border-radius:8px;z-index:100;max-height:180px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.3);min-width:240px}
+.sh-option{padding:8px 12px;cursor:pointer;font-size:12px;color:var(--text);transition:background .12s;border-bottom:1px solid var(--border)}
+.sh-option:last-child{border-bottom:none}
+.sh-option:hover{background:var(--surface2)}
+.sh-option-role{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)}
+/* INTAKE FORM on password screen */
+.pw-divider{display:flex;align-items:center;gap:12px;width:100%}
+.pw-divider::before,.pw-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.pw-divider-text{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px}
+.pw-request-btn{width:100%;padding:11px;border-radius:10px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;cursor:pointer;transition:all .18s;letter-spacing:.8px}
+.pw-request-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,229,255,.04)}
+.intake-form{display:none;flex-direction:column;gap:10px;width:100%;animation:fadeUp .2s ease}
+.intake-form.open{display:flex}
+.intake-input{width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:11px 14px;color:var(--text);font-family:'IBM Plex Sans',sans-serif;font-size:13px;outline:none;transition:border-color .18s}
+.intake-input:focus{border-color:var(--accent)}
+.intake-input::placeholder{color:var(--muted);font-size:12px}
+.intake-textarea{min-height:80px;resize:none}
+.intake-submit-btn{padding:11px;border-radius:8px;border:none;background:var(--accent);color:#000;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.8px;transition:all .18s}
+.intake-submit-btn:hover{background:#33eaff}
+.intake-back{background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline;align-self:center;padding:0}
+.pw-success{text-align:center;padding:16px;background:rgba(0,200,150,.08);border:1px solid rgba(0,200,150,.25);border-radius:8px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--success);width:100%}
 /* ── PASSWORD SCREEN ── */
 #pw-screen{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0}
 #pw-screen::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--grid-color) 1px,transparent 1px),linear-gradient(90deg,var(--grid-color) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
@@ -594,11 +671,34 @@ textarea::placeholder{color:var(--muted)}
   <div class="pw-card">
     <div class="pw-logo">RMF</div>
     <div class="pw-title">RMF EXPERT</div>
-    <div class="pw-sub">RESTRICTED ACCESS · ENTER PASSWORD</div>
-    <input class="pw-input" id="pw-input" type="password" placeholder="Enter password"
-      onkeydown="if(event.key==='Enter')submitPassword()">
-    <button class="pw-btn" id="pw-btn" onclick="submitPassword()">UNLOCK</button>
-    <div class="pw-error" id="pw-error"></div>
+    <div class="pw-sub" id="pw-sub-text">RESTRICTED ACCESS · ENTER PASSWORD</div>
+    <!-- Login form -->
+    <div id="pw-login-form" style="width:100%;display:flex;flex-direction:column;gap:12px">
+      <input class="pw-input" id="pw-input" type="password" placeholder="Enter password"
+        onkeydown="if(event.key==='Enter')submitPassword()">
+      <button class="pw-btn" id="pw-btn" onclick="submitPassword()">UNLOCK</button>
+      <div class="pw-error" id="pw-error"></div>
+      <div class="pw-divider"><span class="pw-divider-text">OR</span></div>
+      <button class="pw-request-btn" onclick="showIntakeForm()">Request Access</button>
+    </div>
+    <!-- Intake form -->
+    <div class="intake-form" id="intake-form">
+      <div class="pw-sub" style="text-align:center;margin-bottom:4px">Tell us about yourself</div>
+      <input class="intake-input" id="int-name"   placeholder="Full Name *">
+      <input class="intake-input" id="int-email"  type="email" placeholder="Email Address *">
+      <input class="intake-input" id="int-org"    placeholder="Organization *">
+      <input class="intake-input" id="int-role"   placeholder="Job Title / Role">
+      <input class="intake-input" id="int-source" placeholder="How did you hear about this site?">
+      <textarea class="intake-input intake-textarea" id="int-use" placeholder="How would you use the RMF Expert platform?"></textarea>
+      <div class="pw-error" id="intake-error"></div>
+      <button class="intake-submit-btn" id="intake-btn" onclick="submitIntake()">SEND REQUEST</button>
+      <button class="intake-back" onclick="showLoginForm()">← Back to login</button>
+    </div>
+    <!-- Success state -->
+    <div id="intake-success" style="display:none;width:100%">
+      <div class="pw-success">✓ Request received! We'll be in touch shortly.</div>
+      <button class="intake-back" style="margin-top:12px;display:block;text-align:center;width:100%" onclick="showLoginForm()">← Back to login</button>
+    </div>
   </div>
 </div>
 
@@ -625,6 +725,7 @@ textarea::placeholder{color:var(--muted)}
   <button class="tab-btn"        onclick="showTab('templates')" id="tab-templates">📄 Templates</button>
   <button class="tab-btn"        onclick="showTab('news')"      id="tab-news">📡 Cyber News</button>
   <button class="tab-btn"        onclick="showTab('iava')"      id="tab-iava">🛡️ IAVA</button>
+  <button class="tab-btn"        onclick="showTab('email')"     id="tab-email">📧 Email</button>
 </nav>
 
 <!-- ══ CHAT ══ -->
@@ -863,6 +964,7 @@ textarea::placeholder{color:var(--muted)}
               <button class="ai-quick-btn" onclick="stigAskQuick('remediate')">Remediation Steps</button>
               <button class="ai-quick-btn" onclick="stigAskQuick('poam')">Draft POA&M Entry</button>
               <button class="ai-quick-btn" onclick="stigAskQuick('risk')">Risk Impact</button>
+              <button class="ai-quick-btn" style="border-color:rgba(0,229,255,.3);color:var(--accent)" onclick="if(selectedFinding)composeFromPOAM(selectedFinding)">📧 Email POA&M</button>
             </div>
           </div>
           <div class="ai-messages" id="stig-ai-messages">
@@ -960,12 +1062,183 @@ textarea::placeholder{color:var(--muted)}
         <button class="sev-btn active" data-sev="HIGH"     onclick="toggleSev(this)">HIGH</button>
         <button class="sev-btn active" data-sev="MEDIUM"   onclick="toggleSev(this)">MEDIUM</button>
       </div>
+      <button class="refresh-btn" id="iava-refresh-btn" onclick="refreshIAVA()"><span class="refresh-icon">↻</span> Refresh</button>
     </div>
     <div class="iava-table-wrap">
       <table class="iava-table">
-        <thead><tr><th>CVE ID</th><th>DESCRIPTION</th><th>PRODUCT</th><th>PUBLISHED</th><th>SEVERITY</th></tr></thead>
+        <thead><tr><th>CVE ID</th><th>DESCRIPTION</th><th>PRODUCT</th><th>PUBLISHED</th><th>SEVERITY</th><th></th></tr></thead>
         <tbody id="iava-tbody"><tr><td colspan="5" style="text-align:center;padding:40px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px">⬡ Loading vulnerability data…</td></tr></tbody>
       </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══ EMAIL ══ -->
+<div class="page" id="page-email">
+  <div class="email-layout">
+    <!-- SIDEBAR: Stakeholder Address Book -->
+    <div class="email-sidebar">
+      <div class="email-sidebar-header">📋 STAKEHOLDER BOOK</div>
+      <div class="email-sidebar-scroll" id="stakeholder-list"></div>
+      <div class="add-stakeholder-form">
+        <input class="add-sh-input" id="sh-name"  placeholder="Full Name *">
+        <input class="add-sh-input" id="sh-email" placeholder="Email Address *" type="email">
+        <input class="add-sh-input" id="sh-role"  placeholder="Role (e.g. System Owner, AO)">
+        <button class="add-sh-btn" onclick="addStakeholder()">+ ADD STAKEHOLDER</button>
+      </div>
+    </div>
+
+    <!-- MAIN: Composer -->
+    <div class="email-main">
+      <!-- Type selector -->
+      <div class="email-type-bar">
+        <span class="email-type-label">COMPOSE:</span>
+        <button class="etype-btn active" id="etype-cve"    onclick="setEmailType('cve',this)">CVE Alert</button>
+        <button class="etype-btn"        id="etype-poam"   onclick="setEmailType('poam',this)">POA&amp;M Request</button>
+        <button class="etype-btn"        id="etype-custom" onclick="setEmailType('custom',this)">Custom</button>
+        <div style="margin-left:auto;display:flex;gap:8px">
+          <button class="etype-btn" id="etype-sent" onclick="setEmailType('sent',this)">📤 Sent (0)</button>
+        </div>
+      </div>
+
+      <!-- CVE Alert form -->
+      <div class="email-form" id="form-cve">
+        <div>
+          <div class="email-field-label">TO</div>
+          <div style="position:relative">
+            <div class="email-to-wrap" id="to-cve-wrap" onclick="document.getElementById('to-cve-input').focus()">
+              <input class="email-input" id="to-cve-input" placeholder="Type name or paste email, press Enter…" onkeydown="handleToInput(event,'cve')" oninput="showShDropdown('cve',this.value)">
+            </div>
+            <div class="sh-dropdown" id="sh-drop-cve" style="display:none"></div>
+          </div>
+        </div>
+        <div>
+          <div class="email-field-label">CVE ID</div>
+          <input class="email-text-input" id="cve-id-input" placeholder="e.g. CVE-2025-12345" oninput="updateCVESubject()">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div>
+            <div class="email-field-label">SEVERITY</div>
+            <select class="email-text-input" id="cve-sev">
+              <option value="CRITICAL">CRITICAL</option><option value="HIGH">HIGH</option>
+              <option value="MEDIUM">MEDIUM</option><option value="LOW">LOW</option>
+            </select>
+          </div>
+          <div>
+            <div class="email-field-label">CVSS SCORE</div>
+            <input class="email-text-input" id="cve-score" placeholder="e.g. 9.8">
+          </div>
+        </div>
+        <div>
+          <div class="email-field-label">AFFECTED PRODUCT</div>
+          <input class="email-text-input" id="cve-product" placeholder="e.g. Microsoft Windows Server 2022">
+        </div>
+        <div>
+          <div class="email-field-label">SUBJECT</div>
+          <input class="email-text-input" id="cve-subject" placeholder="[SECURITY ALERT] CVE-XXXX-XXXXX — Critical Vulnerability">
+        </div>
+        <div>
+          <div class="email-field-label">DESCRIPTION / BODY <span style="color:var(--muted);font-weight:400">(edit AI draft or type manually)</span></div>
+          <textarea class="email-body-area" id="cve-body" placeholder="Click 'Draft with AI' to generate content, or type your message here…"></textarea>
+        </div>
+        <div>
+          <div class="email-field-label">ADDITIONAL NOTE (optional)</div>
+          <input class="email-text-input" id="cve-note" placeholder="Any specific actions required by recipients…">
+        </div>
+      </div>
+
+      <!-- POA&M form -->
+      <div class="email-form" id="form-poam" style="display:none">
+        <div>
+          <div class="email-field-label">TO</div>
+          <div style="position:relative">
+            <div class="email-to-wrap" id="to-poam-wrap" onclick="document.getElementById('to-poam-input').focus()">
+              <input class="email-input" id="to-poam-input" placeholder="Type name or paste email, press Enter…" onkeydown="handleToInput(event,'poam')" oninput="showShDropdown('poam',this.value)">
+            </div>
+            <div class="sh-dropdown" id="sh-drop-poam" style="display:none"></div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div>
+            <div class="email-field-label">REQUEST TYPE</div>
+            <select class="email-text-input" id="poam-req-type">
+              <option value="acceptance">Risk Acceptance Request</option>
+              <option value="extension">POA&amp;M Extension Request</option>
+            </select>
+          </div>
+          <div>
+            <div class="email-field-label">FINDING ID</div>
+            <input class="email-text-input" id="poam-finding-id" placeholder="e.g. V-225231">
+          </div>
+        </div>
+        <div>
+          <div class="email-field-label">RULE TITLE</div>
+          <input class="email-text-input" id="poam-title" placeholder="Finding title from STIG viewer">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+          <div>
+            <div class="email-field-label">CATEGORY</div>
+            <select class="email-text-input" id="poam-cat">
+              <option>CAT I</option><option selected>CAT II</option><option>CAT III</option>
+            </select>
+          </div>
+          <div>
+            <div class="email-field-label">SEVERITY</div>
+            <select class="email-text-input" id="poam-sev">
+              <option value="HIGH">HIGH</option><option value="MEDIUM" selected>MEDIUM</option><option value="LOW">LOW</option>
+            </select>
+          </div>
+          <div>
+            <div class="email-field-label">PROPOSED DATE</div>
+            <input class="email-text-input" id="poam-due" type="date">
+          </div>
+        </div>
+        <div>
+          <div class="email-field-label">SUBJECT</div>
+          <input class="email-text-input" id="poam-subject" placeholder="[POA&M] Risk Acceptance Request — V-XXXXXX">
+        </div>
+        <div>
+          <div class="email-field-label">EMAIL BODY <span style="color:var(--muted);font-weight:400">(edit AI draft or type manually)</span></div>
+          <textarea class="email-body-area" id="poam-body" placeholder="Click 'Draft with AI' to generate content…"></textarea>
+        </div>
+        <div>
+          <div class="email-field-label">ADDITIONAL JUSTIFICATION (optional)</div>
+          <input class="email-text-input" id="poam-just" placeholder="Any additional context for the reviewer…">
+        </div>
+      </div>
+
+      <!-- Custom form -->
+      <div class="email-form" id="form-custom" style="display:none">
+        <div>
+          <div class="email-field-label">TO</div>
+          <div style="position:relative">
+            <div class="email-to-wrap" id="to-custom-wrap" onclick="document.getElementById('to-custom-input').focus()">
+              <input class="email-input" id="to-custom-input" placeholder="Type name or paste email, press Enter…" onkeydown="handleToInput(event,'custom')" oninput="showShDropdown('custom',this.value)">
+            </div>
+            <div class="sh-dropdown" id="sh-drop-custom" style="display:none"></div>
+          </div>
+        </div>
+        <div>
+          <div class="email-field-label">SUBJECT</div>
+          <input class="email-text-input" id="custom-subject" placeholder="Email subject">
+        </div>
+        <div>
+          <div class="email-field-label">MESSAGE</div>
+          <textarea class="email-body-area" id="custom-body" placeholder="Type your message here…" style="min-height:300px"></textarea>
+        </div>
+      </div>
+
+      <!-- Sent history -->
+      <div class="email-form" id="form-sent" style="display:none;padding:0">
+        <div id="sent-list" style="flex:1"></div>
+      </div>
+
+      <!-- Action bar -->
+      <div class="email-actions" id="email-action-bar">
+        <button class="email-draft-btn" id="draft-btn" onclick="draftEmail()">🤖 Draft with AI</button>
+        <button class="email-send-btn" id="send-btn" onclick="sendEmail()">📤 SEND</button>
+        <span class="email-status" id="email-status"></span>
+      </div>
     </div>
   </div>
 </div>
@@ -1727,22 +2000,30 @@ let iavaLoaded=false,allIAVA=[],activeSevs=new Set(['CRITICAL','HIGH','MEDIUM'])
 async function loadIAVA(){
   if(iavaLoaded)return;iavaLoaded=true;
   try{
+    // Rolling 30-day window — newest CVEs only
+    const now=new Date();
+    const thirtyDaysAgo=new Date(now-30*24*60*60*1000);
+    const fmt=d=>d.toISOString().split('.')[0]+'.000';
+    const dateParam=`pubStartDate=${fmt(thirtyDaysAgo)}&pubEndDate=${fmt(now)}`;
     const [r1,r2,r3]=await Promise.all([
-      fetch('https://services.nvd.nist.gov/rest/json/cves/2.0?cvssV3Severity=CRITICAL&resultsPerPage=40'),
-      fetch('https://services.nvd.nist.gov/rest/json/cves/2.0?cvssV3Severity=HIGH&resultsPerPage=30'),
-      fetch('https://services.nvd.nist.gov/rest/json/cves/2.0?cvssV3Severity=MEDIUM&resultsPerPage=20'),
+      fetch(`https://services.nvd.nist.gov/rest/json/cves/2.0?cvssV3Severity=CRITICAL&${dateParam}&resultsPerPage=50`),
+      fetch(`https://services.nvd.nist.gov/rest/json/cves/2.0?cvssV3Severity=HIGH&${dateParam}&resultsPerPage=40`),
+      fetch(`https://services.nvd.nist.gov/rest/json/cves/2.0?cvssV3Severity=MEDIUM&${dateParam}&resultsPerPage=30`),
     ]);
     const [d1,d2,d3]=await Promise.all([r1.json(),r2.json(),r3.json()]);
     const parse=(data,sev)=>(data.vulnerabilities||[]).map(v=>{
       const cve=v.cve;
       const desc=cve.descriptions?.find(d=>d.lang==='en')?.value||'';
       const score=cve.metrics?.cvssMetricV31?.[0]?.cvssData?.baseScore||cve.metrics?.cvssMetricV30?.[0]?.cvssData?.baseScore||'';
-      const published=cve.published?new Date(cve.published).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'';
+      const pubRaw=cve.published||'';
+      const published=pubRaw?new Date(pubRaw).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'';
+      const pubTs=pubRaw?new Date(pubRaw).getTime():0;
       const affected=cve.configurations?.[0]?.nodes?.[0]?.cpeMatch?.[0]?.criteria?.split(':')[4]||'—';
-      return{id:cve.id,desc:desc.slice(0,180),score,sev,published,affected};
+      return{id:cve.id,desc:desc.slice(0,180),score,sev,published,pubTs,affected};
     });
     allIAVA=[...parse(d1,'CRITICAL'),...parse(d2,'HIGH'),...parse(d3,'MEDIUM')];
-    allIAVA.sort((a,b)=>(parseFloat(b.score)||0)-(parseFloat(a.score)||0));
+    // Sort newest published first
+    allIAVA.sort((a,b)=>b.pubTs-a.pubTs);
     const stats={CRITICAL:0,HIGH:0,MEDIUM:0};
     allIAVA.forEach(i=>stats[i.sev]=(stats[i.sev]||0)+1);
     document.getElementById('iava-stats').innerHTML=Object.entries(stats).map(([k,v])=>`<div class="iava-stat"><div class="iava-stat-num" style="color:${k==='CRITICAL'?'#ff4d6d':k==='HIGH'?'#ff8c42':'#ffb347'}">${v}</div><div class="iava-stat-label">${k}</div></div>`).join('')+`<div class="iava-stat"><div class="iava-stat-num" style="color:var(--accent)">${allIAVA.length}</div><div class="iava-stat-label">TOTAL</div></div>`;
@@ -1750,13 +2031,304 @@ async function loadIAVA(){
   }catch{document.getElementById('iava-tbody').innerHTML=`<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--error);font-family:'IBM Plex Mono',monospace;font-size:12px">⚠ NVD API unavailable. <a href="https://nvd.nist.gov/vuln/search" target="_blank" style="color:var(--accent)">Search NVD directly →</a></td></tr>`}
 }
 function toggleSev(btn){const sev=btn.dataset.sev;if(activeSevs.has(sev)){activeSevs.delete(sev);btn.classList.remove('active')}else{activeSevs.add(sev);btn.classList.add('active')}filterIAVA()}
+function refreshIAVA(){
+  iavaLoaded=false;allIAVA=[];
+  document.getElementById('iava-tbody').innerHTML='<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--muted);font-family:IBM Plex Mono,monospace;font-size:12px">⬡ Refreshing…</td></tr>';
+  document.getElementById('iava-stats').innerHTML='';
+  const btn=document.getElementById('iava-refresh-btn');
+  if(btn)btn.classList.add('spinning');
+  loadIAVA().then(()=>{if(btn)btn.classList.remove('spinning')});
+}
 function filterIAVA(){
   const q=(document.getElementById('iava-search')?.value||'').toLowerCase();
   const filtered=allIAVA.filter(i=>activeSevs.has(i.sev)&&(!q||i.id.toLowerCase().includes(q)||i.desc.toLowerCase().includes(q)||i.affected.toLowerCase().includes(q)));
   const tbody=document.getElementById('iava-tbody');
   if(!filtered.length){tbody.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px">No results match your filters.</td></tr>`;return}
-  tbody.innerHTML=filtered.map(i=>`<tr><td><a class="iava-id" href="https://nvd.nist.gov/vuln/detail/${i.id}" target="_blank">${i.id}</a></td><td class="iava-title-cell">${i.desc}${i.desc.length>=180?'…':''}</td><td class="iava-cve">${i.affected}</td><td class="iava-date">${i.published}</td><td><span class="sev-badge sev-${i.sev}">${i.sev}${i.score?' '+i.score:''}</span></td></tr>`).join('');
+  const oneDayAgo=Date.now()-24*60*60*1000;
+  tbody.innerHTML=filtered.map(i=>{
+    const isNew=i.pubTs&&i.pubTs>oneDayAgo;
+    return`<tr><td><a class="iava-id" href="https://nvd.nist.gov/vuln/detail/${i.id}" target="_blank">${i.id}</a>${isNew?'<span style="margin-left:5px;font-family:IBM Plex Mono,monospace;font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(0,200,150,.15);color:var(--success);border:1px solid rgba(0,200,150,.3)">NEW</span>':''}</td><td class="iava-title-cell">${i.desc}${i.desc.length>=180?'…':''}</td><td class="iava-cve">${i.affected}</td><td class="iava-date">${i.published}</td><td><span class="sev-badge sev-${i.sev}">${i.sev}${i.score?' '+i.score:''}</span></td><td><button style="font-family:IBM Plex Mono,monospace;font-size:10px;padding:3px 8px;border-radius:4px;border:1px solid rgba(0,229,255,.25);background:transparent;color:var(--accent);cursor:pointer" onclick="composeFromCVE({id:'${i.id}',sev:'${i.sev}',score:'${i.score}',affected:'${i.affected}',desc:'${(i.desc||'').replace(/'/g,'').slice(0,200)}'})" title="Compose Alert Email">📧</button></td></tr>`;
+  }).join('');
 }
+
+
+// ═══════════════════════════════════
+// INTAKE FORM
+// ═══════════════════════════════════
+function showIntakeForm(){
+  document.getElementById('pw-login-form').style.display='none';
+  document.getElementById('intake-form').classList.add('open');
+  document.getElementById('intake-success').style.display='none';
+  document.getElementById('pw-sub-text').textContent='REQUEST ACCESS';
+}
+function showLoginForm(){
+  document.getElementById('pw-login-form').style.display='flex';
+  document.getElementById('intake-form').classList.remove('open');
+  document.getElementById('intake-success').style.display='none';
+  document.getElementById('pw-sub-text').textContent='RESTRICTED ACCESS · ENTER PASSWORD';
+}
+async function submitIntake(){
+  const name=document.getElementById('int-name').value.trim();
+  const email=document.getElementById('int-email').value.trim();
+  const org=document.getElementById('int-org').value.trim();
+  const err=document.getElementById('intake-error');
+  if(!name||!email||!org){err.textContent='Name, email, and organization are required.';return}
+  const btn=document.getElementById('intake-btn');
+  btn.disabled=true;btn.textContent='SENDING…';err.textContent='';
+  try{
+    const res=await fetch('/api/email',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({type:'intake',name,email,org,
+        role:document.getElementById('int-role').value,
+        source:document.getElementById('int-source').value,
+        useCase:document.getElementById('int-use').value})});
+    const data=await res.json();
+    if(res.ok){
+      document.getElementById('intake-form').classList.remove('open');
+      document.getElementById('intake-success').style.display='block';
+    } else { err.textContent=data.error||'Failed to send. Please try again.'; }
+  }catch{ err.textContent='Network error. Please try again.'; }
+  btn.disabled=false;btn.textContent='SEND REQUEST';
+}
+
+// ═══════════════════════════════════
+// EMAIL TAB
+// ═══════════════════════════════════
+let emailType='cve';
+let toRecipients={cve:[],poam:[],custom:[]};
+let stakeholders=JSON.parse(localStorage.getItem('rmf_stakeholders')||'[]');
+let sentEmails=JSON.parse(localStorage.getItem('rmf_sent')||'[]');
+
+function initEmail(){
+  renderStakeholders();
+  updateSentCount();
+  renderSent();
+}
+
+// ── Stakeholders ──
+function renderStakeholders(){
+  const el=document.getElementById('stakeholder-list');
+  if(!stakeholders.length){
+    el.innerHTML='<div style="padding:20px;text-align:center;font-family:IBM Plex Mono,monospace;font-size:11px;color:var(--muted)">No stakeholders yet.<br>Add one below.</div>';
+    return;
+  }
+  el.innerHTML=stakeholders.map((s,i)=>`
+    <div class="stakeholder-row">
+      <div class="stakeholder-avatar">${(s.name||'?').slice(0,2).toUpperCase()}</div>
+      <div style="flex:1;min-width:0">
+        <div class="stakeholder-name">${s.name}</div>
+        <div class="stakeholder-role">${s.role||s.email}</div>
+      </div>
+      <button class="stakeholder-del" onclick="removeStakeholder(${i})" title="Remove">×</button>
+    </div>`).join('');
+}
+function addStakeholder(){
+  const name=document.getElementById('sh-name').value.trim();
+  const email=document.getElementById('sh-email').value.trim();
+  const role=document.getElementById('sh-role').value.trim();
+  if(!name||!email){alert('Name and email are required.');return}
+  stakeholders.push({name,email,role});
+  localStorage.setItem('rmf_stakeholders',JSON.stringify(stakeholders));
+  document.getElementById('sh-name').value='';
+  document.getElementById('sh-email').value='';
+  document.getElementById('sh-role').value='';
+  renderStakeholders();
+}
+function removeStakeholder(i){
+  stakeholders.splice(i,1);
+  localStorage.setItem('rmf_stakeholders',JSON.stringify(stakeholders));
+  renderStakeholders();
+}
+
+// ── To field chip input ──
+function handleToInput(e,type){
+  if(e.key==='Enter'||e.key===','){
+    e.preventDefault();
+    const val=e.target.value.trim().replace(/,$/,'');
+    if(val) addToChip(type,val,val);
+    e.target.value='';
+    document.getElementById('sh-drop-'+type).style.display='none';
+  }
+}
+function addToChip(type,label,email){
+  if(toRecipients[type].find(r=>r.email===email))return;
+  toRecipients[type].push({label,email});
+  renderToChips(type);
+}
+function removeToChip(type,email){
+  toRecipients[type]=toRecipients[type].filter(r=>r.email!==email);
+  renderToChips(type);
+}
+function renderToChips(type){
+  const wrap=document.getElementById('to-'+type+'-wrap');
+  const input=document.getElementById('to-'+type+'-input');
+  const existingChips=wrap.querySelectorAll('.email-chip');
+  existingChips.forEach(c=>c.remove());
+  toRecipients[type].forEach(r=>{
+    const chip=document.createElement('div');chip.className='email-chip';
+    chip.innerHTML=`${r.label}<button class="email-chip-x" onclick="removeToChip('${type}','${r.email}')">×</button>`;
+    wrap.insertBefore(chip,input);
+  });
+}
+function showShDropdown(type,q){
+  const drop=document.getElementById('sh-drop-'+type);
+  if(!q){drop.style.display='none';return}
+  const matches=stakeholders.filter(s=>s.name.toLowerCase().includes(q.toLowerCase())||s.email.toLowerCase().includes(q.toLowerCase()));
+  if(!matches.length){drop.style.display='none';return}
+  drop.style.display='block';
+  drop.innerHTML=matches.map(s=>`<div class="sh-option" onclick="addToChip('${type}','${s.name}','${s.email}');document.getElementById('to-${type}-input').value='';document.getElementById('sh-drop-${type}').style.display='none'">
+    <div>${s.name}</div><div class="sh-option-role">${s.email} · ${s.role||''}</div></div>`).join('');
+}
+document.addEventListener('click',()=>{document.querySelectorAll('.sh-dropdown').forEach(d=>d.style.display='none')});
+
+// ── Email type switcher ──
+function setEmailType(type,btn){
+  emailType=type;
+  document.querySelectorAll('.etype-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  ['cve','poam','custom','sent'].forEach(t=>{
+    document.getElementById('form-'+t).style.display=t===type?'flex':'none';
+  });
+  document.getElementById('email-action-bar').style.display=type==='sent'?'none':'flex';
+  if(type==='sent')renderSent();
+}
+
+// ── AI Draft ──
+async function draftEmail(){
+  const btn=document.getElementById('draft-btn');
+  btn.disabled=true;btn.textContent='Drafting…';
+  const token=localStorage.getItem('rmf_session')||'';
+  let prompt='';
+  if(emailType==='cve'){
+    const id=document.getElementById('cve-id-input').value||'(CVE ID not specified)';
+    const sev=document.getElementById('cve-sev').value;
+    const score=document.getElementById('cve-score').value;
+    const product=document.getElementById('cve-product').value||'the affected system';
+    prompt=`Draft a professional security vulnerability notification email from an ISSO perspective for the following vulnerability:
+
+CVE ID: ${id}
+Severity: ${sev}
+CVSS Score: ${score||'N/A'}
+Affected Product: ${product}
+
+Include: brief technical description, risk to federal systems, recommended remediation actions with timeline based on severity, and a professional closing. Format as plain paragraphs suitable for an email body. Do not include subject line or salutation.`;
+  } else if(emailType==='poam'){
+    const reqType=document.getElementById('poam-req-type').value;
+    const id=document.getElementById('poam-finding-id').value||'(Finding ID)';
+    const title=document.getElementById('poam-title').value||'(Rule Title)';
+    const cat=document.getElementById('poam-cat').value;
+    const sev=document.getElementById('poam-sev').value;
+    const due=document.getElementById('poam-due').value;
+    prompt=`Draft a formal ${reqType==='extension'?'POA&M extension request':'risk acceptance request'} email from an ISSO to a System Owner/Authorizing Official for the following STIG finding:
+
+Finding ID: ${id}
+Title: ${title}
+Category: ${cat}
+Severity: ${sev}
+${due?'Proposed New Date: '+due:''}
+
+Include: brief description of the finding, ${reqType==='extension'?'justification for the extension and new proposed milestone':'justification for accepting the residual risk'}, and a signature block placeholder. Write as formal government correspondence. Do not include subject line or salutation.`;
+  }
+  if(!prompt){btn.disabled=false;btn.textContent='🤖 Draft with AI';return}
+  try{
+    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json','X-Session-Token':token},
+      body:JSON.stringify({messages:[{role:'user',content:prompt}],model:'claude'})});
+    const data=await res.json();
+    if(data.reply){
+      const bodyId=emailType+'-body';
+      document.getElementById(bodyId).value=data.reply;
+    }
+  }catch{}
+  btn.disabled=false;btn.textContent='🤖 Draft with AI';
+}
+
+// ── Send Email ──
+async function sendEmail(){
+  const status=document.getElementById('email-status');
+  const btn=document.getElementById('send-btn');
+  const recipients=toRecipients[emailType].map(r=>r.email);
+  if(!recipients.length){status.textContent='Add at least one recipient.';status.className='email-status err';return}
+  const token=localStorage.getItem('rmf_session')||'';
+  let payload={type:emailType,recipients};
+  if(emailType==='cve'){
+    const subject=document.getElementById('cve-subject').value||`[SECURITY ALERT] ${document.getElementById('cve-id-input').value}`;
+    payload={...payload,subject,cveId:document.getElementById('cve-id-input').value,severity:document.getElementById('cve-sev').value,
+      score:document.getElementById('cve-score').value,affected:document.getElementById('cve-product').value,
+      aiDraft:document.getElementById('cve-body').value,customNote:document.getElementById('cve-note').value};
+  } else if(emailType==='poam'){
+    const id=document.getElementById('poam-finding-id').value;
+    const reqType=document.getElementById('poam-req-type').value;
+    const subject=document.getElementById('poam-subject').value||`[POA&M] ${reqType==='extension'?'Extension':'Risk Acceptance'} Request — ${id}`;
+    payload={...payload,subject,findingId:id,title:document.getElementById('poam-title').value,
+      cat:document.getElementById('poam-cat').value,severity:document.getElementById('poam-sev').value,
+      requestType:reqType,dueDate:document.getElementById('poam-due').value,
+      aiDraft:document.getElementById('poam-body').value,justification:document.getElementById('poam-just').value};
+  } else {
+    payload={...payload,subject:document.getElementById('custom-subject').value,message:document.getElementById('custom-body').value};
+  }
+  if(!payload.subject){status.textContent='Subject is required.';status.className='email-status err';return}
+  btn.disabled=true;btn.textContent='SENDING…';status.textContent='';
+  try{
+    const res=await fetch('/api/email',{method:'POST',headers:{'Content-Type':'application/json','X-Session-Token':token},body:JSON.stringify(payload)});
+    const data=await res.json();
+    if(res.ok){
+      status.textContent='✓ Sent successfully';status.className='email-status ok';
+      // Save to history
+      sentEmails.unshift({date:new Date().toISOString(),subject:payload.subject,to:toRecipients[emailType].map(r=>r.label),type:emailType});
+      localStorage.setItem('rmf_sent',JSON.stringify(sentEmails.slice(0,100)));
+      updateSentCount();
+      toRecipients[emailType]=[];renderToChips(emailType);
+    } else { status.textContent='⚠ '+data.error;status.className='email-status err'; }
+  }catch(e){status.textContent='⚠ Network error';status.className='email-status err';}
+  btn.disabled=false;btn.textContent='📤 SEND';
+}
+
+function updateSentCount(){
+  const btn=document.getElementById('etype-sent');
+  if(btn)btn.textContent=`📤 Sent (${sentEmails.length})`;
+}
+
+function renderSent(){
+  const el=document.getElementById('sent-list');
+  if(!sentEmails.length){
+    el.innerHTML='<div class="email-empty"><div class="email-empty-icon">📭</div><div class="email-empty-text">NO EMAILS SENT YET</div></div>';
+    return;
+  }
+  el.innerHTML=sentEmails.map(s=>`
+    <div class="sent-row">
+      <span class="sent-date">${new Date(s.date).toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})}</span>
+      <div><div class="sent-subject">${s.subject}</div><div class="sent-to">To: ${s.to.join(', ')}</div></div>
+      <span class="sev-badge sev-${s.type==='cve'?'HIGH':s.type==='poam'?'MEDIUM':'LOW'}" style="font-size:9px">${s.type.toUpperCase()}</span>
+    </div>`).join('');
+}
+
+// ── Pre-fill from other tabs ──
+function composeFromCVE(cveData){
+  showTab('email');
+  setEmailType('cve',document.getElementById('etype-cve'));
+  document.getElementById('cve-id-input').value=cveData.id||'';
+  document.getElementById('cve-sev').value=cveData.sev||'HIGH';
+  document.getElementById('cve-score').value=cveData.score||'';
+  document.getElementById('cve-product').value=cveData.affected||'';
+  document.getElementById('cve-subject').value=`[SECURITY ALERT] ${cveData.id} — ${cveData.sev} Severity Vulnerability`;
+  document.getElementById('cve-body').value=cveData.desc||'';
+  updateSentCount();
+}
+function composeFromPOAM(finding){
+  showTab('email');
+  setEmailType('poam',document.getElementById('etype-poam'));
+  document.getElementById('poam-finding-id').value=finding.vulnId||'';
+  document.getElementById('poam-title').value=finding.ruleTitle||'';
+  document.getElementById('poam-cat').value='CAT '+(finding.cat||'II');
+  document.getElementById('poam-sev').value=(finding.severity||'medium').toUpperCase();
+  document.getElementById('poam-subject').value=`[POA&M] Risk Acceptance Request — ${finding.vulnId}`;
+}
+function updateCVESubject(){
+  const id=document.getElementById('cve-id-input').value;
+  const sev=document.getElementById('cve-sev').value;
+  if(id)document.getElementById('cve-subject').value=`[SECURITY ALERT] ${id} — ${sev} Severity Vulnerability`;
+}
+// Init email tab on load
+initEmail();
 
 // ═══════════════════
 // INIT
