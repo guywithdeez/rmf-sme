@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RMF SME — Risk Management Framework Expert</title>
-<meta name="description" content="AI-powered NIST RMF Subject Matter Expert with STIG Viewer, templates, IAVA tracking, and cybersecurity news.">
+<meta name="description" content="AI-powered NIST RMF Subject Matter Expert with STIG Viewer, templates, IAVM tracking, and cybersecurity news.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Bebas+Neue&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -724,7 +724,7 @@ textarea::placeholder{color:var(--muted)}
   <button class="tab-btn"        onclick="showTab('about')"     id="tab-about">ℹ️ About</button>
   <button class="tab-btn"        onclick="showTab('templates')" id="tab-templates">📄 Templates</button>
   <button class="tab-btn"        onclick="showTab('news')"      id="tab-news">📡 Cyber News</button>
-  <button class="tab-btn"        onclick="showTab('iava')"      id="tab-iava">🛡️ IAVA</button>
+  <button class="tab-btn"        onclick="showTab('iavm')"      id="tab-iavm">🛡️ IAVM</button>
   <button class="tab-btn"        onclick="showTab('email')"     id="tab-email">📧 Email</button>
 </nav>
 
@@ -996,7 +996,7 @@ textarea::placeholder{color:var(--muted)}
       <div class="how-step"><div class="step-num">02</div><div class="step-content"><h4>🔍 STIG Viewer</h4><p>Upload a .ckl checklist file exported from DISA STIG Viewer. Browse all findings by category and status, update finding status and comments, ask the AI to explain any rule or generate remediation steps, then export an updated .ckl or POA&M. Your file never leaves your browser.</p></div></div>
       <div class="how-step"><div class="step-num">03</div><div class="step-content"><h4>📄 Templates</h4><p>Download starter templates for SSP, POA&M, SAR, IRP, and Continuous Monitoring Plan. Preview structure and download as text files.</p></div></div>
       <div class="how-step"><div class="step-num">04</div><div class="step-content"><h4>📡 Cyber News</h4><p>Live RSS feeds from CISA, The Hacker News, Krebs, and Schneier. Filter by advisory, vulnerability, or policy.</p></div></div>
-      <div class="how-step"><div class="step-num">05</div><div class="step-content"><h4>🛡️ IAVA Database</h4><p>Live CRITICAL/HIGH/MEDIUM CVEs from NIST NVD — the public data behind DISA IAVA notices. Searchable and filterable by severity.</p></div></div>
+      <div class="how-step"><div class="step-num">05</div><div class="step-content"><h4>🛡️ IAVM</h4><p>Live vulnerability feed from the NIST NVD Dashboard — the same data behind DoD IAVA notices. Shows the last 7 days of published CVEs, newest first, filterable by severity.</p></div></div>
     </div>
     <div class="about-grid">
       <div class="about-card"><div class="about-card-icon">🔒</div><div class="about-card-title">STIG FILES STAY LOCAL</div><div class="about-card-text">Your .ckl files are parsed entirely in your browser using JavaScript. They are never uploaded to any server. Only the text of individual findings is sent to the AI when you ask a question.</div></div>
@@ -1048,12 +1048,12 @@ textarea::placeholder{color:var(--muted)}
 </div>
 
 <!-- ══ IAVA ══ -->
-<div class="page" id="page-iava">
+<div class="page" id="page-iavm">
   <div class="page-scroll">
-    <div class="page-eyebrow">VULNERABILITY TRACKING</div>
-    <div class="page-title">IAVA / CVE Database</div>
-    <p class="page-desc">Recent high-severity vulnerabilities from NIST NVD — the public data source that maps to DoD IAVA notices.</p>
-    <div class="iava-notice"><span class="iava-notice-icon">ℹ</span><span>The official DISA IAVM system requires a DoD CAC login. This tab displays the same underlying CVE data from NIST NVD, which maps directly to IAVA identifiers. Visit <a href="https://public.cyber.mil" target="_blank" style="color:var(--accent2)">public.cyber.mil</a> with your CAC for official IAVA access.</span></div>
+    <div class="page-eyebrow">INFORMATION ASSURANCE VULNERABILITY MANAGER</div>
+    <div class="page-title">IAVM — Information Assurance Vulnerability Manager</div>
+    <p class="page-desc">Live vulnerability feed sourced directly from the NIST NVD Dashboard — the same data that drives DoD IAVA notices. Updated daily, newest first.</p>
+    <div class="iava-notice"><span class="iava-notice-icon">ℹ</span><span>Data sourced from the <a href="https://nvd.nist.gov/general/nvd-dashboard" target="_blank" style="color:var(--accent2)">NIST NVD Dashboard</a> — the authoritative public source for vulnerabilities that map to DoD IAVA/IAVB/IAVT notices. Showing CVEs published in the last 7 days. For official IAVM tracking, visit <a href="https://public.cyber.mil" target="_blank" style="color:var(--accent2)">public.cyber.mil</a> with a DoD CAC.</span></div>
     <div class="iava-stats" id="iava-stats"></div>
     <div class="iava-header-row">
       <input class="iava-search" id="iava-search" placeholder="Search CVE ID, keyword, or product…" oninput="filterIAVA()">
@@ -1061,6 +1061,7 @@ textarea::placeholder{color:var(--muted)}
         <button class="sev-btn active" data-sev="CRITICAL" onclick="toggleSev(this)">CRITICAL</button>
         <button class="sev-btn active" data-sev="HIGH"     onclick="toggleSev(this)">HIGH</button>
         <button class="sev-btn active" data-sev="MEDIUM"   onclick="toggleSev(this)">MEDIUM</button>
+        <button class="sev-btn"        data-sev="LOW"      onclick="toggleSev(this)">LOW</button>
       </div>
       <button class="refresh-btn" id="iava-refresh-btn" onclick="refreshIAVA()"><span class="refresh-icon">↻</span> Refresh</button>
     </div>
@@ -1339,7 +1340,7 @@ function showTab(name) {
   document.getElementById('page-'+name).classList.add('active');
   document.getElementById('tab-'+name).classList.add('active');
   if(name==='news'&&!newsLoaded) loadNews();
-  if(name==='iava'&&!iavaLoaded) loadIAVA();
+  if(name==='iavm'&&!iavmLoaded) loadIAVM();
 }
 
 function goHome(){
@@ -1996,58 +1997,114 @@ function filterNews(cat,btn){newsFilter=cat;document.querySelectorAll('.news-fil
 // ═══════════════════
 // IAVA
 // ═══════════════════
-let iavaLoaded=false,allIAVA=[],activeSevs=new Set(['CRITICAL','HIGH','MEDIUM']);
-async function loadIAVA(){
-  if(iavaLoaded)return;iavaLoaded=true;
+let iavmLoaded=false,allIAVA=[],activeSevs=new Set(['CRITICAL','HIGH','MEDIUM']);
+async function loadIAVM(){
+  if(iavmLoaded)return;iavmLoaded=true;
   try{
-    // Rolling 30-day window — newest CVEs only
+    // Mirror the NVD Dashboard — last 7 days, all severities, newest first
     const now=new Date();
-    const thirtyDaysAgo=new Date(now-30*24*60*60*1000);
+    const sevenDaysAgo=new Date(now-7*24*60*60*1000);
     const fmt=d=>d.toISOString().split('.')[0]+'.000';
-    const dateParam=`pubStartDate=${fmt(thirtyDaysAgo)}&pubEndDate=${fmt(now)}`;
-    const [r1,r2,r3]=await Promise.all([
-      fetch(`https://services.nvd.nist.gov/rest/json/cves/2.0?cvssV3Severity=CRITICAL&${dateParam}&resultsPerPage=50`),
-      fetch(`https://services.nvd.nist.gov/rest/json/cves/2.0?cvssV3Severity=HIGH&${dateParam}&resultsPerPage=40`),
-      fetch(`https://services.nvd.nist.gov/rest/json/cves/2.0?cvssV3Severity=MEDIUM&${dateParam}&resultsPerPage=30`),
+    const base=`https://services.nvd.nist.gov/rest/json/cves/2.0`;
+    const dateParam=`pubStartDate=${fmt(sevenDaysAgo)}&pubEndDate=${fmt(now)}`;
+    // Two calls: recently published + recently modified (like the NVD Dashboard)
+    const [rPub,rMod]=await Promise.all([
+      fetch(`${base}?${dateParam}&resultsPerPage=100`),
+      fetch(`${base}?lastModStartDate=${fmt(sevenDaysAgo)}&lastModEndDate=${fmt(now)}&resultsPerPage=60`),
     ]);
-    const [d1,d2,d3]=await Promise.all([r1.json(),r2.json(),r3.json()]);
-    const parse=(data,sev)=>(data.vulnerabilities||[]).map(v=>{
+    const [dPub,dMod]=await Promise.all([rPub.json(),rMod.json()]);
+
+    const parseCVE=(v,source)=>{
       const cve=v.cve;
       const desc=cve.descriptions?.find(d=>d.lang==='en')?.value||'';
-      const score=cve.metrics?.cvssMetricV31?.[0]?.cvssData?.baseScore||cve.metrics?.cvssMetricV30?.[0]?.cvssData?.baseScore||'';
+      const m31=cve.metrics?.cvssMetricV31?.[0];
+      const m30=cve.metrics?.cvssMetricV30?.[0];
+      const m2=cve.metrics?.cvssMetricV2?.[0];
+      const score=m31?.cvssData?.baseScore||m30?.cvssData?.baseScore||m2?.cvssData?.baseScore||'';
+      const sev=(m31?.baseSeverity||m30?.baseSeverity||m2?.baseSeverity||'').toUpperCase()||
+                (parseFloat(score)>=9?'CRITICAL':parseFloat(score)>=7?'HIGH':parseFloat(score)>=4?'MEDIUM':'LOW');
       const pubRaw=cve.published||'';
-      const published=pubRaw?new Date(pubRaw).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'';
+      const modRaw=cve.lastModified||'';
       const pubTs=pubRaw?new Date(pubRaw).getTime():0;
-      const affected=cve.configurations?.[0]?.nodes?.[0]?.cpeMatch?.[0]?.criteria?.split(':')[4]||'—';
-      return{id:cve.id,desc:desc.slice(0,180),score,sev,published,pubTs,affected};
+      const modTs=modRaw?new Date(modRaw).getTime():0;
+      const fmtDate=raw=>raw?new Date(raw).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'';
+      const affected=cve.configurations?.[0]?.nodes?.[0]?.cpeMatch?.[0]?.criteria?.split(':')[4]||
+                     (cve.references?.[0]?.url||'').replace(/https?:\/\//,'').split('/')[0]||'—';
+      return{id:cve.id,desc:desc.slice(0,180),score:score?Number(score).toFixed(1):'',
+             sev:sev||'UNKNOWN',published:fmtDate(pubRaw),modified:fmtDate(modRaw),pubTs,modTs,source,affected};
+    };
+
+    const published=(dPub.vulnerabilities||[]).map(v=>parseCVE(v,'published'));
+    const modified=(dMod.vulnerabilities||[]).map(v=>parseCVE(v,'modified'));
+
+    // Merge, deduplicate by CVE ID, newest published first
+    const seen=new Set();
+    allIAVA=[...published,...modified].filter(v=>{
+      if(seen.has(v.id))return false;
+      seen.add(v.id);return true;
     });
-    allIAVA=[...parse(d1,'CRITICAL'),...parse(d2,'HIGH'),...parse(d3,'MEDIUM')];
-    // Sort newest published first
     allIAVA.sort((a,b)=>b.pubTs-a.pubTs);
-    const stats={CRITICAL:0,HIGH:0,MEDIUM:0};
-    allIAVA.forEach(i=>stats[i.sev]=(stats[i.sev]||0)+1);
-    document.getElementById('iava-stats').innerHTML=Object.entries(stats).map(([k,v])=>`<div class="iava-stat"><div class="iava-stat-num" style="color:${k==='CRITICAL'?'#ff4d6d':k==='HIGH'?'#ff8c42':'#ffb347'}">${v}</div><div class="iava-stat-label">${k}</div></div>`).join('')+`<div class="iava-stat"><div class="iava-stat-num" style="color:var(--accent)">${allIAVA.length}</div><div class="iava-stat-label">TOTAL</div></div>`;
+    const stats={CRITICAL:0,HIGH:0,MEDIUM:0,LOW:0};
+    allIAVA.forEach(i=>{ const s=i.sev||'LOW'; if(stats[s]!==undefined)stats[s]++; });
+    const sevColors={CRITICAL:'#ff4d6d',HIGH:'#ff8c42',MEDIUM:'#ffb347',LOW:'var(--success)'};
+    const pubCount=allIAVA.filter(i=>i.source==='published').length;
+    const modCount=allIAVA.filter(i=>i.source==='modified').length;
+    document.getElementById('iava-stats').innerHTML=
+      Object.entries(stats).map(([k,v])=>`<div class="iava-stat"><div class="iava-stat-num" style="color:${sevColors[k]||'var(--muted)'}">${v}</div><div class="iava-stat-label">${k}</div></div>`).join('')+
+      `<div class="iava-stat"><div class="iava-stat-num" style="color:var(--accent)">${allIAVA.length}</div><div class="iava-stat-label">TOTAL · 7 DAYS</div></div>`+
+      `<div class="iava-stat"><div class="iava-stat-num" style="color:var(--success)">${pubCount}</div><div class="iava-stat-label">PUBLISHED</div></div>`+
+      `<div class="iava-stat"><div class="iava-stat-num" style="color:var(--warning)">${modCount}</div><div class="iava-stat-label">MODIFIED</div></div>`;
     filterIAVA();
-  }catch{document.getElementById('iava-tbody').innerHTML=`<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--error);font-family:'IBM Plex Mono',monospace;font-size:12px">⚠ NVD API unavailable. <a href="https://nvd.nist.gov/vuln/search" target="_blank" style="color:var(--accent)">Search NVD directly →</a></td></tr>`}
+  }catch{document.getElementById('iava-tbody').innerHTML=`<tr><td colspan="5" style="text-align:center;padding:40px;color:var(--error);font-family:'IBM Plex Mono',monospace;font-size:12px">⚠ NVD API unavailable. <a href="https://nvd.nist.gov/general/nvd-dashboard" target="_blank" style="color:var(--accent)">Open NVD Dashboard →</a></td></tr>`}
 }
+// Email button delegation on IAVA table
+document.addEventListener('click', function(e){
+  const btn=e.target.closest('.iavm-email-btn');
+  if(!btn)return;
+  composeFromCVE({
+    id: btn.dataset.id,
+    sev: btn.dataset.sev,
+    score: btn.dataset.score,
+    affected: decodeURIComponent(btn.dataset.affected||''),
+    desc: decodeURIComponent(btn.dataset.desc||''),
+  });
+});
+
 function toggleSev(btn){const sev=btn.dataset.sev;if(activeSevs.has(sev)){activeSevs.delete(sev);btn.classList.remove('active')}else{activeSevs.add(sev);btn.classList.add('active')}filterIAVA()}
 function refreshIAVA(){
-  iavaLoaded=false;allIAVA=[];
+  iavmLoaded=false;
+  allIAVA=[];
   document.getElementById('iava-tbody').innerHTML='<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--muted);font-family:IBM Plex Mono,monospace;font-size:12px">⬡ Refreshing…</td></tr>';
   document.getElementById('iava-stats').innerHTML='';
   const btn=document.getElementById('iava-refresh-btn');
   if(btn)btn.classList.add('spinning');
-  loadIAVA().then(()=>{if(btn)btn.classList.remove('spinning')});
+  loadIAVM().then(()=>{if(btn)btn.classList.remove('spinning')});
 }
 function filterIAVA(){
   const q=(document.getElementById('iava-search')?.value||'').toLowerCase();
-  const filtered=allIAVA.filter(i=>activeSevs.has(i.sev)&&(!q||i.id.toLowerCase().includes(q)||i.desc.toLowerCase().includes(q)||i.affected.toLowerCase().includes(q)));
+  const filtered=allIAVA.filter(i=>{
+    const sev=i.sev||'UNKNOWN';
+    return activeSevs.has(sev)&&(!q||i.id.toLowerCase().includes(q)||i.desc.toLowerCase().includes(q)||i.affected.toLowerCase().includes(q));
+  });
   const tbody=document.getElementById('iava-tbody');
-  if(!filtered.length){tbody.innerHTML=`<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px">No results match your filters.</td></tr>`;return}
+  if(!filtered.length){tbody.innerHTML='<tr><td colspan="6" style="text-align:center;padding:30px;color:var(--muted);font-family:IBM Plex Mono,monospace;font-size:12px">No results match your filters.</td></tr>';return}
   const oneDayAgo=Date.now()-24*60*60*1000;
   tbody.innerHTML=filtered.map(i=>{
     const isNew=i.pubTs&&i.pubTs>oneDayAgo;
-    return`<tr><td><a class="iava-id" href="https://nvd.nist.gov/vuln/detail/${i.id}" target="_blank">${i.id}</a>${isNew?'<span style="margin-left:5px;font-family:IBM Plex Mono,monospace;font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(0,200,150,.15);color:var(--success);border:1px solid rgba(0,200,150,.3)">NEW</span>':''}</td><td class="iava-title-cell">${i.desc}${i.desc.length>=180?'…':''}</td><td class="iava-cve">${i.affected}</td><td class="iava-date">${i.published}</td><td><span class="sev-badge sev-${i.sev}">${i.sev}${i.score?' '+i.score:''}</span></td><td><button style="font-family:IBM Plex Mono,monospace;font-size:10px;padding:3px 8px;border-radius:4px;border:1px solid rgba(0,229,255,.25);background:transparent;color:var(--accent);cursor:pointer" onclick="composeFromCVE({id:'${i.id}',sev:'${i.sev}',score:'${i.score}',affected:'${i.affected}',desc:'${(i.desc||'').replace(/'/g,'').slice(0,200)}'})" title="Compose Alert Email">📧</button></td></tr>`;
+    const isMod=i.source==='modified';
+    const sevClass='sev-'+(i.sev||'LOW');
+    const badge=isNew
+      ? '<span style="margin-left:4px;font-family:IBM Plex Mono,monospace;font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(0,200,150,.15);color:var(--success);border:1px solid rgba(0,200,150,.3)">NEW</span>'
+      : isMod ? '<span style="margin-left:4px;font-family:IBM Plex Mono,monospace;font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(255,179,71,.12);color:var(--warning);border:1px solid rgba(255,179,71,.3)">UPD</span>' : '';
+    const safeDesc=(i.desc||'').replace(/'/g,'&#39;').replace(/`/g,'').slice(0,200);
+    return '<tr>'
+      +'<td><a class="iava-id" href="https://nvd.nist.gov/vuln/detail/'+i.id+'" target="_blank">'+i.id+'</a>'+badge+'</td>'
+      +'<td class="iava-title-cell">'+i.desc+(i.desc.length>=180?'…':'')+'</td>'
+      +'<td class="iava-cve">'+i.affected+'</td>'
+      +'<td class="iava-date">'+i.published+'</td>'
+      +'<td><span class="sev-badge '+sevClass+'">'+i.sev+(i.score?' '+i.score:'')+'</span></td>'
+      +'<td><button class="iavm-email-btn" data-id="'+i.id+'" data-sev="'+i.sev+'" data-score="'+i.score+'" data-affected="'+encodeURIComponent(i.affected)+'" data-desc="'+encodeURIComponent(safeDesc)+'" style="font-family:IBM Plex Mono,monospace;font-size:10px;padding:3px 8px;border-radius:4px;border:1px solid rgba(0,229,255,.25);background:transparent;color:var(--accent);cursor:pointer" title="Compose Alert Email">📧</button></td>'
+      +'</tr>';
   }).join('');
 }
 
