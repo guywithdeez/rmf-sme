@@ -1108,7 +1108,7 @@ textarea::placeholder{color:var(--muted)}
           <div class="email-field-label">TO</div>
           <div style="position:relative">
             <div class="email-to-wrap" id="to-cve-wrap" onclick="document.getElementById('to-cve-input').focus()">
-              <input class="email-input" id="to-cve-input" placeholder="Type name or paste email, press Enter…" onkeydown="handleToInput(event,'cve')" oninput="showShDropdown('cve',this.value)">
+              <input class="email-input" id="to-cve-input" placeholder="Type name or paste email — separate with ; or ," onkeydown="handleToInput(event,'cve')" oninput="showShDropdown('cve',this.value)">
             </div>
             <div class="sh-dropdown" id="sh-drop-cve" style="display:none"></div>
           </div>
@@ -1154,7 +1154,7 @@ textarea::placeholder{color:var(--muted)}
           <div class="email-field-label">TO</div>
           <div style="position:relative">
             <div class="email-to-wrap" id="to-poam-wrap" onclick="document.getElementById('to-poam-input').focus()">
-              <input class="email-input" id="to-poam-input" placeholder="Type name or paste email, press Enter…" onkeydown="handleToInput(event,'poam')" oninput="showShDropdown('poam',this.value)">
+              <input class="email-input" id="to-poam-input" placeholder="Type name or paste email — separate with ; or ," onkeydown="handleToInput(event,'poam')" oninput="showShDropdown('poam',this.value)">
             </div>
             <div class="sh-dropdown" id="sh-drop-poam" style="display:none"></div>
           </div>
@@ -1214,7 +1214,7 @@ textarea::placeholder{color:var(--muted)}
           <div class="email-field-label">TO</div>
           <div style="position:relative">
             <div class="email-to-wrap" id="to-custom-wrap" onclick="document.getElementById('to-custom-input').focus()">
-              <input class="email-input" id="to-custom-input" placeholder="Type name or paste email, press Enter…" onkeydown="handleToInput(event,'custom')" oninput="showShDropdown('custom',this.value)">
+              <input class="email-input" id="to-custom-input" placeholder="Type name or paste email — separate with ; or ," onkeydown="handleToInput(event,'custom')" oninput="showShDropdown('custom',this.value)">
             </div>
             <div class="sh-dropdown" id="sh-drop-custom" style="display:none"></div>
           </div>
@@ -2243,9 +2243,9 @@ function removeStakeholder(i){
 
 // ── To field chip input ──
 function handleToInput(e,type){
-  if(e.key==='Enter'||e.key===','){
+  if(e.key===';'||e.key===','){
     e.preventDefault();
-    const val=e.target.value.trim().replace(/,$/,'');
+    const val=e.target.value.trim().replace(/[;,]$/,'');
     if(val) addToChip(type,val,val);
     e.target.value='';
     document.getElementById('sh-drop-'+type).style.display='none';
